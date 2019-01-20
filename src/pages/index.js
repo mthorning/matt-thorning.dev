@@ -1,28 +1,19 @@
 import React from 'react'
-import { Link } from 'gatsby'
 import Layout from '../components/layout'
 import SEO from '../components/seo'
+import BlogPostPreview from '../components/blog-post-preview'
 
 export default function({ data }) {
-  const { edges: posts } = data.allMarkdownRemark;
-
-  return(
+  const { edges: posts } = data.allMarkdownRemark
+  return (
     <Layout>
       <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
       <div className="blog-posts">
         {posts
           .filter(post => post.node.frontmatter.title.length > 0)
-          .map(({ node: post }) => {
-            return (
-              <div className="blog-post-preview" key={post.id}>
-                <h1>
-                  <Link to={post.frontmatter.path}>{post.frontmatter.title}</Link>
-                </h1>
-                <h2>{post.frontmatter.date}</h2>
-                <p>{post.excerpt}</p>
-              </div>
-            );
-          })}
+          .map(({ node: post }) => (
+            <BlogPostPreview post={post} />
+          ))}
       </div>
     </Layout>
   )
@@ -44,4 +35,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
