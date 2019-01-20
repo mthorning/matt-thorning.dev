@@ -1,7 +1,12 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'gatsby'
 
-export default class BlogPostPreview extends Component {
+const propTypes = {
+  post: PropTypes.object.isRequired,
+}
+
+class BlogPostPreview extends Component {
   state = {
     color: 'rgba(0, 0, 0, 0.5)',
   }
@@ -29,3 +34,6 @@ export default class BlogPostPreview extends Component {
     )
   }
 }
+
+BlogPostPreview.propTypes = propTypes
+export default BlogPostPreview
