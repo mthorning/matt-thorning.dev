@@ -1,0 +1,99 @@
+---
+path: '/using-closure'
+date: '2019-01-20T19:00:00'
+title: 'Using closures'
+---
+
+When I was learning about closures in Javascript for the first time I remember seeing many examples like this:
+
+```javascript
+const counter = (function() {
+  let count = 0
+  return function() {
+    count++
+    return count
+  }
+})()
+
+console.log(counter()) //1
+console.log(counter()) //2
+console.log(counter()) //3
+```
+
+Now, it was pretty clear to me what was happening, the outer function (which is an Immediately Invoked Function Expression or IIFE for short) declares the count variable, assigns the number zero to it and then returns the inner function. This inner function is executed each time we call `count()` and 'knows' about the count variable because it has closure over it.
+
+So all well and good. The bit that was not clear to me was _why_ this would be useful! I would like to demonstrate a couple of ways in which I repeatedly use closures in my daily coding.
+
+---
+
+The first technique is encapsulation. This is a way of creating a module where the inner workings are private and you only expose certain methods to interact with them. It is exactly what is happening in the example above but it is (hopefully!) easier to see why it is useful if we can use some code with a bit more going on.
+
+```javascript
+const library = (function() {
+  const books = ['Island', '1984', 'Dracula', 'Papillon']
+
+  return {
+    getBooks() {
+      return [...books]
+    },
+    deleteBook(title) {
+      books.splice(books.indexOf(title), 1)
+    },
+    addBook(title) {
+      books.push(title)
+    },
+  }
+})()
+
+library.addBook('catch 22')
+library.deleteBook('Dracula')
+console.log(library.getBooks()) // [ Island, 1984, Papillon, catch 22 ]
+
+const libraryBooks = library.getBooks()
+libraryBooks.push('Beowulf')
+console.log(libraryBooks) // [ Island, 1984, Papillon, catch 22, Beowulf ]
+console.log(library.getBooks()) // [ Island, 1984, Papillon, catch 22 ]
+```
+
+As you can see, our `books` array is protected from the outside world by the inner function's closure over it. The only way to interact with it is through the public methods; `getBooks()` returns a copy of the array instead of a reference to it and books can only be added or deleted one at a time.
+
+---
+
+The second example is a pattern I use frequently. I will use a React component to demonstrate, don't worry if you don't know React, it is pretty easy to see what is happening.
+
+```javascript
+class StartEndDate extends React.Component {
+  state = {
+    start: null,
+    end: null
+  }
+
+  // This is our closure, I have used es6 arrow functions this time
+  updateTime = startOrEnd => newTime => (
+    this.setState({
+      [startOrEnd]: newTime
+    })
+  )
+
+  render() {
+    return (
+      <DateInput label="From" updateTime={this.updateTime('start')} />
+      <DateInput label="To"   updateTime={this.updateTime('end')} />
+    )
+  }
+}
+
+function DateInput({ label, updateTime }) {
+  return (
+    <label for="timeInput">From</label>
+    <input id="timeInput" type="time" onChange={updateTime}>
+  )
+}
+```
+
+The JSX in the return of the StartEndDate class' `render` method calls the DateInput function. This returns the markup for a `<label>` and `<input>`. When a change event is detected, the value is passed through to the `updateTime` method on the StartEndDate class. 
+If you look at `render` method where this method is passed to DateInput, it is first called with either `'start'` or `'end'`. Our two inputs now have their own version of the `updateTime` method which has closure over the `startOrEnd` variable. Using computed property keys we can dynamically assign the new value to the StartEndDate component state using the variable in closure.
+
+---
+
+These are two of my most often used closure patterns. I hope that I have been able to show why they are such a useful feature of the language and an important tool to have in your toolset.

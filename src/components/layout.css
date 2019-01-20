@@ -38,13 +38,11 @@ template {
   display: none;
 }
 a {
-  color: rgba(0, 0, 0, 0.5) !important;
   background-color: transparent;
   -webkit-text-decoration-skip: objects;
 }
 a:active,
 a:hover {
-  color: #fc4445 !important;
   outline-width: 0;
 }
 abbr[title] {
@@ -619,4 +617,10 @@ pre tt:after {
   html {
     font-size: 100%;
   }
+}
+.orange-link {
+  color: rgba(0, 0, 0, 0.5);
+}
+.orange-link:hover {
+  color: #fc4445;
 }

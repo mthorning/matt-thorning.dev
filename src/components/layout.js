@@ -33,10 +33,14 @@ const Layout = ({ children }) => (
               justifyContent: 'flex-end',
             }}
           >
-            <a style={{ margin: '5px' }} href="https://twitter.com/thorning_m">
+            <a
+              style={{ marginRight: '10px' }}
+              className="orange-link"
+              href="https://twitter.com/thorning_m"
+            >
               Twitter
             </a>
-            <a style={{ margin: '5px' }} href="https://github.com/mthorning">
+            <a className="orange-link" href="https://github.com/mthorning">
               Github
             </a>
           </footer>

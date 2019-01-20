@@ -12,7 +12,7 @@ export default function({ data }) {
         {posts
           .filter(post => post.node.frontmatter.title.length > 0)
           .map(({ node: post }) => (
-            <BlogPostPreview post={post} />
+            <BlogPostPreview key={post.id} post={post} />
           ))}
       </div>
     </Layout>
