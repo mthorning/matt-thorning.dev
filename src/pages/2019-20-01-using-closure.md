@@ -4,7 +4,7 @@ date: '2019-01-20T19:00:00'
 title: 'Using closures'
 ---
 
-When I was learning about closures in Javascript for the first time I remember seeing many examples like this:
+When I was learning about closures in Javascript for the first time I saw a lot of examples like this:
 
 ```javascript
 const counter = (function() {
@@ -20,13 +20,13 @@ console.log(counter()) //2
 console.log(counter()) //3
 ```
 
-Now, it was pretty clear to me what was happening, the outer function (which is an Immediately Invoked Function Expression or IIFE for short) declares the count variable, assigns the number zero to it and then returns the inner function. This inner function is executed each time we call `count()` and 'knows' about the count variable because it has closure over it.
+Now, it was pretty clear to me what was happening; the outer function (which is an Immediately Invoked Function Expression or IIFE for short) declares the count variable, assigns the number zero to it and then returns the inner function. This inner function is executed each time we call `count()` and 'knows' about the count variable because it has closure over it.
 
-So all well and good. The bit that was not clear to me was _why_ this would be useful! I would like to demonstrate a couple of ways in which I repeatedly use closures in my daily coding.
+So all well and good. The bit that was not clear to me was _why_ this would be useful! As such, I would like to demonstrate a couple of ways in which I use closures in my daily coding.
 
 ---
 
-The first technique is encapsulation. This is a way of creating a module where the inner workings are private and you only expose certain methods to interact with them. It is exactly what is happening in the example above but it is (hopefully!) easier to see why it is useful if we can use some code with a bit more going on.
+The first technique is encapsulation. This is a way of creating a module where the inner workings are private and you only expose certain methods to interact with them. It is exactly what is happening in the example above but it is (hopefully!) easier to see why it is useful when we look at some code which has a bit more going on.
 
 ```javascript
 const library = (function() {
@@ -91,8 +91,11 @@ function DateInput({ label, updateTime }) {
 }
 ```
 
-The JSX in the return of the StartEndDate class' `render` method calls the DateInput function. This returns the markup for a `<label>` and `<input>`. When a change event is detected, the value is passed through to the `updateTime` method on the StartEndDate class. 
-If you look at `render` method where this method is passed to DateInput, it is first called with either `'start'` or `'end'`. Our two inputs now have their own version of the `updateTime` method which has closure over the `startOrEnd` variable. Using computed property keys we can dynamically assign the new value to the StartEndDate component state using the variable in closure.
+In this code we have one stateful React component, which is declared as an es6 class and one functional component. You should be able to see where the functional component is used, it is in the return of the render method (the code that looks like HTML is actually JSX; it calls the DateInput function, passing the props `label` and `updateTime` to it).
+
+The DateInput function returns the markup for a `<label>` and `<input>`. When a change event is detected, the value is passed through to the `updateTime` method on the StartEndDate class.
+
+If you look at the `render` method where this method is passed to DateInput, it is first called with either `'start'` or `'end'`. Our two inputs now have their own version of the `updateTime` method which has closure over the `startOrEnd` variable. Using computed property keys we can dynamically assign the new value to the component's state using the variable in closure.
 
 ---
 

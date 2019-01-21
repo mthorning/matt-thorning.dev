@@ -1,25 +1,23 @@
-import React from "react";
-import Helmet from "react-helmet";
-import Layout from './layout';
+import React from 'react'
+import Helmet from 'react-helmet'
+import Layout from './layout'
 
-export default function Template({
-  data
-}) {
-  const post = data.markdownRemark;
+export default function Template({ data }) {
+  const post = data.markdownRemark
   return (
-   <Layout>
+    <Layout>
       <div className="blog-post-container">
-      <Helmet title={`CodeStack - ${post.frontmatter.title}`} />
-      <div className="blog-post">
-        <h1>{post.frontmatter.title}</h1>
-        <div
-          className="blog-post-content"
-          dangerouslySetInnerHTML={{ __html: post.html }}
-        />
+        <Helmet title={`HelloCode - ${post.frontmatter.title}`} />
+        <div className="blog-post">
+          <h1>{post.frontmatter.title}</h1>
+          <div
+            className="blog-post-content"
+            dangerouslySetInnerHTML={{ __html: post.html }}
+          />
+        </div>
       </div>
-    </div>
-   </Layout>
-  );
+    </Layout>
+  )
 }
 
 export const pageQuery = graphql`
@@ -34,4 +32,3 @@ export const pageQuery = graphql`
     }
   }
 `
-;
