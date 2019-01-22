@@ -20,7 +20,7 @@ console.log(counter()) //2
 console.log(counter()) //3
 ```
 
-Now, it was pretty clear to me what was happening; the outer function (which is an Immediately Invoked Function Expression or IIFE for short) declares the count variable, assigns the number zero to it and then returns the inner function. This inner function is executed each time we call `count()` and 'knows' about the count variable because it has closure over it.
+Now, it was pretty clear to me what was happening; the outer function (which is an Immediately Invoked Function Expression or IIFE for short) declares the `count` variable, assigns the number zero to it and then returns the inner function. This inner function is executed each time we call `count()` and 'knows' about the `count` variable because it has closure over it.
 
 So all well and good. The bit that was not clear to me was _why_ this would be useful! As such, I would like to demonstrate a couple of ways in which I use closures in my daily coding.
 
@@ -61,7 +61,7 @@ As you can see, our `books` array is protected from the outside world by the inn
 
 The second example is a pattern I use frequently. I will use a React component to demonstrate, don't worry if you don't know React, it is pretty easy to see what is happening.
 
-```javascript
+```jsx
 class StartEndDate extends React.Component {
   state = {
     start: null,
@@ -91,12 +91,12 @@ function DateInput({ label, updateTime }) {
 }
 ```
 
-In this code we have one stateful React component, which is declared as an es6 class and one functional component. You should be able to see where the functional component is used, it is in the return of the render method (the code that looks like HTML is actually JSX; it calls the DateInput function, passing the props `label` and `updateTime` to it).
+In this code we have one stateful React component, which is declared as an es6 class and one functional component. You should be able to see where the functional component is used, it is in the return of the `render` method (the code that looks like HTML is actually JSX; it calls the `DateInput` function, passing the props `label` and `updateTime` to it).
 
-The DateInput function returns the markup for a `<label>` and `<input>`. When a change event is detected, the value is passed through to the `updateTime` method on the StartEndDate class.
+The `DateInput` function returns the markup for a `<label>` and `<input>`. When a change event is detected, the value is passed through to the `updateTime` method on the `StartEndDate` class.
 
-If you look at the `render` method where this method is passed to DateInput, it is first called with either `'start'` or `'end'`. Our two inputs now have their own version of the `updateTime` method which has closure over the `startOrEnd` variable. Using computed property keys we can dynamically assign the new value to the component's state using the variable in closure.
+If you look at the `render` method where this function is passed to `DateInput`, it is first called with either the value "start" or "end". Our two inputs now have their own version of the `updateTime` method which has closure over the `startOrEnd` variable. Using computed property keys we can dynamically assign the new value to the component's state using the variable in closure.
 
 ---
 
-These are two of my most often used closure patterns. I hope that I have been able to show why they are such a useful feature of the language and an important tool to have in your toolset.
+These are two of my most often used closure patterns. I hope that I have been able to show why they are such a useful feature of the language and an important tool to have in your tool-set.

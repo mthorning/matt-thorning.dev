@@ -5,13 +5,15 @@ module.exports = {
     author: `@thorning_m`,
   },
   plugins: [
+    `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-catch-links`,
+    `gatsby-plugin-sharp`,
     {
       resolve: `gatsby-plugin-favicon`,
       options: {
         logo: './src/images/favicon-32x32.png',
       },
     },
-    `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -19,8 +21,6 @@ module.exports = {
         path: `${__dirname}/src/images`,
       },
     },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -36,7 +36,6 @@ module.exports = {
       // To learn more, visit: https://gatsby.app/offline
       // 'gatsby-plugin-offline',
     },
-    `gatsby-plugin-catch-links`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -48,6 +47,15 @@ module.exports = {
       resolve: `gatsby-transformer-remark`,
       options: {
         plugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              // It's important to specify the maxWidth (in pixels) of
+              // the content container as this plugin uses this as the
+              // base for generating different widths of each image.
+              maxWidth: 960,
+            },
+          },
           {
             resolve: `gatsby-remark-prismjs`,
             options: {
@@ -91,6 +99,16 @@ module.exports = {
       resolve: `gatsby-plugin-typography`,
       options: {
         pathToConfigModule: `./typography`,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: 'UA-107077384-2',
+        head: false,
+        sampleRate: 5,
+        siteSpeedSampleRate: 10,
+        cookieDomain: 'blog.thorning.ovh',
       },
     },
   ],
