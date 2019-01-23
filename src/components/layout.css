@@ -630,4 +630,5 @@ pre tt:after {
   background: #8585838c;
   color: #090909;
   font-family: 'Fira Mono', monospace;
+  border-radius: 0.2em;
 }

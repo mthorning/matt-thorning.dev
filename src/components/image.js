@@ -29,5 +29,5 @@ import Img from 'gatsby-image'
 //     render={data => <Img fluid={data.placeholderImage.childImageSharp.fluid} />}
 //   />
 // )
-const Image = null;
+const Image = null
 export default Image

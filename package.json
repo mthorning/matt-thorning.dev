@@ -37,6 +37,8 @@
     "develop": "gatsby develop",
     "start": "npm run develop",
     "format": "prettier --write \"src/**/*.js\"",
+    "preversion": "npm run format",
+    "postversion": "git push && git push --tags && ./release.sh",
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
   },
   "devDependencies": {
