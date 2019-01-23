@@ -1,9 +1,22 @@
 {
-  "name": "gatsby-starter-default",
+  "name": "blog",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "description": "A blog about programming and code",
   "version": "0.3.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "@thorning_m",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mthorning/blog.git"
+  },
+  "keywords": [
+    "blog",
+    "programming",
+    "coding"
+  ],
+  "devDependencies": {
+    "prettier": "^1.15.2"
+  },
   "dependencies": {
     "gatsby": "^2.0.76",
     "gatsby-image": "^2.0.20",
@@ -28,10 +41,6 @@
     "typography": "^0.16.18",
     "typography-theme-stern-grove": "^0.16.18"
   },
-  "keywords": [
-    "gatsby"
-  ],
-  "license": "MIT",
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
@@ -40,15 +49,5 @@
     "preversion": "npm run format",
     "postversion": "git push && git push --tags && ./release.sh",
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
-  },
-  "devDependencies": {
-    "prettier": "^1.15.2"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
-  },
-  "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
   }
 }
