@@ -14,7 +14,7 @@ Fortunately the package.json has a `"version"` property (as seen above) so you c
 
 ## Semantic versioning
 
-How do we convey an understanding of the impact are changes will have on our users using just the version number? Semantic versioning (or semver for short) allows us to let them know which one of three categories the code we are releasing falls in to:
+How do we convey an understanding of the impact our changes will have on our users using just the version number? Semantic versioning (or semver for short) allows us to let them know which one of three categories the code we are releasing falls in to:
 
 1. Major Version - These changes will break stuff! If you are updating a dependency to a new major version then you need to set aside some time to rework your code to ensure it works correctly; don't do it on a Friday afternoon!
 2. Minor Version - These changes are backwards-compatible features which should not break any existing code, only adding additional functionality.
