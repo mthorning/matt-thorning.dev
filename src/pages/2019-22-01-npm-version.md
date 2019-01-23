@@ -4,23 +4,23 @@ date: '2019-01-22T20:00'
 title: 'Semantic versioning with NPM'
 ---
 
-When you release code it's a really good idea to assign a version number to it. This gives users a useful reference number they can send to you if things aren't working as expected (making it easier to track down bugs), gives you a safe point you can roll back to where you know things were working correctly and, as you can see from taking a look at the dependencies and dev-dependencies sections in the package.json, is vitally important if you are planning on building an application which pulls in code from third-party sources.
+When you release code it's a really good idea to assign a version number to it. This gives users a useful reference number they can send to you if things aren't working as expected (making it easier to track down bugs), gives you a safe point you can roll back to where you know things were working correctly and, as you can see from taking a look at the dependencies and dev-dependencies sections in a package.json, is vitally important if you are planning on building an application which pulls in code from third-party sources.
 
 ![package.json screenshot](../images/20190122/pjson.png)
 
-Fortunately the package.json has a `"version"` property (above) so you can just increment that and commit to git right? Well, that would be one way of doing it but it doesn't let other people using your code know whether the changes you have made are small bug fixes or massive, sweeping changes which are going to render all of their code completely useless. It's also not going to be particularly easy to checkout an old version because you are going to have to search back through your git log to find the commit where you altered the package.json (I hope you wrote a descriptive commit message!).
+Fortunately the package.json has a `"version"` property (as seen above) so you can just increment that and commit to git right? Well, that would be one way of doing it but it doesn't let other people using your code know whether the changes you've made are small bug fixes or massive, sweeping changes which are going to render all of their code completely useless. It's also not going to be particularly easy to checkout an old version because you are going to have to search back through your git log to find the commit where you altered the package.json (I hope you wrote a descriptive commit message!).
 
 ---
 
 ## Semantic versioning
 
-How do we convey an understanding of the changes we have made in a release using only the version number? Semantic versioning (or semver for short) allows us to let our users know that the code we are releasing falls into one of three categories:
+How do we convey an understanding of the impact are changes will have on our users using just the version number? Semantic versioning (or semver for short) allows us to let them know which one of three categories the code we are releasing falls in to:
 
-1. Major Version - These changes will break stuff! If you are updating a dependency to a new major version then you need to set aside some time to rework your code to ensure it works correctly; don't do it on a Friday!
+1. Major Version - These changes will break stuff! If you are updating a dependency to a new major version then you need to set aside some time to rework your code to ensure it works correctly; don't do it on a Friday afternoon!
 2. Minor Version - These changes are backwards-compatible features which should not break any existing code, only adding additional functionality.
 3. Patch Version - These are backwards-compatible bug fixes and should therefore be safe to use without having to make changes to any code which uses it.
 
-The version number is in three parts, separated by a full stop.
+The version number is in three parts, each part separated by a full stop:
 
 **MAJOR.MINOR.PATCH**
 
@@ -60,7 +60,7 @@ git checkout 0.15.0
 
 ## Npm version
 
-This is all very useful but that's a lot to do each time you want to release, especially when you consider that this doesn't actually _release_ anything! Luckily for us, there is a command which will do this for us. To bump the version on the package.json, create a new commit and tag it with the version number you can use one the following commands:
+This is all very useful but that's a lot to do each time you want to release something, especially when you consider that this doesn't _actually release anything!_ Luckily for us, there is a command which will do this for us. To bump the version on the package.json, create a new commit and tag it with the version number you can use one the following commands:
 
 ```
 npm version major -m "Version %s - Breaking Changes!"
@@ -82,13 +82,13 @@ tag-version-prefix=""
 
 ## Pre and post version scripts
 
-Do you use the scripts section of the package.json? If not, you should, it's incredibly useful! A typical scripts section for me has scripts for running Webpack, Node servers, Jest for tests and release scripts. Here is a picture from a chat app I made recently to give you some idea:
+Do you use the scripts section of the package.json? If not, you should, it's incredibly useful! A typical scripts section for me has scripts for running Webpack, Node servers, Jest (for tests) and release scripts. Here is a picture from the package.json of a chat app I made recently to give you some idea:
 
 ![package.json screenshot](../images/20190122/pjson_2.png)
 
-As you can see in the above picture, there's a script call `postversion` near the bottom. NPM allows you to create pre and post scripts for any script you like. I could create a "premongo" script or a "postrelease-vps" if I wanted to and NPM would run them exactly where you would expect them to be run. Here, I am using a `postversion` script to push the newly created tagged commit to the remote repository. If I have Eslint or Jest on a project then I run those in a "preversion" script, if either the tests or the linting fail then the version script does not run.
+As you can see in the above picture, there's a script called `postversion` near the bottom. NPM allows you to create pre and post scripts for any script you like. I could create a "premongo" script or a "postrelease-vps" if I wanted to and NPM would run them exactly where you would expect them to be run. Here, I am using a `postversion` script to push the newly created tagged commit to the remote repository. If I have Eslint or Jest in a project then I run those in a "preversion" script, if either the tests or the linting fail then the version script does not run.
 
-In this app, which is written in [GatsbyJS](https://www.gatsbyjs.org/ "Gatsby's Homepage"), I use a "preversion" script to run prettier which formats my code nicely (I don't bother using a linter in this codebase because of that) and a "postversion" script to push my commit and tags and then run the release script which pushes my code to the server:
+In this app, which is written in [GatsbyJS](https://www.gatsbyjs.org/ "Gatsby's Homepage"), I use a "preversion" script to run Prettier which formats my code nicely (I don't bother using a linter in this codebase because of that) and a "postversion" script to push my git commit & tags and then run the release script which pushes my code to the server:
 
 ```json
     "format": "prettier --write \"src/**/*.js\"",

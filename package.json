@@ -1,10 +1,9 @@
 {
   "name": "blog",
-  "private": true,
   "description": "A blog about programming and code",
-  "version": "0.3.0",
   "author": "@thorning_m",
   "license": "MIT",
+  "version": "0.3.0",
   "repository": {
     "type": "git",
     "url": "git@github.com:mthorning/blog.git"
