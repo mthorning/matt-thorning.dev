@@ -105,10 +105,7 @@ module.exports = {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         trackingId: 'UA-133286805-1',
-        head: false,
-        sampleRate: 5,
-        siteSpeedSampleRate: 10,
-        cookieDomain: 'blog.thorning.ovh',
+        head: true,
       },
     },
   ],
