@@ -603,6 +603,13 @@ pre code {
   background: none;
   line-height: 1.42;
 }
+pre[class*='language-'].line-numbers {
+  padding: 0;
+  padding-left: 2.8em !important;
+  overflow: auto;
+  word-wrap: normal;
+  white-space: pre;
+}
 code:before,
 tt:before,
 tt:after {

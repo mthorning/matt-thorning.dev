@@ -48,6 +48,13 @@ module.exports = {
       options: {
         plugins: [
           {
+            resolve: 'gatsby-remark-copy-linked-files',
+            options: {
+              imagesPath: '!*.gif',
+              linksPath: '*',
+            },
+          },
+          {
             resolve: `gatsby-remark-images`,
             options: {
               // It's important to specify the maxWidth (in pixels) of
