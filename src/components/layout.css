@@ -610,6 +610,9 @@ pre[class*='language-'].line-numbers {
   word-wrap: normal;
   white-space: pre;
 }
+pre[class*='language-'].line-numbers .line-numbers-rows {
+  left: 4px !important;
+}
 code:before,
 tt:before,
 tt:after {
