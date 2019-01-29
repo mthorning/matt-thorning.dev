@@ -138,30 +138,30 @@ Our `editor` variable from _line 2_ has a method called `edit` which calls a fun
 
 ## Test Driven Development
 
-_lines 6 - 9_ use five functions which are imported from a separate file I have written. These functions process the text by:
-1. Splitting the text into separate chunks which I could easily work with.
+_Lines 6 - 9_ use five functions which are imported from a separate file. These functions process the text by:
+1. Splitting the text into separate blocks which I could easily work with.
 1. Calculating the current positions of the supplied keyword in each line.
-1. Creating a new chunk of the correct amount of empty spaces for each line.
-1. Adding the new chunk to each line
-1. Rejoining the chunks of text back together.
+1. Creating a new block of the correct amount of empty spaces for each line.
+1. Adding the new blocks of empty space to each line.
+1. Rejoining the blocks of text back together.
 
-One of the advantages of separating your logic like this is that you can write simple functions which just do one thing each. These are pure functions which do not have any side effects - based on what you put in you know exactly what you are going to get out. Because of this, the best and easiest way to develop oure functions is to set up tests where you supply an input and test that the output is as expected.
+One of the advantages of separating your logic like this is that you can write simple functions which just do one thing each. These are pure functions which do not have any side effects - based on what you put in you know exactly what you are going to get out. Because of this, the best and easiest way to develop our functions is to set up test cases where we control the input to each function and test that the output is as expected.
 
-The VS Code generator creates your project with Mocha installed, I prefer to work with [Jest](https://jestjs.io/) though. You can install Jest with NPM:
+The VS Code generator creates your project with Mocha already installed, howeverI prefer to work with [Jest](https://jestjs.io/). You can install Jest with NPM:
 ```
 npm install Jest -D
 ```
-This will add Jest to the node_modules binaries (.bin) folder. The easiest thing to do is to add this to the `scripts` section in your _package.json_:
+This will add Jest to the node\_modules binaries (.bin) folder, the easiest way to run Jest then is to add this line to the `scripts` section in your _package.json_:
 ```json
 "scripts": {
     "test": "jest"
 }
 ```
-And run the tests with:
+And run the tests with the command:
 ```
 npm test
 ```
-Jest will search through you codebase for files with `.test` in the name and run the tests in those files (our functions are in a file which I, rather originally, titled _functions.js_ and the tests are in the, equally originally named, _functions.test.js_ file). You can also start the tests in watch mode so that the tests will re-run each time a change is made; there are also some useful options in the watch menu that are worth exploring:
+Jest will search through your codebase for files with `.test` in the name and run the tests in those files (our functions are in a file which I, rather originally, titled _functions.js_ and the tests are in the, equally originally named, _functions.test.js_ file). You can also start the tests in watch mode so that the tests will re-run each time a change is made; the watch menu includes some useful options that are worth exploring:
 ```
 $ npm test -- --watch
 
@@ -179,9 +179,10 @@ Watch Usage
 
 ---
 
-At the top of the file I `require` in the functions from _functions.js_. The reason I put these functions in a separate file was so that I would not need to mock anything when running the tests, if I left them in _extension.js_ then Jest would attempt to import the `vscode` object.
+At the top of the file I `require` in the functions from _functions.js_. The reason I put these functions in a separate file was so that I would not need to mock anything when running the tests; if I left them in _extension.js_ then Jest would attempt to import the `vscode` object.
 
 To create a test suite in Jest you use a `describe` block. The first argument is just a string which will be used at the start of every test and the second argument is the function within which you run each test.
+
 ```javascript{numberLines: true}
 const {
     getMask,
@@ -230,7 +231,7 @@ describe("The function ", () => {
     ].join("\n");
  
 ```
-First I set up the variables which will be used in each test. At _line 11_ is the imaginary keyword supplied by our user, next, at _line 13_ is the block of text which our user has highlighted, declared as an array joined with `\n` (newline). Each following `expected` output is then used both to test the function has come up with the correct output and also as the input for the following function.
+First I set up the variables which will be used in each test. At _line 11_ is the imaginary keyword supplied by our user, next, at _line 13_ is the block of text which our user has highlighted (declared as an array joined with `\n` which is a newline). Each following `expected` output is then used both to test the function has produced the correct output and also as the input for the subsequent function.
 ```javascript{numberLines: 47}
 
     test("getLines returns expected", () => {
@@ -260,3 +261,96 @@ First I set up the variables which will be used in each test. At _line 11_ is th
         );
     });
 ```
+
+If a test fails then Jest will give you a handy diff to show you why it failed:
+
+![Failed tests output](./failedTest.png)
+
+It is possible to set up the VS Code debugger so that you can breakpoint your code as the tests run to help with debugging. I won't go into how to do that here though, maybe in another post!
+
+This is what we're aiming to achieve, all tests passed:
+
+![Passed tests output](./passedTest.png)
+
+---
+## The functions
+
+It's (finally!) time to take a look at the functions themselves. Here's a reminder of _lines 6 - 9_ from _extensions.js_:
+```javascript{numberLines: 6}
+const lines = getLines(text, keyword)
+const mask = getMask(lines)
+const transformedText = transform(lines, mask, getSpaces)
+const result = joinWithKeyword(transformedText, keyword)
+```
+
+#### **getLines(text, keyword)**
+```javascript
+getLines(text, keyword) {
+    return text.split("\n").map(line => line.split(keyword));
+}
+```
+The `getLines` function takes the highlighted text and keyword as arguments and uses Array's split method to split the text on the newline character (remember this is how we tested it above?), we then split each line at the keyword which result in an array where each element is a line of text which is itself an array with each element containing either the text before or after the keyword. For example, if the keyword provided was 'SPLIT', the following text:
+
+This is some SPLIT text <br />
+It will SPLIT words by newline <br />
+Also by keyword <br />
+
+would output as:
+```javascript
+[ ['this is some ', 'text'], ['It will ', 'words by newline'], ['Also by keyword'] ]
+```
+
+#### **getMask(lines)**
+```javascript
+getMask(lines) {
+    return lines.map(line => {
+        if (line.length > 1) {
+            return line[0].length;
+        }
+        return 0;
+    });
+}
+```
+This function creates an array with one element per line. Each element contains a number which represents the length of the block of text which precedes the keyword. If the keyword is not on a line it will put a zero in its place. The mask for the example above would be `[ 13, 8, 0]`.
+
+#### **getSpaces(max, mask[i])**
+```javascript
+getSpaces(max, index) {
+    const diff = max - index;
+    return new Array(diff).fill(" ");
+}
+```
+This function is used by the `transform` function (below). It takes the `max` variable (explained next) and uses it to calculate how much space needs to be added to the block of text. It returns an array of the required length and fills it with empty spaces.
+
+#### **transform(lines, mask, getSpaces)**
+```javascript{numberLines: true}
+transform(lines, mask, getSpaces) {
+    const max = Math.max(...mask);
+    return lines.map((line, i) => {
+        if (mask[i]) {
+            const extended = [line[0], ...getSpaces(max, mask[i])].join("");
+            line.splice(0, 1, extended);
+        }
+        return line;
+    });
+}
+```
+The first thing this function does is get the `max` number from the `mask`. This is the position of the rightmost keyword in our lines of text and is where we want to move our other lines to. Next, it maps through the `lines` array and if the line has a corresponding number in the `mask` (ie. is greater than zero) then it creates an extended version of the block of text which has the extra spaces added into it.
+
+This happens on _line 5_. You can see that we create a new array from our first element (`line[0]`) and spread the output from the above `getSpaces` function into it. This array would look like:
+```
+['this is some ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+````
+Then we join the array, making a string with the block of spaces at the end. On _line 6_ we use Array's splice method to replace the first element of the line with our new extended version.
+
+#### **joinWithKeyword(transformedText, keyword)**
+```javascript
+joinWithKeyword(transformed, keyword) {
+    return transformed.map(l => l.join(keyword)).join("\n");
+}
+```
+Finally we just need to put our blocks of text back together. We map through the array output by the `transform` function and join each line with the `keyword`. Lastly we join the lines back together using the newline (`\n`) character again.
+
+So that's everything that we need to do to create the extension. All that remains to do is to make it available for people to use.
+
+---
