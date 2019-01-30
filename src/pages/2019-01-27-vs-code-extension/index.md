@@ -1,10 +1,10 @@
 ---
 path: '/vscode-extension'
-date: '2019-01-27T20:00'
+date: '2019-01-30T20:00'
 title: 'Creating a VS Code extension'
 ---
 
-Where I work we have become a bit particular about making our code line up vertically in the import sections and when declaring some objects so that it looks nice and neat! My colleague commented that it would be nice if there was an extension for VS Code that would do the alignment for us so I made one (I suspect that this was his plan all along!).
+Where I work we have become quite particular about making our code line up vertically in the import sections and when declaring some objects, so that it looks nice and neat! My colleague commented that it would be nice if there was an extension for VS Code that would do the alignment for us, so I made one, and I suspect that this was his plan all along!.
 
 The full code can be found on [my Github](https://github.com/mthorning/align-vertically), I will explain the steps I took to create it below.
 
@@ -53,7 +53,7 @@ That's all I'm going to say about getting setup, I haven't gone into great detai
 
 ## Adding a menu item
 
-The first thing I knew I wanted to do was add an item to the context menu so that users could right-click on some highlighted text to run the extension. This can be achieved through the _package.json_ (whilst you are in there you should change the references to 'helloWorld' to the name of your extension); just add the following to the `contributes` section:
+The first thing I knew that I wanted to do was to add an item to the context menu so that users could right-click on some highlighted text to run the extension. This can be achieved through the _package.json_, just add the following to the `contributes` section. Whilst you have this file open you should also change any references to 'helloWorld' to the name of your extension:
 
 ```json
 "contributes": {
@@ -96,7 +96,7 @@ function activate(context) {
 }
 ```
 
-The second argument passed to `vscode.commands.registerCommand` is our function which we will call `alignVertically`. This function will do the nitty-gritty of formatting the text and replacing it in the editor:
+The second argument passed to `vscode.commands.registerCommand` is our function which we will call `alignVertically`. This function will call the functions which handle the formatting of the text and replace it in the editor:
 
 ```javascript{numberLines: true}
 async function alignVertically() {
@@ -130,9 +130,11 @@ if (text) {
 }
 ```
 
-_Lines 6 - 9_ call the functions which I have written to transform the highlighted text. These are in another file and I will cover them in the next section. By _line 10_ we have our transformed text held in a variable called `result` and all that is left to do is to replace the highlighted text in the editor with value of this `result` variable. 
+_Lines 6 - 9_ call the functions which I have written to transform the highlighted text. These are in another file and I will cover them in the next section. By _line 10_ we have our transformed text held in a variable called `result` and all that is left to do is to replace the highlighted text in the editor with value of this `result` variable.
 
-Our `editor` variable from _line 2_ has a method called `edit` which calls a function with an object (named `builder`) which has the method `replace` and it, as you can probably guess, replaces the selected text (`editor.selection` - previously used on _line 3_) with `result`. Phew, that felt like a lot when typing it out, it's not that bad though, hopefully it made sense to read!
+Our `editor` variable from _line 2_ has a method called `edit` which calls a function with an object (named here `builder`) which has the method `replace` and it, as you can probably guess, replaces the selected text (`editor.selection` - previously used on _line 3_) with `result`. Phew, that felt like a lot when typing it out, it's not that bad though, hopefully it made sense to read!
+
+The next couple of sections are about the functions which format the text. If you are only interested in how to create an extension then you should probably skip these and jump down to the [last section](#publishing-the-extension) which is about how to publish your extension to the marketplace. If, however, you're interested in how I formatted the text itself then read on!
 
 ---
 
@@ -141,17 +143,17 @@ Our `editor` variable from _line 2_ has a method called `edit` which calls a fun
 _Lines 6 - 9_ use five functions which are imported from a separate file. These functions process the text by:
 1. Splitting the text into separate blocks which I could easily work with.
 1. Calculating the current positions of the supplied keyword in each line.
-1. Creating a new block of the correct amount of empty spaces for each line.
+1. Creating a new block of the correct amount of empty space for each line.
 1. Adding the new blocks of empty space to each line.
 1. Rejoining the blocks of text back together.
 
-One of the advantages of separating your logic like this is that you can write simple functions which just do one thing each. These are pure functions which do not have any side effects - based on what you put in you know exactly what you are going to get out. Because of this, the best and easiest way to develop our functions is to set up test cases where we control the input to each function and test that the output is as expected.
+One of the advantages of separating your logic like this is that you can write simple functions which just do one thing each. These are pure functions which do not have any side effects - based on what you put in you know exactly what you are going to get out. Because of this, the best and easiest way to develop our functions is to set up test cases where we can control the input to each function and test that the output is as expected.
 
-The VS Code generator creates your project with Mocha already installed, howeverI prefer to work with [Jest](https://jestjs.io/). You can install Jest with NPM:
+The VS Code generator creates your project with Mocha already installed, however I prefer to work with [Jest](https://jestjs.io/). You can install Jest with NPM:
 ```
 npm install Jest -D
 ```
-This will add Jest to the node\_modules binaries (.bin) folder, the easiest way to run Jest then is to add this line to the `scripts` section in your _package.json_:
+This will add Jest to the _node\_modules_ binaries (_.bin_) folder, the easiest way to run Jest then is to add this line to the `scripts` section in your _package.json_:
 ```json
 "scripts": {
     "test": "jest"
@@ -161,7 +163,7 @@ And run the tests with the command:
 ```
 npm test
 ```
-Jest will search through your codebase for files with `.test` in the name and run the tests in those files (our functions are in a file which I, rather originally, titled _functions.js_ and the tests are in the, equally originally named, _functions.test.js_ file). You can also start the tests in watch mode so that the tests will re-run each time a change is made; the watch menu includes some useful options that are worth exploring:
+Jest will search through your codebase for files with _.test_ in the name and run the tests in those files (our functions are in a file which I, rather originally, titled _functions.js_ and the tests are in the, equally originally named, _functions.test.js_ file). You can also start the tests in watch mode so that the tests will re-run each time a change is made; the watch menu includes some useful options that are worth exploring:
 ```
 $ npm test -- --watch
 
@@ -231,7 +233,7 @@ describe("The function ", () => {
     ].join("\n");
  
 ```
-First I set up the variables which will be used in each test. At _line 11_ is the imaginary keyword supplied by our user, next, at _line 13_ is the block of text which our user has highlighted (declared as an array joined with `\n` which is a newline). Each following `expected` output is then used both to test the function has produced the correct output and also as the input for the subsequent function.
+First I set up the variables which will be used in each test. At _line 11_ is the imaginary keyword supplied by our user, next, at _line 13_ is the block of text which our user has highlighted (declared as an array joined with `\n` which is a newline). Each following `expected` output is then used both to test the function has produced the correct output and also as the input for the following function.
 ```javascript{numberLines: 47}
 
     test("getLines returns expected", () => {
@@ -354,3 +356,31 @@ Finally we just need to put our blocks of text back together. We map through the
 So that's everything that we need to do to create the extension. All that remains to do is to make it available for people to use.
 
 ---
+
+## Publishing the extension
+
+I'm not going to go into a great deal of detail on this, partly because the documentation on VS Code's site tells you everything you need to know and partly because I feel like I've been prattling on for far too long already! Therefore, for a detailed guide take a look [here](https://code.visualstudio.com/api/working-with-extensions/publishing-extension). The short version is that you need to run:
+```
+npm install -g vsce
+```
+Then you need to get a Personal Access Token from the Azure DevOps site. You use this token to set yourself up as a publisher by running:
+```
+vsce create-publisher < publisher name >
+```
+Once `vsce` (which stands for Visual Studio Code Extension) is setup you can run the below to publish your extension to the marketplace:
+```
+vsce publish
+```
+If you don't want to publish your extension to the marketplace for public use then you can instead run:
+```
+vcse package
+```
+This will create a _.vsix_ file which can be shared with whomever you choose and be easily installed with:
+```
+code --install-extension < path/to/file.vsix >
+```
+
+---
+
+## Fin
+When I was figuring out how to make this basic extension I struggled a little bit to find the information I needed. I hope that if you have stumbled across this post that it has helped to fill in one or two of the blanks. If you have any comments or questions, or have spotted something that is incorrect or could have been done in a better way then please let me know on Twitter. Cheers :smile:
