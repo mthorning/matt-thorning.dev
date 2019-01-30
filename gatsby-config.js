@@ -50,13 +50,7 @@ module.exports = {
         plugins: [
           `gatsby-remark-autolink-headers`,
           `gatsby-remark-emoji-unicode`,
-          {
-            resolve: 'gatsby-remark-copy-linked-files',
-            options: {
-              imagesPath: '*.gif',
-              linksPath: '*',
-            },
-          },
+          `gatsby-remark-copy-linked-files`,
           {
             resolve: `gatsby-remark-images`,
             options: {
