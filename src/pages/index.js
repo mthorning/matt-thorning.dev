@@ -7,7 +7,10 @@ export default function({ data }) {
   const { edges: posts } = data.allMarkdownRemark
   return (
     <Layout>
-      <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
+      <SEO
+        title="Home"
+        keywords={[`javascript`, `web development`, `frontend`]}
+      />
       <div className="blog-posts">
         {posts
           .filter(post => post.node.frontmatter.title.length > 0)
