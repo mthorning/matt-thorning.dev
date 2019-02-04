@@ -91,9 +91,9 @@ As you can see in the above picture, there's a script called `postversion` near 
 In this app, which is written in [GatsbyJS](https://www.gatsbyjs.org/ "Gatsby's Homepage"), I use a "preversion" script to run Prettier which formats my code nicely (I don't bother using a linter in this codebase because of that) and a "postversion" script to push my git commit & tags and then run the release script which pushes my code to the server:
 
 ```json
-    "format": "prettier --write \"src/**/*.js\"",
-    "preversion": "npm run format",
-    "postversion": "git push && git push --tags && ./release.sh"
+  "format": "prettier --write \"src/**/*.js\"",
+"preversion": "npm run format",
+  "postversion": "git push && git push --tags && ./release.sh"
 ```
 
 ---

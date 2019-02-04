@@ -26,13 +26,13 @@ Running the generator scaffolds a new project ready for developing. Just type th
 $ yo code
 
 
-     _-----_     ╭──────────────────────────╮
-    |       |    │   Welcome to the Visual  │
-    |--(o)--|    │   Studio Code Extension  │
+   _-----_     ╭──────────────────────────╮
+  |       |    │   Welcome to the Visual  │
+  |--(o)--|    │   Studio Code Extension  │
    `---------´   │        generator!        │
-    ( _´U`_ )    ╰──────────────────────────╯
-    /___A___\   /
-     |  ~  |
+  ( _´U`_ )    ╰──────────────────────────╯
+  /___A___\   /
+   |  ~  |
    __'.___.'__
  ´   `  |° ´ Y `
 
@@ -57,20 +57,20 @@ The first thing I knew that I wanted to do was to add an item to the context men
 
 ```json
 "contributes": {
-    "commands": [
-        {
-            "command": "extension.alignVertically",
-            "title": "Align Vertically"
-        }
-    ],
-    "menus": {
-        "editor/context": [
-            {
-                "command": "extension.alignVertically",
-                "group": "YourGroup@1"
-            }
-        ]
+  "commands": [
+    {
+      "command": "extension.alignVertically",
+      "title": "Align Vertically"
     }
+  ],
+  "menus": {
+    "editor/context": [
+      {
+        "command": "extension.alignVertically",
+        "group": "YourGroup@1"
+      }
+    ]
+  }
 }
 ```
 
@@ -87,12 +87,12 @@ If you are writing your file in TypeScript then it will look different but the l
 
 ```javascript
 function activate(context) {
-    let disposable = vscode.commands.registerCommand(
-        'extension.alignVertically',
-        alignVertically
-    )
+  let disposable = vscode.commands.registerCommand(
+    'extension.alignVertically',
+    alignVertically
+  )
 
-    context.subscriptions.push(disposable)
+  context.subscriptions.push(disposable)
 }
 ```
 
@@ -100,19 +100,19 @@ The second argument passed to `vscode.commands.registerCommand` is our function 
 
 ```javascript{numberLines: true}
 async function alignVertically() {
-    const editor = vscode.window.activeTextEditor
-    const text = editor.document.getText(editor.selection)
-    if (text) {
-        const keyword = await getKeywordFromUser()
+  const editor = vscode.window.activeTextEditor
+  const text = editor.document.getText(editor.selection)
+  if (text) {
+    const keyword = await getKeywordFromUser()
 ```
 Let's take a closer look at this function. On _line 2_ we get the `activeTextEditor` from the `vscode` object (which is required in at the top of the file). Then, on _line 3_ we get the text which has been highlighted by the user. The `if` statement on _line 4_ means that the rest of the program will only run if some text has acutally been selected.
 
 Next (_line 5_) we prompt the user for the keyword which is going to be used to split the text. You hopefully noticed on _line 1_ that this function is `async` which means we can make it wait for some data by using the `await` command. We call `getKeywordFromUser` and the execution is paused until the result is returned. Here is the function:
 ```javascript
 function getKeywordFromUser() {
-    return vscode.window.showInputBox({
-        placeHolder: "Align by which word?"
-    });
+  return vscode.window.showInputBox({
+    placeHolder: "Align by which word?"
+  });
 }
 ```
 Using a method on the `vscode` API's `window` object, all we need to do is set the placeholder text which we want to be displayed by the input box. The result is returned by the API as a promise which is resolved when the user hits enter.
@@ -121,12 +121,12 @@ Back to the `alignVertically` function:
 
 ```javascript{numberLines: 4}
 if (text) {
-    const keyword = await getKeywordFromUser()
-    const lines = getLines(text, keyword)
-    const mask = getMask(lines)
-    const transformedText = transform(lines, mask, getSpaces)
-    const result = joinWithKeyword(transformedText, keyword)
-    editor.edit(builder => builder.replace(editor.selection, result))
+  const keyword = await getKeywordFromUser()
+  const lines = getLines(text, keyword)
+  const mask = getMask(lines)
+  const transformedText = transform(lines, mask, getSpaces)
+  const result = joinWithKeyword(transformedText, keyword)
+  editor.edit(builder => builder.replace(editor.selection, result))
 }
 ```
 
@@ -156,7 +156,7 @@ npm install Jest -D
 This will add Jest to the _node\_modules_ binaries (_.bin_) folder, the easiest way to run Jest then is to add this line to the `scripts` section in your _package.json_:
 ```json
 "scripts": {
-    "test": "jest"
+  "test": "jest"
 }
 ```
 And run the tests with the command:
@@ -187,81 +187,81 @@ To create a test suite in Jest you use a `describe` block. The first argument is
 
 ```javascript{numberLines: true}
 const {
-    getMask,
-    getLines,
-    transform,
-    getSpaces,
-    joinWithKeyword
+  getMask,
+  getLines,
+  transform,
+  getSpaces,
+  joinWithKeyword
 } = require("../functions.js");
 
 describe("The function ", () => {
 
-    const keyword = "SPLIT";
+  const keyword = "SPLIT";
 
-    const text = [
-        "This is some SPLIT text",
-        "I want SPLIT to test",
-        "Nothing to report here",
-        "It SPLIT should be getting",
-        "split where there SPLIT is"
-    ].join("\n");
+  const text = [
+    "This is some SPLIT text",
+    "I want SPLIT to test",
+    "Nothing to report here",
+    "It SPLIT should be getting",
+    "split where there SPLIT is"
+  ].join("\n");
 
-    const expectedLines = [
-        ["This is some ", " text"],
-        ["I want ", " to test"],
-        ["Nothing to report here"],
-        ["It ", " should be getting"],
-        ["split where there ", " is"]
-    ];
+  const expectedLines = [
+    ["This is some ", " text"],
+    ["I want ", " to test"],
+    ["Nothing to report here"],
+    ["It ", " should be getting"],
+    ["split where there ", " is"]
+  ];
 
-    const expectedMask = [13, 7, 0, 3, 18];
+  const expectedMask = [13, 7, 0, 3, 18];
 
-    const expectedTransformed = [
-        ["This is some      ", " text"],
-        ["I want            ", " to test"],
-        ["Nothing to report here"],
-        ["It                ", " should be getting"],
-        ["split where there ", " is"]
-    ];
+  const expectedTransformed = [
+    ["This is some      ", " text"],
+    ["I want            ", " to test"],
+    ["Nothing to report here"],
+    ["It                ", " should be getting"],
+    ["split where there ", " is"]
+  ];
 
-    const expectedResult = [
-        "This is some      SPLIT text",
-        "I want            SPLIT to test",
-        "Nothing to report here",
-        "It                SPLIT should be getting",
-        "split where there SPLIT is"
-    ].join("\n");
+  const expectedResult = [
+    "This is some      SPLIT text",
+    "I want            SPLIT to test",
+    "Nothing to report here",
+    "It                SPLIT should be getting",
+    "split where there SPLIT is"
+  ].join("\n");
  
 ```
 First I set up the variables which will be used in each test. At _line 11_ is the imaginary keyword supplied by our user, next, at _line 13_ is the block of text which our user has highlighted (declared as an array joined with `\n` which is a newline). Each following `expected` output is then used both to test the function has produced the correct output and also as the input for the following function.
 ```javascript{numberLines: 47}
 
-    test("getLines returns expected", () => {
-        expect(getLines(text, keyword)).toEqual(expectedLines);
-    });
+  test("getLines returns expected", () => {
+    expect(getLines(text, keyword)).toEqual(expectedLines);
+  });
 
-    test("getMask returns expected", () => {
-        expect(getMask(expectedLines)).toEqual(expectedMask);
-    });
+  test("getMask returns expected", () => {
+    expect(getMask(expectedLines)).toEqual(expectedMask);
+  });
 
-    test("getSpaces returns expected", () => {
-        expectedMask.forEach(index => {
-            const diff = 18 - index;
-            expect(getSpaces(18, index).length).toBe(diff);
-        });
+  test("getSpaces returns expected", () => {
+    expectedMask.forEach(index => {
+      const diff = 18 - index;
+      expect(getSpaces(18, index).length).toBe(diff);
     });
+  });
 
-    test("transform returns expected", () => {
-        expect(transform(expectedLines, expectedMask, getSpaces)).toEqual(
-            expectedTransformed
-        );
-    });
+  test("transform returns expected", () => {
+    expect(transform(expectedLines, expectedMask, getSpaces)).toEqual(
+      expectedTransformed
+    );
+  });
 
-    test("joinWithKeyword returns expected", () => {
-        expect(joinWithKeyword(expectedTransformed, keyword)).toEqual(
-            expectedResult
-        );
-    });
+  test("joinWithKeyword returns expected", () => {
+    expect(joinWithKeyword(expectedTransformed, keyword)).toEqual(
+      expectedResult
+    );
+  });
 ```
 
 If a test fails then Jest will give you a handy diff to show you why it failed:
@@ -288,7 +288,7 @@ const result = joinWithKeyword(transformedText, keyword)
 #### **getLines(text, keyword)**
 ```javascript
 getLines(text, keyword) {
-    return text.split("\n").map(line => line.split(keyword));
+  return text.split("\n").map(line => line.split(keyword));
 }
 ```
 The `getLines` function takes the highlighted text and keyword as arguments and uses Array's split method to split the text on the newline character (remember this is how we tested it above?), we then split each line at the keyword which result in an array where each element is a line of text which is itself an array with each element containing either the text before or after the keyword. For example, if the keyword provided was 'SPLIT', the following text:
@@ -305,12 +305,12 @@ would output as:
 #### **getMask(lines)**
 ```javascript
 getMask(lines) {
-    return lines.map(line => {
-        if (line.length > 1) {
-            return line[0].length;
-        }
-        return 0;
-    });
+  return lines.map(line => {
+    if (line.length > 1) {
+      return line[0].length;
+    }
+    return 0;
+  });
 }
 ```
 This function creates an array with one element per line. Each element contains a number which represents the length of the block of text which precedes the keyword. If the keyword is not on a line it will put a zero in its place. The mask for the example above would be `[ 13, 8, 0]`.
@@ -318,8 +318,8 @@ This function creates an array with one element per line. Each element contains 
 #### **getSpaces(max, mask[i])**
 ```javascript
 getSpaces(max, index) {
-    const diff = max - index;
-    return new Array(diff).fill(" ");
+  const diff = max - index;
+  return new Array(diff).fill(" ");
 }
 ```
 This function is used by the `transform` function (below). It takes the `max` variable (explained next) and uses it to calculate how much space needs to be added to the block of text. It returns an array of the required length and fills it with empty spaces.
@@ -327,14 +327,14 @@ This function is used by the `transform` function (below). It takes the `max` va
 #### **transform(lines, mask, getSpaces)**
 ```javascript{numberLines: true}
 transform(lines, mask, getSpaces) {
-    const max = Math.max(...mask);
-    return lines.map((line, i) => {
-        if (mask[i]) {
-            const extended = [line[0], ...getSpaces(max, mask[i])].join("");
-            line.splice(0, 1, extended);
-        }
-        return line;
-    });
+  const max = Math.max(...mask);
+  return lines.map((line, i) => {
+    if (mask[i]) {
+      const extended = [line[0], ...getSpaces(max, mask[i])].join("");
+      line.splice(0, 1, extended);
+    }
+    return line;
+  });
 }
 ```
 The first thing this function does is get the `max` number from the `mask`. This is the position of the rightmost keyword in our lines of text and is where we want to move our other lines to. Next, it maps through the `lines` array and if the line has a corresponding number in the `mask` (ie. is greater than zero) then it creates an extended version of the block of text which has the extra spaces added into it.
@@ -348,7 +348,7 @@ Then we join the array, making a string with the block of spaces at the end. On 
 #### **joinWithKeyword(transformedText, keyword)**
 ```javascript
 joinWithKeyword(transformed, keyword) {
-    return transformed.map(l => l.join(keyword)).join("\n");
+  return transformed.map(l => l.join(keyword)).join("\n");
 }
 ```
 Finally we just need to put our blocks of text back together. We map through the array output by the `transform` function and join each line with the `keyword`. Lastly we join the lines back together using the newline (`\n`) character again.

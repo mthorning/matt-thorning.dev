@@ -4,7 +4,7 @@ date: '2019-01-20T19:00:00'
 title: 'Using closures'
 ---
 
-When I was learning about closures in Javascript for the first time I saw a lot of examples like this:
+When I was learning about closures in JavaScript for the first time I saw a lot of examples like this:
 
 ```javascript
 const counter = (function() {

@@ -1,4 +1,5 @@
 import React from 'react'
+import { graphql } from 'gatsby'
 import Layout from '../components/layout'
 import SEO from '../components/seo'
 import BlogPostPreview from '../components/blog-post-preview'
@@ -9,7 +10,7 @@ export default function({ data }) {
     <Layout>
       <SEO
         title="Home"
-        keywords={[`javascript`, `web development`, `frontend`]}
+        keywords={[`JavaScript`, `web development`, `frontend`, `programming`]}
       />
       <div className="blog-posts">
         {posts
