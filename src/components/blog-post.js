@@ -2,6 +2,7 @@ import React from 'react'
 import { graphql } from 'gatsby'
 import Helmet from 'react-helmet'
 import Layout from './layout'
+import Links from './Links'
 
 export default function Template({ data }) {
   const post = data.markdownRemark
@@ -17,6 +18,7 @@ export default function Template({ data }) {
           />
         </div>
       </div>
+      <Links />
     </Layout>
   )
 }

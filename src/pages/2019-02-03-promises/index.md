@@ -1,10 +1,10 @@
 ---
 path: '/promises'
-date: '2019-02-03T10:00'
+date: '2019-02-05T21:30'
 title: 'Promises, Promises'
 ---
 
-Unlike a lot of other languages, JavaScript is single-threaded which means it can only process one command at a time. We often need to get data from other sources, be it from a database, server or the user and I'm sure you can imagine how bad our applications would be if we had to pause the execution of our program each time we were waiting. Promises solve this problem for us, we request some data from wherever we're getting it from and we set the actions which we want to run once the data is returned. This leaves our single-thread free to carry on with other tasks.
+Unlike a lot of other languages, JavaScript is single-threaded which means it can only process one command at a time. We often need to get data from other sources, be it from a database, server or the user and I'm sure you can imagine how bad our applications would be if we had to pause the execution of our program each time we were waiting. Promises solve this problem for us, we request some data from wherever we're getting it from and we set the actions which we want to run once the data is returned. This leaves our single-thread free to carry on with other tasks in the meantime.
 
 Until quite recently it was necessary to use a third-party library for promises (jQuery's _Deferred_ was the most popular) but since ES6 they have been native to JS. Here's the basic pattern:
 ```javascript
@@ -45,9 +45,9 @@ The function called in the `Promise` constructor is actually called with two cal
 
 ## Promise chaining
 
-It is possible to chain `then` functions after a promise. This is also a good place to introduce you to `catch`. When chaining, it is usually the case that you will only use `then` for resolved promises, a `catch` can be added to the end of the chain to catch an error thrown from any point preceding it.
+It is possible to chain `then` functions after a promise. This is also a good place to introduce you to `catch`. When chaining, it is usually the case that you will only use `then` for handling promises, a `catch` can be added to the end of the chain to catch an error thrown from any point preceding it.
 
-Here we will get our promise from another source, I quite often use [Axios](https://github.com/axios/axios) to make HTTP requests. Their API is really simple, to make a GET request you just write `axios.get('api/endpoint/url')` which returns a promise that resolves when the data is returned from the server.
+Here we will get our promise from another source; I quite often use [Axios](https://github.com/axios/axios) to make HTTP requests. Their API is really simple, to make a GET request you just write `axios.get('api/endpoint/url')` which returns a promise that resolves when the data is returned from the server.
 ```javascript
 axios.get('api/endpoint/url')
   .then(response =>
@@ -98,7 +98,7 @@ async function getData() {
 
 We prepend the `async` keyword to the function declaration and then use `await` anywhere we want to pause execution to wait for a promise to resolve.
 
-Unfortunately, error handling with async/await is not as clean as before and the only way (that I know of!) to achieve the same level of error handling as above is to wrap everything in a `try/catch` block:
+Unfortunately, error handling with async/await is not as clean as before and the only way (that I know of) to achieve the same level of error handling as above is to wrap everything in a `try/catch` block:
 ```javascript
 async function getData() {
   try {
@@ -114,9 +114,9 @@ async function getData() {
 
 ---
 
-## Promises for speed
+## Asynchronous programming
 
-There is a problem with the way I have written the examples above. Unless we need to wait for the result of the first call so that we can use the data in the response to make the second call, this is a very inefficient of programming. I can illustrate this with some code.
+The examples above work perfectly well but, unless we need to wait for the result of the first call so that we can use the data in the response to make the second call, it is a very inefficient way of programming. I can illustrate this with some code.
 
 First, let's create a mock HTTP GET method:
 ```javascript
@@ -126,7 +126,7 @@ function get(response, delay) {
   })
 }
 ```
-We can call this function with the response we wish to be returned and the delay. We also need to be able to time the test cases we're going to write so let's make a stopwatch:
+This function just returns the `response` which we set with the first argument after waiting for amount of time set with the second argument, `delay`. We also need to be able to time the test cases we're going to write so let's make a stopwatch:
 ```javascript
 const stopwatch = (() => {
   let start, end
@@ -144,7 +144,8 @@ const stopwatch = (() => {
 I've used a closure here, if you're not clued up on closures then you should check out my post about them [here](/using-closure). Next, we'll recreate the functions from above:
 ```javascript
 const testCases = {
-	one() {
+
+  one() {
     return new Promise(resolve => {
       const responses = []
       get('three', 3)
@@ -160,7 +161,7 @@ const testCases = {
     })
   },
 
-	two() {
+  two() {
     return new Promise(async resolve => {
       const first = await get('three', 3)
       const second = await get('two', 2)
@@ -171,10 +172,10 @@ const testCases = {
   }
 }
 ```
-Hopefully you can recognise the code from earlier, here we are making three `get` requests instead of two. `testCases.one` pushes all of the data into an array whereas `testCases.two` uses `await` to wait for the data before assigning them to variables. Notice that we create a `new Promise` and then make the `get` request within which returns a promise each time. When we have received all of our data we resolve our 'master' promise. So now, all that remains to do is add the code which runs these tests:
+Hopefully you can recognise the code from earlier, only here we are making three `get` requests instead of two. `testCases.one` pushes all of the data into an array whereas `testCases.two` uses `await` to wait for the promises to resolve before assigning the data to local variables. Notice that we create a `new Promise` and then make the `get` request within which also returns a promise each time. When we have received all of our data we resolve our 'master' promise. So now, all that remains to do is add the code which runs these tests:
 ```javascript
 async function runTest(testCase) {
-	let result, time;
+  let result, time;
   stopwatch.start()
   result = await testCases[testCase]()
   time = stopwatch.stop()
@@ -186,7 +187,7 @@ This function is called with the name of the test we want to run, it starts the 
 runTest('one') // Result: three two one, Time: 6.003 seconds
 runTest('two') // Result: three two one, Time: 6.004 seconds
 ```
-So you can see that both of our functions took 6 seconds to run, this is the sum of the delays that we set due to waiting for the response each time. We hae written our functions synchronously; each line is executed in order and will wait for its turn to run. We can instead play to JavaScript's strengths and write our code asynchronously. We'll add a third test to our `testCases` object:
+So you can see that both of our functions took six seconds to run, this is because we have written our code synchronously; each line is executed in order and will wait for the previous lines to complete before running itself. We can instead play to JavaScript's strengths and write our code asynchronously. We'll add a third test to our `testCases` object:
 ```javascript
 three() {
     return new Promise(resolve => {
@@ -213,10 +214,44 @@ three() {
   	})
   }
 ```
-There's a bit more going on with this function. First we initialise our `responses` array, then we've added a function called `check`. Following that we make our three `get` requests as before, only this time we call `check` each time one resolves which looks at the length of our `responses` array and, when our array contains the three responses, it resolves our 'master' promise. Let's see how it does:
+There's a bit more going on with this function. First we initialise our empty `responses` array, then we've added a function called `check`. Following that we make our three `get` requests as before, only this time we call `check` each time one resolves. `check` looks at the length of our `responses` array and, when our array contains the three responses, it resolves our 'master' promise. Let's see how it does:
 ```javascript
-runTest('one') // Result: one two three, Time: 3.002 seconds
+runTest('three') // Result: one two three, Time: 3.002 seconds
 ```
 Half the time, and you can see that the order of our responses has changed, our code is running asynchronously!
 
-PROMISE STATES - PENDING, RESOLVED, REJECTED
+---
+
+## Promise.all()
+
+There is a better way to write test-case number three so that we don't need the `check` function. We can also put our responses back into the same order as the other tests; in the real world this probably isn't important but let's do it anyway!
+
+Time for a confession, I have forgotten to mention something very important about promises. Promises are always in one of three states. When you first create a promise it is in a "pending" state, it is then transitioned into either a "resolved" or "rejected" state. Once a promise has reached "resolved" or "rejected" it cannot go back to "pending". If you want to know which state a promise is in you can call `Promise.state()`, this is pretty useful when debugging as you can set a breakpoint and run this in the console (I might do a post on debugging in Chrome soon).
+
+Here's test-case number four:
+```javascript
+four() {
+  return new Promise(resolve => {
+    const responses = []
+    responses.push(get('three', 3))
+    responses.push(get('two', 2))
+    responses.push(get('one', 1))
+    Promise.all(responses)
+      .then(values => {
+        const output = values.join(' ')
+        resolve(output)
+      })
+  })
+}
+```
+In this function we push the returned promises from the `get` call into the `responses` array straight away. These promises are in a "pending" state and will act as placeholders, meaning that the results will be in the same order as our first two test-cases. Instead of checking the length of the `responses` array each time a promise resolves we can use Promise's `all` method, which itself returns a promise that resolves when all of the promises in the array resolve. This is much better than before because we no longer need to know how many promises we are waiting for:
+```javascript
+runTest('four') // Result: three two one, Time: 3.003 seconds
+```
+
+Three seconds again and this time the results are in the correct order. Here's the running code from above if you would like to run the tests yourself:
+<iframe width="100%" height="300" src="//jsfiddle.net/matthewthorning/95y2bv1k/145/embedded/js,html,css,result/dark/" allowfullscreen="allowfullscreen" allowpaymentrequest frameborder="0"></iframe>
+
+---
+
+Hopefully you found this post useful, thanks for taking the time to read to the end. If you have any comments, corrections or questions then you can contact me on Twitter. :+1:

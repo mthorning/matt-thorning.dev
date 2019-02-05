@@ -31,18 +31,7 @@ const Layout = ({ children }) => (
               display: 'flex',
               justifyContent: 'flex-end',
             }}
-          >
-            <a
-              style={{ marginRight: '10px' }}
-              className="orange-link"
-              href="https://twitter.com/thorning_m"
-            >
-              Twitter
-            </a>
-            <a className="orange-link" href="https://github.com/mthorning">
-              Github
-            </a>
-          </footer>
+          />
         </div>
       </>
     )}
