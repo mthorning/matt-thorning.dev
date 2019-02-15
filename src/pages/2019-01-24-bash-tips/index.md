@@ -22,9 +22,9 @@ Command | Description
 `:h` | Put it after a filename, and it will change that filename to remove everything up to the folder.
 `exit 0` | Exit script with exit code zero.
 `head` | Print first 5 lines of file.txt.
-`tail`  | print last 5 lines of file.txt.
-`lsof` | lists open files. Use with `-i :80` to find process listening on a port (port 80 here).
-`ctrl-r` | reverse history search. `Ctrl-r` next item, `ctrl-j` to copy or `enter` to run.
+`tail`  | Print last 5 lines of file.txt.
+`lsof` | Lists open files. Use with `-i :80` to find process listening on a port (port 80 here).
+`ctrl-r` | Reverse history search. `Ctrl-r` next item, `ctrl-j` to copy or `enter` to run.
 
 ### Variables
 ```
