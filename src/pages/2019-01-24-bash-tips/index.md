@@ -24,6 +24,7 @@ Command | Description
 `head` | Print first 5 lines of file.txt.
 `tail`  | print last 5 lines of file.txt.
 `lsof` | lists open files. Use with `-i :80` to find process listening on a port (port 80 here).
+`ctrl-r` | reverse history search. `Ctrl-r` next item, `ctrl-j` to copy or `enter` to run.
 
 ### Variables
 ```
