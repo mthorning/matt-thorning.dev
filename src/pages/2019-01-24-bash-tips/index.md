@@ -1,6 +1,6 @@
 ---
 path: '/bash-tips'
-date: '2019-02-17T19:00'
+date: '2019-02-17T20:00'
 title: 'Bash tips'
 ---
 
