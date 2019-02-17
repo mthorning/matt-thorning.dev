@@ -50,7 +50,7 @@
     "start": "npm run develop",
     "format": "prettier --write \"src/**/*.js\"",
     "preversion": "npm run format",
-    "postversion": "git push && git push --tags && ./release.sh",
+    "postversion": "git push && git push --tags",
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
   }
 }
