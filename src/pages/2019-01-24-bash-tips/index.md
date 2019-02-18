@@ -50,7 +50,7 @@ until a line with on ENDOFSTRING
 ### Translate
 Transforms or deletes characters in a string.
 ```
-$ echo "hello there" | tr a-z A-Z 
+$ echo "hello there" | tr a-z A-Z
 HELLO THERE
 
 $ echo "edward woodward" | tr -d "d"
