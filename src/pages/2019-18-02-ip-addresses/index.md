@@ -4,7 +4,7 @@ date: '2019-02-17T08:00'
 title: 'IP Addresses'
 ---
 
-If you're going to be a web developer then it helps to have a basic understanding of how the internet works, I thought IP addresses would be a good place to start. This is not something I am an expert in, I'm hoping that in writing this article I will further my own understanding. As always you can reach me on Twitter if you see any innacuracies or think that I have missed anything which should be included.
+As a web developer it is presumably beneficial to have a basic understanding of how the internet works! This isn't something I've known a great deal about, I've always just taken it for granted so I've decided to write some posts to further my own understanding; I thought IP addresses would be a good place to start. As always you can reach me on Twitter if you see any innacuracies or think that I have missed anything which should be included.
 
 Every device which is connected to the internet needs an IP address. IP stands for _Internet Protocol_ which is the set of rules that devices need to adhere to if they are going to be able to communicate with one another over the internet. When you visit a website with you web browser you are navigating to an IP address, fortunately there is a system in place which means that we don't have to remember the IP addresses of all of the websites we visit.
 
