@@ -1,6 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'gatsby'
+import { orangeLink } from '../constants'
+import CalendarDate from './calendar-date'
+import { css } from 'emotion'
 
 const propTypes = {
   post: PropTypes.object.isRequired,
@@ -8,13 +11,22 @@ const propTypes = {
 
 function BlogPostPreview({ post }) {
   return (
-    <div className="blog-post-preview">
-      <h1>
-        <Link className="orange-link" to={post.frontmatter.path}>
+    <div>
+      <h1
+        className={css`
+          margin-bottom: 8px;
+        `}
+      >
+        <Link className={orangeLink} to={post.frontmatter.path}>
           {post.frontmatter.title}
         </Link>
       </h1>
-      <h6 style={{ marginTop: '0' }}>{post.frontmatter.date}</h6>
+      <CalendarDate
+        className={css`
+          margin-bottom: 20px;
+        `}
+        date={post.frontmatter.date}
+      />
       <p>{post.excerpt}</p>
     </div>
   )
