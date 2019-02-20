@@ -630,12 +630,6 @@ pre tt:after {
     font-size: 100%;
   }
 }
-.orange-link {
-  color: rgba(0, 0, 0, 0.5);
-}
-.orange-link:hover {
-  color: #fc4445;
-}
 /* single backtick markdown blocks */
 :not(pre) > code[class*='language-text'] {
   background: #8585838c;

@@ -14,6 +14,7 @@
     "coding"
   ],
   "devDependencies": {
+    "emotion": "^10.0.7",
     "prettier": "^1.15.2"
   },
   "dependencies": {
@@ -40,6 +41,8 @@
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-helmet": "^5.2.0",
+    "react-icons": "^3.4.0",
+    "react-share": "^2.4.0",
     "react-typography": "^0.16.18",
     "typography": "^0.16.18",
     "typography-theme-stern-grove": "^0.16.18"

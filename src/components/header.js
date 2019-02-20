@@ -1,35 +1,58 @@
 import { Link } from 'gatsby'
 import PropTypes from 'prop-types'
 import React from 'react'
+import PersonalLinks from './personal-links'
+import { smallScreen, primaryColor, secondaryColor } from '../constants'
+import { css } from 'emotion'
 
-const Header = ({ siteTitle }) => (
-  <div
-    style={{
-      background: `#FC4445`,
-      marginBottom: `1.45rem`,
-    }}
-  >
-    <div
-      style={{
-        margin: `0 auto`,
-        maxWidth: 960,
-        padding: `1.0rem 1.0875rem`,
-      }}
-    >
-      <h1 style={{ margin: 0 }}>
-        <Link
-          to="/"
-          style={{
-            color: `white`,
-            textDecoration: `none`,
-          }}
-        >
-          {siteTitle}
-        </Link>
-      </h1>
+const Header = ({ siteTitle }) => {
+  const wrapper = css`
+    background: ${primaryColor};
+    margin-bottom: 1.45rem;
+    position: relative;
+  `
+  const titleWrapper = css`
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 20px;
+  `
+  const personalLinks = css`
+    position: absolute;
+    top: 0;
+    right: 20px;
+    font-size: 25px;
+
+    ${smallScreen} {
+      right: 0;
+      a {
+        font-size: 20px;
+      }
+    }
+  `
+  const title = css`
+    margin: 0;
+    a {
+      color: ${secondaryColor};
+      text-decoration: none;
+      &:hover {
+        color: ${secondaryColor};
+      }
+      ${smallScreen} {
+        font-size: 24px;
+      }
+    }
+  `
+  return (
+    <div className={wrapper}>
+      <PersonalLinks className={personalLinks} />
+      <div className={titleWrapper}>
+        <h1 className={title}>
+          <Link to="/">{siteTitle}</Link>
+        </h1>
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 Header.propTypes = {
   siteTitle: PropTypes.string,
