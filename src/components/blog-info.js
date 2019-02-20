@@ -1,17 +1,11 @@
 import React from 'react'
-import CalendarDate from './calendar-date'
-import Tag from './tag'
-import TimeToRead from './time-to-read'
-import { headingTextColor } from '../constants'
+import { FaCalendarAlt, FaTag } from 'react-icons/fa'
+import { textColor } from '../constants'
 import { css } from 'emotion'
 
 export default function BlogInfo({ className, post }) {
-  const wrapper = css`
-    ${className}
-  `
-
   const info = css`
-    color: ${headingTextColor};
+    color: ${textColor};
     font-size: 14px;
     display: inline;
     margin-right: 10px;
@@ -20,11 +14,33 @@ export default function BlogInfo({ className, post }) {
       margin-left: 5px;
     }
   `
+
+  const CalendarDate = () => (
+    <div className={info}>
+      <FaCalendarAlt />
+      <span>{post.frontmatter.date}</span>
+    </div>
+  )
+
+  const Tag = () => (
+    <div className={info}>
+      <FaTag />
+      <span>{post.frontmatter.tag}</span>
+    </div>
+  )
+
+  const TimeToRead = () => (
+    <div className={info}>
+      <FaStopwatch />
+      <span>{post.timeToRead} minute read</span>
+    </div>
+  )
+
   return (
-    <div className={wrapper}>
-      <CalendarDate className={info} date={post.frontmatter.date} />
-      <Tag className={info} tag={post.frontmatter.tag} />
-      <TimeToRead className={info} timeToRead={post.timeToRead} />
+    <div className={className}>
+      <CalendarDate />
+      <Tag />
+      <TimeToRead />
     </div>
   )
 }

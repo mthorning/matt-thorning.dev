@@ -1,14 +1,15 @@
 import React from 'react'
 import { FaGithub, FaTwitter } from 'react-icons/fa'
 import { css } from 'emotion'
+import { secondaryColor } from '../constants'
 
 export default function({ className }) {
   const logoStyling = css`
-    color: #fff;
+    color: ${secondaryColor};
     font-size: 30px;
     margin: 10px;
     &:hover {
-      color: #fff;
+      color: ${secondaryColor};
     }
   `
   return (

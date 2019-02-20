@@ -1,12 +1,13 @@
 import { css } from 'emotion'
 
-export const headingTextColor = 'rgba(0, 0, 0, 0.5)'
-export const highlightColor = '#fc4445'
+export const primaryColor = '#fc4445'
+export const secondaryColor = '#fff'
+export const textColor = 'rgba(0, 0, 0, 0.5)'
 export const smallScreen = `@media (max-width: 480px)`
 
 export const orangeLink = css`
-  color: ${headingTextColor};
+  color: ${textColor};
   &:hover {
-    color: #fc4445;
+    color: ${primaryColor};
   }
 `

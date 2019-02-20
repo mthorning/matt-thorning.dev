@@ -2,12 +2,12 @@ import { Link } from 'gatsby'
 import PropTypes from 'prop-types'
 import React from 'react'
 import PersonalLinks from './personal-links'
-import { smallScreen } from '../constants'
+import { smallScreen, primaryColor, secondaryColor } from '../constants'
 import { css } from 'emotion'
 
 const Header = ({ siteTitle }) => {
   const wrapper = css`
-    background: #fc4445;
+    background: ${primaryColor};
     margin-bottom: 1.45rem;
     position: relative;
   `
@@ -32,10 +32,10 @@ const Header = ({ siteTitle }) => {
   const title = css`
     margin: 0;
     a {
-      color: white;
+      color: ${secondaryColor};
       text-decoration: none;
       &:hover {
-        color: #fff;
+        color: ${secondaryColor};
       }
       ${smallScreen} {
         font-size: 24px;

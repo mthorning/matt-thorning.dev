@@ -1,6 +1,6 @@
 import React from 'react'
 import { css } from 'emotion'
-import { headingTextColor } from '../constants'
+import { textColor } from '../constants'
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -20,12 +20,21 @@ import {
 } from 'react-icons/fa'
 import { smallScreen } from '../constants'
 
+const brands = {
+  email: '#ffd900',
+  facebook: '#3b5998',
+  linkedin: '#0077b5',
+  reddit: '#ff4500',
+  twitter: '#55acee',
+  whatsapp: '#25d366',
+}
+
 export default function ShareButtons({ shareUrl, title }) {
   function IconWrapper({ children, color }) {
     return (
       <div
         className={css`
-          color: ${headingTextColor};
+          color: ${textColor};
           width: 40px;
           height: 40px;
           font-size: 25px;
@@ -61,37 +70,37 @@ export default function ShareButtons({ shareUrl, title }) {
         }
       `}
     >
-      <IconWrapper color="#ffd900">
+      <IconWrapper color={brands.email}>
         <EmailShareButton subject={title} url={shareUrl}>
           <FaEnvelope />
         </EmailShareButton>
       </IconWrapper>
 
-      <IconWrapper color="#3b5998">
+      <IconWrapper color={brands.facebook}>
         <FacebookShareButton quote={title} url={shareUrl}>
           <FaFacebook />
         </FacebookShareButton>
       </IconWrapper>
 
-      <IconWrapper color="#0077b5">
+      <IconWrapper color={brands.linkedin}>
         <LinkedinShareButton title={title} url={shareUrl}>
           <FaLinkedin />
         </LinkedinShareButton>
       </IconWrapper>
 
-      <IconWrapper color="#ff4500">
+      <IconWrapper color={brands.reddit}>
         <RedditShareButton title={title} url={shareUrl}>
           <FaReddit />
         </RedditShareButton>
       </IconWrapper>
 
-      <IconWrapper color="#55acee">
+      <IconWrapper color={brands.twitter}>
         <TwitterShareButton title={title} url={shareUrl}>
           <FaTwitter />
         </TwitterShareButton>
       </IconWrapper>
 
-      <IconWrapper color="#25d366">
+      <IconWrapper color={brands.whatsapp}>
         <WhatsappShareButton title={title} url={shareUrl}>
           <FaWhatsapp />
         </WhatsappShareButton>
