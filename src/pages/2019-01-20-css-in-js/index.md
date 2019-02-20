@@ -5,7 +5,7 @@ title: 'CSS in JS'
 tag: 'javascript'
 ---
 
-I've looked at CSS in JS libraries before but there always seemed be trade-offs which have made them appear less attractive than Sass or even plain CSS. However, I have recently been playing around with [Emotion](https://github.com/emotion-js/emotion) and I'm pretty impressed! I want to show some examples of what I have been doing with it and hopefully at the same time convince my team that it is time to move away from Sass.
+I've looked at CSS in JS libraries before but there always seemed be trade-offs which have made them appear less attractive than Sass or even plain CSS. However, I have recently been playing around with [Emotion](https://github.com/emotion-js/emotion) and I'm pretty impressed so I thought I would write a quick post showing some examples of what it can do.
 
 I've been using Emotion with React, there is a React-specific package (_@emotion/core_) which provides some additional features but I have just been using their framework-agnostic version. There are several different ways that you can use Emotion, the examples below use the method that works best for me, check out their [documentation](https://emotion.sh/docs/introduction) if you're interested in what else it can do.
 
