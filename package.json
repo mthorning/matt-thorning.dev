@@ -14,10 +14,10 @@
     "coding"
   ],
   "devDependencies": {
-    "emotion": "^10.0.7",
     "prettier": "^1.15.2"
   },
   "dependencies": {
+    "emotion": "^10.0.7",
     "gatsby": "^2.0.76",
     "gatsby-image": "^2.0.20",
     "gatsby-plugin-catch-links": "^2.0.9",
