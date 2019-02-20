@@ -6,7 +6,7 @@ import ShareButtons from './share-buttons'
 import BlogInfo from './blog-info'
 import { css } from 'emotion'
 
-export default function Template({ data }) {
+export default function Template({ data, location }) {
   const post = data.markdownRemark
 
   function Title() {
@@ -28,10 +28,7 @@ export default function Template({ data }) {
       <Helmet title={`HelloCode - ${post.frontmatter.title}`} />
       <Title />
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
-      <ShareButtons
-        shareUrl={window.location.href}
-        title={post.frontmatter.title}
-      />
+      <ShareButtons shareUrl={location.href} title={post.frontmatter.title} />
     </Layout>
   )
 }
