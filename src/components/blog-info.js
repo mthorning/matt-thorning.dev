@@ -1,36 +1,40 @@
 import React from 'react'
 import { FaCalendarAlt, FaTag, FaStopwatch } from 'react-icons/fa'
-import { textColor } from '../constants'
+import { textColor, smallScreen } from '../constants'
 import { css } from 'emotion'
 
 export default function BlogInfo({ className, post, children }) {
-  const info = css`
+  const infoWrapper = css`
+    display: flex;
+    ${smallScreen} {
+      flex-direction: column;
+    }
+  `
+  const infoItem = css`
     color: ${textColor};
     font-size: 14px;
-    display: inline;
     margin-right: 10px;
-
     span {
       margin-left: 5px;
     }
   `
 
   const CalendarDate = () => (
-    <div className={info}>
+    <div className={infoItem}>
       <FaCalendarAlt />
       <span>{post.frontmatter.date}</span>
     </div>
   )
 
   const Tag = () => (
-    <div className={info}>
+    <div className={infoItem}>
       <FaTag />
       <span>{post.frontmatter.tag}</span>
     </div>
   )
 
   const TimeToRead = () => (
-    <div className={info}>
+    <div className={infoItem}>
       <FaStopwatch />
       <span>{post.timeToRead} minute read</span>
     </div>
@@ -46,9 +50,11 @@ export default function BlogInfo({ className, post, children }) {
       `}
     >
       {children}
-      <CalendarDate />
-      <Tag />
-      <TimeToRead />
+      <div className={infoWrapper}>
+        <CalendarDate />
+        <Tag />
+        <TimeToRead />
+      </div>
     </div>
   )
 }
