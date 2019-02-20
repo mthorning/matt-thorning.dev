@@ -12,21 +12,18 @@ const propTypes = {
 function BlogPostPreview({ post }) {
   return (
     <div>
-      <h1
-        className={css`
-          margin-bottom: 8px;
-        `}
-      >
-        <Link className={orangeLink} to={post.frontmatter.path}>
-          {post.frontmatter.title}
-        </Link>
-      </h1>
       <BlogInfo
         className={css`
           margin-bottom: 20px;
         `}
         post={post}
-      />
+      >
+        <h1>
+          <Link className={orangeLink} to={post.frontmatter.path}>
+            {post.frontmatter.title}
+          </Link>
+        </h1>
+      </BlogInfo>
       <p>{post.excerpt}</p>
     </div>
   )

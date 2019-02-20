@@ -1,9 +1,9 @@
 import React from 'react'
-import { FaCalendarAlt, FaTag } from 'react-icons/fa'
+import { FaCalendarAlt, FaTag, FaStopwatch } from 'react-icons/fa'
 import { textColor } from '../constants'
 import { css } from 'emotion'
 
-export default function BlogInfo({ className, post }) {
+export default function BlogInfo({ className, post, children }) {
   const info = css`
     color: ${textColor};
     font-size: 14px;
@@ -37,7 +37,15 @@ export default function BlogInfo({ className, post }) {
   )
 
   return (
-    <div className={className}>
+    <div
+      className={css`
+        ${className}
+        h1 {
+          margin-bottom: 10px;
+        }
+      `}
+    >
+      {children}
       <CalendarDate />
       <Tag />
       <TimeToRead />

@@ -13,14 +13,12 @@ export default function Template({ data }) {
     const wrapper = css`
       margin-bottom: 30px;
     `
-    const title = css`
-      margin-bottom: 10px;
-    `
 
     return (
       <div className={wrapper}>
-        <h1 className={title}>{post.frontmatter.title}</h1>
-        <BlogInfo post={post} />
+        <BlogInfo post={post}>
+          <h1>{post.frontmatter.title}</h1>
+        </BlogInfo>
       </div>
     )
   }
