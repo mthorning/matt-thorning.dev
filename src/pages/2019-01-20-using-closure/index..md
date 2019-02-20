@@ -2,11 +2,12 @@
 path: '/using-closure'
 date: '2019-01-20T19:00:00'
 title: 'Using closures'
+tag: 'javascript'
 ---
 
 When I was learning about closures in JavaScript for the first time I saw a lot of examples like this:
 
-```javascript
+```jsx
 const counter = (function() {
   let count = 0
   return function() {
@@ -28,7 +29,7 @@ So all well and good. The bit that was not clear to me was _why_ this would be u
 
 The first technique is encapsulation. This is a way of creating a module where the inner workings are private and only certain methods are exposed for other modules to interact with them. It is exactly what is happening in the example above but it is (hopefully!) easier to see why it is useful when we look at some code which has a bit more going on.
 
-```javascript
+```jsx
 const library = (function() {
   const books = ['Island', '1984', 'Dracula', 'Papillon']
 

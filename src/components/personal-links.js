@@ -1,14 +1,22 @@
 import React from 'react'
 import { FaGithub, FaTwitter } from 'react-icons/fa'
-import { orangeLink } from '../constants'
+import { css } from 'emotion'
 
-export default function() {
+export default function({ className }) {
+  const logoStyling = css`
+    color: #fff;
+    font-size: 30px;
+    margin: 10px;
+    &:hover {
+      color: #fff;
+    }
+  `
   return (
-    <div>
-      <a className={orangeLink} href="https://twitter.com/thorning_m">
+    <div className={className}>
+      <a className={logoStyling} href="https://twitter.com/thorning_m">
         <FaTwitter />
       </a>
-      <a className={orangeLink} href="https://github.com/mthorning">
+      <a className={logoStyling} href="https://github.com/mthorning">
         <FaGithub />
       </a>
     </div>

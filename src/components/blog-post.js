@@ -3,7 +3,7 @@ import { graphql } from 'gatsby'
 import Helmet from 'react-helmet'
 import Layout from './layout'
 import ShareButtons from './share-buttons'
-import CalendarDate from './calendar-date'
+import BlogInfo from './blog-info'
 import { css } from 'emotion'
 
 export default function Template({ data }) {
@@ -20,7 +20,7 @@ export default function Template({ data }) {
     return (
       <div className={wrapper}>
         <h1 className={title}>{post.frontmatter.title}</h1>
-        <CalendarDate date={post.frontmatter.date} />
+        <BlogInfo post={post} />
       </div>
     )
   }
@@ -30,7 +30,10 @@ export default function Template({ data }) {
       <Helmet title={`HelloCode - ${post.frontmatter.title}`} />
       <Title />
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
-      <ShareButtons shareUrl={window.location.href} />
+      <ShareButtons
+        shareUrl={window.location.href}
+        title={post.frontmatter.title}
+      />
     </Layout>
   )
 }
@@ -39,10 +42,12 @@ export const pageQuery = graphql`
   query BlogPostByPath($path: String!) {
     markdownRemark(frontmatter: { path: { eq: $path } }) {
       html
+      timeToRead
       frontmatter {
         date(formatString: "MMMM DD, YYYY")
         path
         title
+        tag
       }
     }
   }

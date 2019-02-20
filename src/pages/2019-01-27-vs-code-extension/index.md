@@ -2,6 +2,7 @@
 path: '/vscode-extension'
 date: '2019-01-30T20:00'
 title: 'Creating a VS Code extension'
+tag: 'javascript'
 ---
 
 Where I work we have become quite particular about making our code line up vertically in the import sections and when declaring some objects, so that it looks nice and neat! My colleague commented that it would be nice if there was an extension for VS Code that would do the alignment for us, so I made one, and I suspect that this was his plan all along!.
@@ -85,7 +86,7 @@ If you chose to write your extension in JavaScript then you will have a file cal
 
 If you are writing your file in TypeScript then it will look different but the logic is going to be the same for both. We need to change the `activate` function to register our extension, notice that `"extension.alignVertically"` matches up with the entries in the _package.json_.
 
-```javascript
+```jsx
 function activate(context) {
   let disposable = vscode.commands.registerCommand(
     'extension.alignVertically',
@@ -98,7 +99,7 @@ function activate(context) {
 
 The second argument passed to `vscode.commands.registerCommand` is our function which we will call `alignVertically`. This function will call the functions which handle the formatting of the text and replace it in the editor:
 
-```javascript{numberLines: true}
+```jsx{numberLines: true}
 async function alignVertically() {
   const editor = vscode.window.activeTextEditor
   const text = editor.document.getText(editor.selection)
@@ -108,7 +109,7 @@ async function alignVertically() {
 Let's take a closer look at this function. On _line 2_ we get the `activeTextEditor` from the `vscode` object (which is required in at the top of the file). Then, on _line 3_ we get the text which has been highlighted by the user. The `if` statement on _line 4_ means that the rest of the program will only run if some text has acutally been selected.
 
 Next (_line 5_) we prompt the user for the keyword which is going to be used to split the text. You hopefully noticed on _line 1_ that this function is `async` which means we can make it wait for some data by using the `await` command. We call `getKeywordFromUser` and the execution is paused until the result is returned. Here is the function:
-```javascript
+```jsx
 function getKeywordFromUser() {
   return vscode.window.showInputBox({
     placeHolder: "Align by which word?"
@@ -119,7 +120,7 @@ Using a method on the `vscode` API's `window` object, all we need to do is set t
 
 Back to the `alignVertically` function:
 
-```javascript{numberLines: 4}
+```jsx{numberLines: 4}
 if (text) {
   const keyword = await getKeywordFromUser()
   const lines = getLines(text, keyword)
@@ -185,7 +186,7 @@ At the top of the file I `require` in the functions from _functions.js_. The rea
 
 To create a test suite in Jest you use a `describe` block. The first argument is just a string which will be used at the start of every test and the second argument is the function within which you run each test.
 
-```javascript{numberLines: true}
+```jsx{numberLines: true}
 const {
   getMask,
   getLines,
@@ -234,7 +235,7 @@ describe("The function ", () => {
  
 ```
 First I set up the variables which will be used in each test. At _line 11_ is the imaginary keyword supplied by our user, next, at _line 13_ is the block of text which our user has highlighted (declared as an array joined with `\n` which is a newline). Each following `expected` output is then used both to test the function has produced the correct output and also as the input for the following function.
-```javascript{numberLines: 47}
+```jsx{numberLines: 47}
 
   test("getLines returns expected", () => {
     expect(getLines(text, keyword)).toEqual(expectedLines);
@@ -278,7 +279,7 @@ This is what we're aiming to achieve, all tests passed:
 ## The functions
 
 It's (finally!) time to take a look at the functions themselves. Here's a reminder of _lines 6 - 9_ from _extensions.js_:
-```javascript{numberLines: 6}
+```jsx{numberLines: 6}
 const lines = getLines(text, keyword)
 const mask = getMask(lines)
 const transformedText = transform(lines, mask, getSpaces)
@@ -286,7 +287,7 @@ const result = joinWithKeyword(transformedText, keyword)
 ```
 
 #### **getLines(text, keyword)**
-```javascript
+```jsx
 getLines(text, keyword) {
   return text.split("\n").map(line => line.split(keyword));
 }
@@ -298,12 +299,12 @@ It will SPLIT words by newline <br />
 Also by keyword <br />
 
 would output as:
-```javascript
+```jsx
 [ ['this is some ', 'text'], ['It will ', 'words by newline'], ['Also by keyword'] ]
 ```
 
 #### **getMask(lines)**
-```javascript
+```jsx
 getMask(lines) {
   return lines.map(line => {
     if (line.length > 1) {
@@ -316,7 +317,7 @@ getMask(lines) {
 This function creates an array with one element per line. Each element contains a number which represents the length of the block of text which precedes the keyword. If the keyword is not on a line it will put a zero in its place. The mask for the example above would be `[ 13, 8, 0]`.
 
 #### **getSpaces(max, mask[i])**
-```javascript
+```jsx
 getSpaces(max, index) {
   const diff = max - index;
   return new Array(diff).fill(" ");
@@ -325,7 +326,7 @@ getSpaces(max, index) {
 This function is used by the `transform` function (below). It takes the `max` variable (explained next) and uses it to calculate how much space needs to be added to the block of text. It returns an array of the required length and fills it with empty spaces.
 
 #### **transform(lines, mask, getSpaces)**
-```javascript{numberLines: true}
+```jsx{numberLines: true}
 transform(lines, mask, getSpaces) {
   const max = Math.max(...mask);
   return lines.map((line, i) => {
@@ -346,7 +347,7 @@ This happens on _line 5_. You can see that we create a new array from our first 
 Then we join the array, making a string with the block of spaces at the end. On _line 6_ we use Array's splice method to replace the first element of the line with our new extended version.
 
 #### **joinWithKeyword(transformedText, keyword)**
-```javascript
+```jsx
 joinWithKeyword(transformed, keyword) {
   return transformed.map(l => l.join(keyword)).join("\n");
 }

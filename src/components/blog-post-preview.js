@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'gatsby'
 import { orangeLink } from '../constants'
-import CalendarDate from './calendar-date'
+import BlogInfo from './blog-info'
 import { css } from 'emotion'
 
 const propTypes = {
@@ -21,11 +21,11 @@ function BlogPostPreview({ post }) {
           {post.frontmatter.title}
         </Link>
       </h1>
-      <CalendarDate
+      <BlogInfo
         className={css`
           margin-bottom: 20px;
         `}
-        date={post.frontmatter.date}
+        post={post}
       />
       <p>{post.excerpt}</p>
     </div>
