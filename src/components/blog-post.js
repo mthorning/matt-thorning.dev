@@ -3,11 +3,13 @@ import { graphql } from 'gatsby'
 import Helmet from 'react-helmet'
 import Layout from './layout'
 import ShareButtons from './share-buttons'
+import PreviousNext from './previous-next'
 import BlogInfo from './blog-info'
 import { css } from 'emotion'
 
-export default function Template({ data, location }) {
+export default function Template({ data, location, pageContext }) {
   const post = data.markdownRemark
+  const { previous, next } = pageContext
 
   function Title() {
     const wrapper = css`
@@ -29,6 +31,7 @@ export default function Template({ data, location }) {
       <Title />
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
       <ShareButtons shareUrl={location.href} title={post.frontmatter.title} />
+      <PreviousNext previous={previous} next={next} />
     </Layout>
   )
 }
