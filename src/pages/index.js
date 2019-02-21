@@ -1,17 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { graphql } from 'gatsby'
 import Layout from '../components/layout'
 import SEO from '../components/seo'
 import BlogPostPreview from '../components/blog-post-preview'
+import TagSelector from '../components/tag-selector'
 
 export default function({ data }) {
   const { edges: posts } = data.allMarkdownRemark
+  const tags = Array.from(
+    posts.reduce((tags, post) => tags.add(post.node.frontmatter.tag), new Set())
+  )
+  const [selectedTags, setSelectedTags] = useState({})
   return (
     <Layout>
       <SEO
-        title="Home"
-        keywords={[`JavaScript`, `web development`, `frontend`, `programming`]}
+        title="Hello Code"
+        keywords={[
+          `JavaScript`,
+          `web`,
+          `development`,
+          `frontend`,
+          `linux`,
+          `networking`,
+          `programming`,
+        ]}
       />
+      <TagSelector {...{ tags, selectedTags, setSelectedTags }} />
       <div className="blog-posts">
         {posts
           .filter(post => post.node.frontmatter.title.length > 0)

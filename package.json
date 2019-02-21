@@ -17,6 +17,7 @@
     "prettier": "^1.15.2"
   },
   "dependencies": {
+    "@emotion/core": "^10.0.7",
     "emotion": "^10.0.7",
     "gatsby": "^2.0.76",
     "gatsby-image": "^2.0.20",
@@ -38,8 +39,8 @@
     "gatsby-transformer-remark": "^2.2.0",
     "prismjs": "^1.15.0",
     "prop-types": "^15.6.2",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
     "react-helmet": "^5.2.0",
     "react-icons": "^3.4.0",
     "react-share": "^2.4.0",
