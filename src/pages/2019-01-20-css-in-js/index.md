@@ -176,7 +176,7 @@ First let's talk about the import. You need to import `jsx` from Emotion as well
 }
 ```
 
-So why bother with all of this? Because, if you look at the `TagBlock` component you can see that the `css` prop accepts an array. You can add styles to this array and they will be applied in order, overwriting any of the same rules which precede it. In this example the color of the tag is being overridden with `highlightColor` if the tag has been selected.
+So why bother with all of this? Because, if you look at the `TagBlock` component you can see that the `css` prop accepts an array. You can add styles to this array and they will be applied in order, overriding any of the same rules which precede it. In this example the color of the tag is being overridden with `highlightColor` if the tag has been selected.
 
 I think this extra functionality alone warrants using this package for React apps over the other version. One of the other advantages I have read about is that any styles in a `className` prop from the parent will override the styles applied in the child's `css` prop which is a pretty nice feature.
 
