@@ -18,7 +18,7 @@ import {
   FaTwitter,
   FaWhatsapp,
 } from 'react-icons/fa'
-import { smallScreen } from '../constants'
+import { smallScreen, footerIconFontSize } from '../constants'
 
 const brands = {
   email: '#ffd900',
@@ -35,9 +35,9 @@ export default function ShareButtons({ shareUrl, title }) {
       <div
         className={css`
           color: ${textColor};
+          font-size: ${footerIconFontSize};
           width: 40px;
           height: 40px;
-          font-size: 25px;
           display: flex;
           padding: 8px;
           align-items: center;
@@ -76,16 +76,16 @@ export default function ShareButtons({ shareUrl, title }) {
         </EmailShareButton>
       </IconWrapper>
 
+      <IconWrapper color={brands.twitter}>
+        <TwitterShareButton title={title} url={shareUrl}>
+          <FaTwitter />
+        </TwitterShareButton>
+      </IconWrapper>
+
       <IconWrapper color={brands.facebook}>
         <FacebookShareButton quote={title} url={shareUrl}>
           <FaFacebook />
         </FacebookShareButton>
-      </IconWrapper>
-
-      <IconWrapper color={brands.linkedin}>
-        <LinkedinShareButton title={title} url={shareUrl}>
-          <FaLinkedin />
-        </LinkedinShareButton>
       </IconWrapper>
 
       <IconWrapper color={brands.reddit}>
@@ -94,10 +94,10 @@ export default function ShareButtons({ shareUrl, title }) {
         </RedditShareButton>
       </IconWrapper>
 
-      <IconWrapper color={brands.twitter}>
-        <TwitterShareButton title={title} url={shareUrl}>
-          <FaTwitter />
-        </TwitterShareButton>
+      <IconWrapper color={brands.linkedin}>
+        <LinkedinShareButton title={title} url={shareUrl}>
+          <FaLinkedin />
+        </LinkedinShareButton>
       </IconWrapper>
 
       <IconWrapper color={brands.whatsapp}>
