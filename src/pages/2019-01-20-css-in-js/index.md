@@ -143,3 +143,41 @@ This is great for allowing you to set up a file of constants which can be import
 I've only been using Emotion for a very brief time and have only scratched the surface of what it can do. Transitioning to it has been extremely easy because it offers all of the functionality of CSS but with the flexibility of JavaScript. The compositional way in which Emotion allows you to build your CSS compliments React nicely, particularly now that hooks are live. This is particularly noticeable when you reach a point where you want to extract some logic into its own component; simply cut and paste the JSX, hooks and styling out of your component and paste them into a new file.
 
 This has just been a quick look at Emotion, I haven't tried other CSS-in-JS libraries, but I was impressed enough by my experience with it that I wanted to put together this quick post. Hopefully it's been helpful to someone!
+
+___
+##Update
+
+I've found a reason to move from the framework-agnostic package to _@emotion/core_. 
+
+When using the `css` prop instead of `className`, it is possible to pass an array of styles; here is the code I have been writing (truncated for clarity):
+```jsx
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core'
+
+const baseStyle = css`
+  color: ${textColor};
+`
+
+function TagBlock(tagName) {
+  const highlighted = tagSelected && css`
+    color: ${highlightColor};
+  `
+  return (
+    <span css={[baseStyle, highlighted]}>
+      {tagName}
+    </span>
+  )
+}
+```
+First let's talk about the import. You need to import `jsx` from Emotion as well as `css` and tell the Babel plugin to use the `jsx` function instead of _React.createElement_. This can be done with a [JSX Pragma](https://emotion.sh/docs/css-prop#jsx-pragma) (that's the bit in comments `/** @jsx jsx */`) which is an as-you-need-it solution if you're just trying things out. When/if you decide to use the package permanently you can update your _.babelrc_ with:
+```json
+{
+  "presets": ["@emotion/babel-preset-css-prop"]
+}
+```
+
+So why bother with all of this? Because, if you look at the `TagBlock` component you can see that the `css` prop accepts an array. You can add styles to this array and they will be applied in order, overwriting any of the same rules which precede it. In this example the color of the tag is being overridden with `highlightColor` if the tag has been selected.
+
+I think this extra functionality alone warrants using this package for React apps over the other version. One of the other advantages I have read about is that any styles in a `className` prop from the parent will override the styles applied in the child's `css` prop which is a pretty nice feature.
+
+I'm now going to refactor my components to use _@emotion/core_, I've been looking for an excuse to write a quick post about Codemod anyway!
