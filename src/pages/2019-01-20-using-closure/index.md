@@ -2,7 +2,7 @@
 path: '/using-closure'
 date: '2019-01-20T19:00:00'
 title: 'Using closures'
-tag: 'javascript'
+tags: ['javascript']
 ---
 
 When I was learning about closures in JavaScript for the first time I saw a lot of examples like this:

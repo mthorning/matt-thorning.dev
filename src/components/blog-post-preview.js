@@ -4,6 +4,7 @@ import { Link } from 'gatsby'
 import { orangeLink } from '../constants'
 import BlogInfo from './blog-info'
 import { css } from 'emotion'
+import TagDisplay from './tag-display'
 
 const propTypes = {
   post: PropTypes.object.isRequired,
@@ -24,6 +25,7 @@ function BlogPostPreview({ post }) {
           </Link>
         </h1>
       </BlogInfo>
+      <TagDisplay tags={post.frontmatter.tags} />
       <p>{post.excerpt}</p>
     </div>
   )

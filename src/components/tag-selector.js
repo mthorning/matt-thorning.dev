@@ -1,36 +1,47 @@
 import React from 'react'
-/** @jsx jsx */
-import { css, jsx } from '@emotion/core'
+import { css } from 'emotion'
 import { textColor, primaryColor } from '../constants'
 
-export default function TagSelector({ tags, selectedTags, setSelectedTags }) {
-  const baseStyle = css`
-    border-radius: 4px;
-    background: rgba(0, 0, 0, 0.1);
-    color: ${textColor};
-    padding: 4px;
-    margin-right: 5px;
-    cursor: pointer;
-  `
+const baseStyle = css`
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.1);
+  color: ${textColor};
+  padding: 4px;
+  margin: 5px 5px 0 0;
+  cursor: pointer;
+`
+const wrapper = css`
+  display: flex;
+  flex-wrap: wrap;
+`
+export default function TagSelector({ tags, selectedTags, dispatch }) {
   function onTagClick(e) {
-    const tag = e.target.innerText
-    setSelectedTags({
-      ...selectedTags,
-      [tag]: !selectedTags[tag],
-    })
+    const payload = e.target.innerText
+    if (!selectedTags.includes(payload)) {
+      dispatch({ type: 'add', payload })
+    } else if (selectedTags.length && selectedTags.includes(payload)) {
+      dispatch({ type: 'remove', payload })
+    }
   }
 
   function TagBlock(tag) {
     const tagCol =
-      selectedTags[tag] &&
+      selectedTags.includes(tag) &&
       css`
         color: ${primaryColor};
       `
     return (
-      <span key={tag} onClick={onTagClick} css={[baseStyle, tagCol]}>
+      <span
+        key={tag}
+        onClick={onTagClick}
+        className={css`
+          ${baseStyle}
+          ${tagCol}
+        `}
+      >
         {tag}
       </span>
     )
   }
-  return <>{tags.map(TagBlock)}</>
+  return <div className={wrapper}>{tags.sort().map(TagBlock)}</div>
 }

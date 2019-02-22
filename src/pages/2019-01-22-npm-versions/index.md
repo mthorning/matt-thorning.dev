@@ -2,7 +2,7 @@
 path: '/npm-version'
 date: '2019-01-22T20:00'
 title: 'Semantic versioning with NPM'
-tag: 'javascript'
+tags: ['javascript', 'tooling', 'deployment']
 ---
 
 When you release code it's a really good idea to assign a version number to it. This gives users a useful reference number they can send to you if things aren't working as expected (making it easier to track down bugs), gives you a safe point you can roll back to where you know things were working correctly and, as you can see from taking a look at the dependencies and dev-dependencies sections in a package.json, is vitally important if you are planning on building an application which pulls in code from third-party sources.

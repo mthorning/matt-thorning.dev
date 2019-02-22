@@ -13,3 +13,11 @@ export const orangeLink = css`
     color: ${primaryColor};
   }
 `
+export const infoItemStyle = css`
+  color: ${textColor};
+  font-size: 14px;
+  margin-right: 10px;
+  span {
+    margin-left: 5px;
+  }
+`

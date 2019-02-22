@@ -2,7 +2,7 @@
 path: '/bash-tips'
 date: '2019-02-16T20:00'
 title: 'Bash tips'
-tag: 'linux'
+tags: ['linux']
 ---
 
 This post is as much for myself as it is for anyone else and I will update it whenever I come across anything that I find that is worth including. The below are all of the cool little bash commands for linux/unix that I have stumbled across.
