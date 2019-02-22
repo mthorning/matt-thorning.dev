@@ -140,6 +140,28 @@ const style = css`
 
 This is great for allowing you to set up a file of constants which can be imported into all of your modules for consistency or theming.
 
+It's also worth remembering that the `css` function (tagged template) returns a class so you can dynamically add styles as you would with classes:
+```jsx
+const baseStyle = css`
+  color: ${textColor};
+`
+
+function TagBlock(tagName) {
+  const highlighted = tagSelected && css`
+    color: ${highlightColor};
+  `
+  return (
+    <span className={css`
+      ${baseStyle}
+      ${highlighted}
+    `}>
+      {tagName}
+    </span>
+  )
+}
+```
+In this example the component will change the colour of the text to `highlightColor` when `tagSelected` is true.
+
 I've only been using Emotion for a very brief time and have only scratched the surface of what it can do. Transitioning to it has been extremely easy because it offers all of the functionality of CSS but with the flexibility of JavaScript. The compositional way in which Emotion allows you to build your CSS compliments React nicely, particularly now that hooks are live. This is particularly noticeable when you reach a point where you want to extract some logic into its own component; simply cut and paste the JSX, hooks and styling out of your component and paste them into a new file.
 
 This has just been a quick look at Emotion, I haven't tried other CSS-in-JS libraries, but I was impressed enough by my experience with it that I wanted to put together this quick post. Hopefully it's been helpful to someone!
