@@ -1,5 +1,5 @@
 import React from 'react'
-import { css } from 'emotion'
+import { css } from '@emotion/core'
 import { textColor, primaryColor } from '../constants'
 
 const baseStyle = css`
@@ -34,7 +34,7 @@ export default function TagSelector({ tags, selectedTags, dispatch }) {
       <span
         key={tag}
         onClick={onTagClick}
-        className={css`
+        css={css`
           ${baseStyle}
           ${tagCol}
         `}
@@ -43,5 +43,5 @@ export default function TagSelector({ tags, selectedTags, dispatch }) {
       </span>
     )
   }
-  return <div className={wrapper}>{tags.sort().map(TagBlock)}</div>
+  return <div css={wrapper}>{tags.sort().map(TagBlock)}</div>
 }

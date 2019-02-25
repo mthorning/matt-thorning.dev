@@ -1,5 +1,5 @@
 import React from 'react'
-import { css } from 'emotion'
+import { css } from '@emotion/core'
 import { textColor } from '../constants'
 import {
   EmailShareButton,
@@ -33,7 +33,7 @@ export default function ShareButtons({ shareUrl, title }) {
   function IconWrapper({ children, color }) {
     return (
       <div
-        className={css`
+        css={css`
           color: ${textColor};
           font-size: ${footerIconFontSize};
           width: 40px;
@@ -61,7 +61,7 @@ export default function ShareButtons({ shareUrl, title }) {
 
   return (
     <div
-      className={css`
+      css={css`
         display: flex;
         justify-content: flex-end;
 

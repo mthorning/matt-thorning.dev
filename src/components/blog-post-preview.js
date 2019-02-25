@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'gatsby'
 import { orangeLink } from '../constants'
 import BlogInfo from './blog-info'
-import { css } from 'emotion'
+import { css } from '@emotion/core'
 import TagDisplay from './tag-display'
 
 const propTypes = {
@@ -14,13 +14,13 @@ function BlogPostPreview({ post }) {
   return (
     <div>
       <BlogInfo
-        className={css`
+        css={css`
           margin-bottom: 20px;
         `}
         post={post}
       >
         <h1>
-          <Link className={orangeLink} to={post.frontmatter.path}>
+          <Link css={orangeLink} to={post.frontmatter.path}>
             {post.frontmatter.title}
           </Link>
         </h1>

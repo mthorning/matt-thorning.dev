@@ -1,7 +1,7 @@
 import React from 'react'
 import { FaHome, FaBackward, FaForward } from 'react-icons/fa'
 import { Link } from 'gatsby'
-import { css } from 'emotion'
+import { css } from '@emotion/core'
 import {
   textColor,
   footerIconFontSize,
@@ -41,10 +41,10 @@ export default function({ previous, next }) {
   `
   return (
     <>
-      <div className={iconWrapper}>
+      <div css={iconWrapper}>
         <Link
           to={previous.path}
-          className={css`
+          css={css`
             ${icon}
             grid-area: prev;
           `}
@@ -53,7 +53,7 @@ export default function({ previous, next }) {
         </Link>
 
         <div
-          className={css`
+          css={css`
             ${title}
             grid-area: prev-title;
           `}
@@ -63,7 +63,7 @@ export default function({ previous, next }) {
 
         <Link
           to="/"
-          className={css`
+          css={css`
             ${icon}
             grid-area: home;
           `}
@@ -72,7 +72,7 @@ export default function({ previous, next }) {
         </Link>
 
         <div
-          className={css`
+          css={css`
             ${title}
             grid-area: next-title;
             justify-self: end;
@@ -81,9 +81,9 @@ export default function({ previous, next }) {
           <div>{next.title}</div>
         </div>
 
-        <Link to={next.path} className={icon}>
+        <Link to={next.path} css={icon}>
           <FaForward
-            className={css`
+            css={css`
               ${icon}
               grid-area: next;
             `}

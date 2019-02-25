@@ -5,7 +5,7 @@ import Layout from './layout'
 import ShareButtons from './share-buttons'
 import PreviousNext from './previous-next'
 import BlogInfo from './blog-info'
-import { css } from 'emotion'
+import { css } from '@emotion/core'
 
 export default function Template({ data, location, pageContext }) {
   const post = data.markdownRemark
@@ -17,7 +17,7 @@ export default function Template({ data, location, pageContext }) {
     `
 
     return (
-      <div className={wrapper}>
+      <div css={wrapper}>
         <BlogInfo post={post}>
           <h1>{post.frontmatter.title}</h1>
         </BlogInfo>
