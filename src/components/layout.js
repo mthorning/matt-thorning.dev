@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { StaticQuery, graphql } from 'gatsby'
 import Header from './header'
-import { css } from 'emotion'
+import { css } from '@emotion/core'
 
 const Layout = ({ children }) => (
   <StaticQuery
@@ -19,7 +19,7 @@ const Layout = ({ children }) => (
       <>
         <Header siteTitle={data.site.siteMetadata.title} />
         <div
-          className={css`
+          css={css`
             margin: 0 auto;
             max-width: 960px;
             padding: 0px 1.0875rem 1.45rem;

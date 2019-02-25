@@ -12,6 +12,7 @@ module.exports = {
     `gatsby-plugin-sitemap`,
     `gatsby-plugin-catch-links`,
     `gatsby-plugin-offline`,
+    `gatsby-plugin-emotion`,
     {
       resolve: `gatsby-plugin-favicon`,
       options: {

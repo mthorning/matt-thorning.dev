@@ -63,7 +63,7 @@ export default function({ data }) {
         ]}
       />
       <TagSelector {...{ tags, selectedTags, dispatch }} />
-      <div className="blog-posts">
+      <div>
         {posts
           .filter(filterBySelectedTags)
           .filter(post => post.node.frontmatter.title.length > 0)

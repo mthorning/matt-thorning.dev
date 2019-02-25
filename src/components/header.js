@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import PersonalLinks from './personal-links'
 import { smallScreen, primaryColor, secondaryColor } from '../constants'
-import { css } from 'emotion'
+import { css } from '@emotion/core'
 
 const Header = ({ siteTitle }) => {
   const wrapper = css`
@@ -43,10 +43,10 @@ const Header = ({ siteTitle }) => {
     }
   `
   return (
-    <div className={wrapper}>
-      <PersonalLinks className={personalLinks} />
-      <div className={titleWrapper}>
-        <h1 className={title}>
+    <div css={wrapper}>
+      <PersonalLinks css={personalLinks} />
+      <div css={titleWrapper}>
+        <h1 css={title}>
           <Link to="/">{siteTitle}</Link>
         </h1>
       </div>
