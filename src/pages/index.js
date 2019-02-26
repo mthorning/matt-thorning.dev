@@ -8,15 +8,6 @@ import TagSelector from '../components/tag-selector'
 export default function({ data }) {
   const { edges: posts } = data.allMarkdownRemark
 
-  const tags = Array.from(
-    new Set(
-      posts.reduce(
-        (tags, post) => (tags = [...tags, ...post.node.frontmatter.tags]),
-        []
-      )
-    )
-  )
-
   function reducer(state, action) {
     switch (action.type) {
       case 'add':
@@ -37,6 +28,14 @@ export default function({ data }) {
   }
   const [state, dispatch] = useReducer(reducer, { selectedTags: [] })
   const { selectedTags } = state
+
+  const tags = posts.reduce((tags, post) => {
+    if (filterBySelectedTags(post)) {
+      return (tags = [...tags, ...post.node.frontmatter.tags])
+    }
+    return tags
+  }, [])
+  console.log(tags)
 
   function filterBySelectedTags(post) {
     const { tags } = post.node.frontmatter
