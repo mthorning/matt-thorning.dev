@@ -31,7 +31,6 @@ export default function TagSelector({ tags, selectedTags, dispatch }) {
       }),
     {}
   )
-  console.log(tags, tagList, tagCount)
 
   function onTagClick(tag) {
     if (!selectedTags.includes(tag)) {

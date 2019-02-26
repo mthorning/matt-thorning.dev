@@ -35,7 +35,6 @@ export default function({ data }) {
     }
     return tags
   }, [])
-  console.log(tags)
 
   function filterBySelectedTags(post) {
     const { tags } = post.node.frontmatter
