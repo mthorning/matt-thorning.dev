@@ -1,6 +1,6 @@
 import React from 'react'
 import { css } from '@emotion/core'
-import { textColor, primaryColor } from '../constants'
+import { textColor, primaryColor } from 'constants'
 
 const baseStyle = css`
   border-radius: 4px;

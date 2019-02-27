@@ -7,7 +7,7 @@ import {
   footerIconFontSize,
   orangeLink,
   smallScreen,
-} from '../constants'
+} from 'constants'
 
 export default function({ previous, next }) {
   const iconWrapper = css`

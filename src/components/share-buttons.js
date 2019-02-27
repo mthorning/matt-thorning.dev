@@ -1,6 +1,5 @@
 import React from 'react'
 import { css } from '@emotion/core'
-import { textColor } from '../constants'
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -18,7 +17,7 @@ import {
   FaTwitter,
   FaWhatsapp,
 } from 'react-icons/fa'
-import { smallScreen, footerIconFontSize } from '../constants'
+import { smallScreen, footerIconFontSize, textColor } from 'constants'
 
 const brands = {
   email: '#ffd900',

@@ -1,10 +1,9 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 import Helmet from 'react-helmet'
-import Layout from './layout'
-import ShareButtons from './share-buttons'
-import PreviousNext from './previous-next'
-import BlogInfo from './blog-info'
+import Layout from 'layouts/main-layout'
+import { ShareButtons, PreviousNext } from 'components'
+import { BlogInfo } from 'components/blog'
 import { css } from '@emotion/core'
 
 export default function Template({ data, location, pageContext }) {

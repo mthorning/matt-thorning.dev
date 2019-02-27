@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'gatsby'
-import { orangeLink } from '../constants'
-import BlogInfo from './blog-info'
+import { orangeLink } from 'constants'
+import { BlogInfo } from 'components/blog'
 import { css } from '@emotion/core'
-import TagDisplay from './tag-display'
+import { TagDisplay } from 'components/tags'
 
 const propTypes = {
   post: PropTypes.object.isRequired,

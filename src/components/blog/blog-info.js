@@ -1,6 +1,6 @@
 import React from 'react'
 import { FaCalendarAlt, FaStopwatch } from 'react-icons/fa'
-import { smallScreen, infoItemStyle } from '../constants'
+import { smallScreen, infoItemStyle } from 'constants'
 import { css } from '@emotion/core'
 
 const infoWrapperStyle = css`

@@ -14,6 +14,18 @@ module.exports = {
     `gatsby-plugin-offline`,
     `gatsby-plugin-emotion`,
     {
+      resolve: `gatsby-plugin-alias-imports`,
+      options: {
+        alias: {
+          components: 'src/components',
+          layouts: 'src/layouts',
+          pages: 'src/pages',
+          constants: 'src/constants',
+        },
+        extensions: ['js'],
+      },
+    },
+    {
       resolve: `gatsby-plugin-favicon`,
       options: {
         logo: './src/images/favicon-32x32.png',

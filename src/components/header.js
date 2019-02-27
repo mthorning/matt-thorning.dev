@@ -2,10 +2,10 @@ import { Link } from 'gatsby'
 import PropTypes from 'prop-types'
 import React from 'react'
 import PersonalLinks from './personal-links'
-import { smallScreen, primaryColor, secondaryColor } from '../constants'
+import { smallScreen, primaryColor, secondaryColor } from 'constants'
 import { css } from '@emotion/core'
 
-const Header = ({ siteTitle }) => {
+const Header = ({ Title }) => {
   const wrapper = css`
     background: ${primaryColor};
     margin-bottom: 1.45rem;
@@ -46,9 +46,7 @@ const Header = ({ siteTitle }) => {
     <div css={wrapper}>
       <PersonalLinks css={personalLinks} />
       <div css={titleWrapper}>
-        <h1 css={title}>
-          <Link to="/">{siteTitle}</Link>
-        </h1>
+        <Title className={title} />
       </div>
     </div>
   )

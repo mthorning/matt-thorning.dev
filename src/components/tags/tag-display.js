@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FaTag } from 'react-icons/fa'
-import { infoItemStyle } from '../constants'
+import { infoItemStyle } from 'constants'
 import { css } from '@emotion/core'
 
 function TagDisplay({ tags }) {

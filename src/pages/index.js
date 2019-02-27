@@ -1,9 +1,9 @@
 import React, { useReducer } from 'react'
 import { graphql } from 'gatsby'
-import Layout from '../components/layout'
-import SEO from '../components/seo'
-import BlogPostPreview from '../components/blog-post-preview'
-import TagSelector from '../components/tag-selector'
+import Layout from 'layouts/main-layout'
+import { SEO } from 'components'
+import { BlogPostPreview } from 'components/blog'
+import { TagSelector } from 'components/tags'
 
 export default function({ data }) {
   const { edges: posts } = data.allMarkdownRemark
