@@ -1,24 +1,23 @@
 import React from 'react'
 import { FaCalendarAlt, FaStopwatch } from 'react-icons/fa'
-import { smallScreen, infoItemStyle } from 'constants'
 import { css } from '@emotion/core'
 
-const infoWrapperStyle = css`
+const infoWrapperStyle = theme => css`
   display: flex;
-  ${smallScreen} {
+  ${theme.smallScreen} {
     flex-direction: column;
   }
 `
 export default function BlogInfo({ className, post, children }) {
   const CalendarDate = () => (
-    <div css={infoItemStyle}>
+    <div css={theme => theme.infoItemStyle}>
       <FaCalendarAlt />
       <span>{post.frontmatter.date}</span>
     </div>
   )
 
   const TimeToRead = () => (
-    <div css={infoItemStyle}>
+    <div css={theme => theme.infoItemStyle}>
       <FaStopwatch />
       <span>{post.timeToRead} minute read</span>
     </div>
@@ -33,7 +32,7 @@ export default function BlogInfo({ className, post, children }) {
       `}
     >
       {children}
-      <div css={infoWrapperStyle}>
+      <div css={theme => theme.infoWrapperStyle}>
         <CalendarDate />
         <TimeToRead />
       </div>

@@ -2,20 +2,14 @@ import React from 'react'
 import { FaHome, FaBackward, FaForward } from 'react-icons/fa'
 import { Link } from 'gatsby'
 import { css } from '@emotion/core'
-import {
-  textColor,
-  footerIconFontSize,
-  orangeLink,
-  smallScreen,
-} from 'constants'
 
 export default function({ previous, next }) {
   const iconWrapper = css`
-    font-size: ${footerIconFontSize};
+    font-size: ${theme => theme.footerIconFontSize};
     width: 100%;
     margin-top: 30px;
     padding-top: 20px;
-    border-top: 1px solid ${textColor};
+    border-top: 1px solid ${theme => theme.textColor};
     display: grid;
     grid-template-columns: 25px 1fr 25px 1fr 25px;
     grid-template-areas: 'prev prev-title home next-title next';
@@ -23,7 +17,7 @@ export default function({ previous, next }) {
     align-items: center;
   `
   const icon = css`
-    ${orangeLink}
+    ${theme => theme.orangeLink}
     display: flex;
   `
   const title = css`
@@ -34,7 +28,7 @@ export default function({ previous, next }) {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      ${smallScreen} {
+      ${theme => theme.smallScreen} {
         display: none;
       }
     }

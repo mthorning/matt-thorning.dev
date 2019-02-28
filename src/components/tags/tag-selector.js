@@ -1,11 +1,10 @@
 import React from 'react'
 import { css } from '@emotion/core'
-import { textColor, primaryColor } from 'constants'
 
 const baseStyle = css`
   border-radius: 4px;
   background: rgba(0, 0, 0, 0.1);
-  color: ${textColor};
+  color: ${theme => theme.textColor};
   padding: 4px;
   margin: 5px 5px 0 0;
   cursor: pointer;
@@ -19,7 +18,7 @@ const wrapper = css`
 const tagNumber = css`
   margin-left: 5px;
   font-size: 14px;
-  color: ${primaryColor};
+  color: ${theme => theme.primaryColor};
 `
 export default function TagSelector({ tags, selectedTags, dispatch }) {
   const tagList = Array.from(new Set(tags))
@@ -45,7 +44,7 @@ export default function TagSelector({ tags, selectedTags, dispatch }) {
     const tagCol =
       isSelected &&
       css`
-        color: ${primaryColor};
+        color: ${theme => theme.primaryColor};
       `
     return (
       <span

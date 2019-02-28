@@ -20,7 +20,6 @@ module.exports = {
           components: 'src/components',
           layouts: 'src/layouts',
           pages: 'src/pages',
-          constants: 'src/constants',
         },
         extensions: ['js'],
       },

@@ -17,7 +17,6 @@ import {
   FaTwitter,
   FaWhatsapp,
 } from 'react-icons/fa'
-import { smallScreen, footerIconFontSize, textColor } from 'constants'
 
 const brands = {
   email: '#ffd900',
@@ -33,8 +32,8 @@ export default function ShareButtons({ shareUrl, title }) {
     return (
       <div
         css={css`
-          color: ${textColor};
-          font-size: ${footerIconFontSize};
+          color: ${theme => theme.textColor};
+          font-size: ${theme => theme.footerIconFontSize};
           width: 40px;
           height: 40px;
           display: flex;
@@ -64,7 +63,7 @@ export default function ShareButtons({ shareUrl, title }) {
         display: flex;
         justify-content: flex-end;
 
-        ${smallScreen} {
+        ${theme => theme.smallScreen} {
           justify-content: center;
         }
       `}

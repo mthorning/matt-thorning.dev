@@ -1,14 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FaTag } from 'react-icons/fa'
-import { infoItemStyle } from 'constants'
 import { css } from '@emotion/core'
 
 function TagDisplay({ tags }) {
   return (
     <div
       css={css`
-        ${infoItemStyle}
+        ${theme => theme.infoItemStyle}
         margin-bottom: 20px;
       `}
     >
