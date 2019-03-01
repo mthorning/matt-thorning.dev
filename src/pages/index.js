@@ -47,7 +47,7 @@ export default function({ data }) {
   }
 
   return (
-    <Layout>
+    <Layout animateHeader>
       <SEO
         title="Hello Code"
         keywords={[

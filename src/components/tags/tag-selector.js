@@ -1,10 +1,10 @@
 import React from 'react'
 import { css } from '@emotion/core'
 
-const baseStyle = css`
+const baseStyle = theme => css`
   border-radius: 4px;
   background: rgba(0, 0, 0, 0.1);
-  color: ${theme => theme.textColor};
+  color: ${theme.textColor};
   padding: 4px;
   margin: 5px 5px 0 0;
   cursor: pointer;
@@ -15,10 +15,10 @@ const wrapper = css`
   display: flex;
   flex-wrap: wrap;
 `
-const tagNumber = css`
+const tagNumber = theme => css`
   margin-left: 5px;
   font-size: 14px;
-  color: ${theme => theme.primaryColor};
+  color: ${theme.primaryColor};
 `
 export default function TagSelector({ tags, selectedTags, dispatch }) {
   const tagList = Array.from(new Set(tags))
@@ -41,18 +41,18 @@ export default function TagSelector({ tags, selectedTags, dispatch }) {
 
   function TagBlock(tag) {
     const isSelected = selectedTags.includes(tag)
-    const tagCol =
+    const tagCol = theme =>
       isSelected &&
       css`
-        color: ${theme => theme.primaryColor};
+        color: ${theme.primaryColor};
       `
     return (
       <span
         key={tag}
         onClick={() => onTagClick(tag)}
-        css={css`
-          ${baseStyle}
-          ${tagCol}
+        css={theme => css`
+          ${baseStyle(theme)}
+          ${tagCol(theme)}
         `}
       >
         {tag}

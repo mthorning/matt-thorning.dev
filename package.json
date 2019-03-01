@@ -48,7 +48,7 @@
     "react-share": "^2.4.0",
     "react-typography": "^0.16.18",
     "typography": "^0.16.18",
-    "typography-theme-stern-grove": "^0.16.18"
+    "typography-theme-noriega": "^0.16.18"
   },
   "scripts": {
     "build": "gatsby build",

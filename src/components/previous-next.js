@@ -4,23 +4,23 @@ import { Link } from 'gatsby'
 import { css } from '@emotion/core'
 
 export default function({ previous, next }) {
-  const iconWrapper = css`
-    font-size: ${theme => theme.footerIconFontSize};
+  const iconWrapper = theme => css`
+    font-size: ${theme.footerIconFontSize};
     width: 100%;
     margin-top: 30px;
     padding-top: 20px;
-    border-top: 1px solid ${theme => theme.textColor};
+    border-top: 1px solid ${theme.textColor};
     display: grid;
     grid-template-columns: 25px 1fr 25px 1fr 25px;
     grid-template-areas: 'prev prev-title home next-title next';
     grid-column-gap: 8px;
     align-items: center;
   `
-  const icon = css`
-    ${theme => theme.orangeLink}
+  const icon = theme => css`
+    ${theme.orangeLink}
     display: flex;
   `
-  const title = css`
+  const title = theme => css`
     ${'' /*  This is an important hack for text-overflow */}
     min-width: 0;
     div {
@@ -28,7 +28,7 @@ export default function({ previous, next }) {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      ${theme => theme.smallScreen} {
+      ${theme.smallScreen} {
         display: none;
       }
     }
@@ -38,8 +38,8 @@ export default function({ previous, next }) {
       <div css={iconWrapper}>
         <Link
           to={previous.path}
-          css={css`
-            ${icon}
+          css={theme => css`
+            ${icon(theme)}
             grid-area: prev;
           `}
         >
@@ -47,8 +47,8 @@ export default function({ previous, next }) {
         </Link>
 
         <div
-          css={css`
-            ${title}
+          css={theme => css`
+            ${title(theme)}
             grid-area: prev-title;
           `}
         >
@@ -57,8 +57,8 @@ export default function({ previous, next }) {
 
         <Link
           to="/"
-          css={css`
-            ${icon}
+          css={theme => css`
+            ${icon(theme)}
             grid-area: home;
           `}
         >
@@ -66,8 +66,8 @@ export default function({ previous, next }) {
         </Link>
 
         <div
-          css={css`
-            ${title}
+          css={theme => css`
+            ${title(theme)}
             grid-area: next-title;
             justify-self: end;
           `}
@@ -77,8 +77,8 @@ export default function({ previous, next }) {
 
         <Link to={next.path} css={icon}>
           <FaForward
-            css={css`
-              ${icon}
+            css={theme => css`
+              ${icon(theme)}
               grid-area: next;
             `}
           />

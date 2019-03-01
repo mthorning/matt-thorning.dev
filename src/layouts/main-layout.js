@@ -1,17 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { StaticQuery, graphql } from 'gatsby'
-import { Header, TypeHello } from 'components'
+import Header, { Title, TypeHello } from 'components/header'
 import { css } from '@emotion/core'
 
-const Layout = ({ children }) => {
-  // function Title() {
-  //   return (
-  //     <h1 css={title}>
-  //       <Link to="/">{data.site.siteMetadata.title}</Link>
-  //     </h1>
-  //   )
-  // }
+const Layout = ({ children, animateHeader }) => {
   return (
     <StaticQuery
       query={graphql`
@@ -25,7 +18,13 @@ const Layout = ({ children }) => {
       `}
       render={data => (
         <>
-          <Header Title={TypeHello} />
+          <Header>
+            {animateHeader ? (
+              <TypeHello />
+            ) : (
+              <Title title={data.site.siteMetadata.title} />
+            )}
+          </Header>
           <div
             css={css`
               margin: 0 auto;

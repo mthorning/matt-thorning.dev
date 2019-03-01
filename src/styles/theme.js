@@ -13,6 +13,7 @@ export default {
   smallScreen: `@media (max-width: 480px)`,
   orangeLink: css`
     color: ${textColor};
+    text-decoration: none;
     cursor: pointer;
     &:hover {
       color: ${primaryColor};

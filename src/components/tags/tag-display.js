@@ -6,8 +6,8 @@ import { css } from '@emotion/core'
 function TagDisplay({ tags }) {
   return (
     <div
-      css={css`
-        ${theme => theme.infoItemStyle}
+      css={theme => css`
+        ${theme.infoItemStyle}
         margin-bottom: 20px;
       `}
     >

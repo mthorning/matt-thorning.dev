@@ -2,13 +2,7 @@ import React from 'react'
 import { FaCalendarAlt, FaStopwatch } from 'react-icons/fa'
 import { css } from '@emotion/core'
 
-const infoWrapperStyle = theme => css`
-  display: flex;
-  ${theme.smallScreen} {
-    flex-direction: column;
-  }
-`
-export default function BlogInfo({ className, post, children }) {
+export default function BlogInfo({ post, children }) {
   const CalendarDate = () => (
     <div css={theme => theme.infoItemStyle}>
       <FaCalendarAlt />
@@ -27,7 +21,7 @@ export default function BlogInfo({ className, post, children }) {
     <div
       css={css`
         h1 {
-          margin-bottom: 10px;
+          margin-bottom: 15px;
         }
       `}
     >

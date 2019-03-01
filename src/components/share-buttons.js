@@ -31,9 +31,9 @@ export default function ShareButtons({ shareUrl, title }) {
   function IconWrapper({ children, color }) {
     return (
       <div
-        css={css`
-          color: ${theme => theme.textColor};
-          font-size: ${theme => theme.footerIconFontSize};
+        css={theme => css`
+          color: ${theme.textColor};
+          font-size: ${theme.footerIconFontSize};
           width: 40px;
           height: 40px;
           display: flex;
@@ -59,11 +59,11 @@ export default function ShareButtons({ shareUrl, title }) {
 
   return (
     <div
-      css={css`
+      css={theme => css`
         display: flex;
         justify-content: flex-end;
 
-        ${theme => theme.smallScreen} {
+        ${theme.smallScreen} {
           justify-content: center;
         }
       `}

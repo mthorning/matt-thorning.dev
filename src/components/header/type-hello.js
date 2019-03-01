@@ -1,28 +1,23 @@
 import React, { useEffect, useReducer } from 'react'
 import { css } from '@emotion/core'
+import { title as baseStyle } from './style'
 
-const baseStyle = css`
-  margin: 0;
-  color: #fff;
-  min-height: 39.27px;
-  display: inline-block;
+const whiteBorder = theme => css`
+  border-right: 3px solid ${theme.secondaryColor};
 `
-const whiteBorder = css`
-  border-right: 3px solid #fff;
-`
-const blinkBorder = css`
+const blinkBorder = theme => css`
   @keyframes blink {
     50% {
-      border-right: 3px solid #fc4445;
+      border-right: 3px solid ${theme.primaryColor};
     }
   }
   animation: blink 0.5s step-end infinite alternate;
 `
 
-export default function LandingPage({ className }) {
+export default function TypeHello() {
   const initialState = {
     text: '',
-    style: [baseStyle, whiteBorder],
+    style: theme => [baseStyle, whiteBorder].map(css => css(theme)),
   }
   const reducer = (state, action) => {
     switch (action.type) {
@@ -36,7 +31,7 @@ export default function LandingPage({ className }) {
       case 'updateClasses':
         return {
           ...state,
-          style: action.payload,
+          style: theme => action.payload(theme),
         }
       default:
         return state
@@ -87,11 +82,12 @@ export default function LandingPage({ className }) {
   function cursorAnimation() {
     dispatch({
       type: 'updateClasses',
-      payload: [baseStyle, whiteBorder, blinkBorder],
+      payload: theme =>
+        [baseStyle, whiteBorder, blinkBorder].map(css => css(theme)),
     })
     setTimeout(() => {
-      dispatch({ type: 'updateClasses', payload: [baseStyle] })
-    }, 3500)
+      dispatch({ type: 'updateClasses', payload: theme => [baseStyle(theme)] })
+    }, 2500)
   }
 
   async function type() {
@@ -105,5 +101,5 @@ export default function LandingPage({ className }) {
     type()
   }, [])
 
-  return <h1 css={state.style}>{state.text}</h1>
+  return <h1 css={theme => state.style(theme)}>{state.text}</h1>
 }

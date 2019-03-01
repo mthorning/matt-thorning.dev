@@ -1,10 +1,15 @@
 import React from 'react'
 import { ThemeProvider } from 'emotion-theming'
-import theme from './src/theme'
+import { Global } from '@emotion/core'
+import { theme, global } from './src/styles'
 import('prismjs/themes/prism-tomorrow.css')
-import('layouts/main.css')
 import('prismjs/plugins/line-numbers/prism-line-numbers.css')
 
 export const wrapRootElement = ({ element }) => {
-  return <ThemeProvider theme={theme}>{element}</ThemeProvider>
+  return (
+    <ThemeProvider theme={theme}>
+      <Global styles={global} />
+      {element}
+    </ThemeProvider>
+  )
 }

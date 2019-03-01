@@ -1,7 +1,7 @@
-import Typography from "typography"
-import sternGrove from "typography-theme-stern-grove"
+import Typography from 'typography'
+import noriega from 'typography-theme-noriega'
 
-sternGrove.bodyFontFamily = ['Quicksand', 'sans-serif']
-const typography = new Typography(sternGrove)
+const typography = new Typography(noriega)
+typography.headerWeight = 400
 
 export default typography
