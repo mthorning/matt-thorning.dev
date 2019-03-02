@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `<HelloCode />`,
+    title: `HelloCode`,
     description: `A blog about coding and computing.`,
     author: `@thorning_m`,
     siteUrl: `https://blog.thorning.ovh`,
@@ -10,7 +10,6 @@ module.exports = {
     `gatsby-plugin-catch-links`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-sitemap`,
-    `gatsby-plugin-catch-links`,
     `gatsby-plugin-offline`,
     `gatsby-plugin-emotion`,
     {
