@@ -44,7 +44,7 @@ export default css`
   p a {
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
-    color: dodgerblue;
+    color: #1575cabd;
     text-decoration: none;
   }
   p a:active,
@@ -334,8 +334,9 @@ export default css`
   }
   /* single backtick markdown blocks */
   :not(pre) > code[class*='language-text'] {
-    background: #8585838c;
-    color: #090909;
+    background: #85858338;
+    padding: 0 5px;
+    color: #090909c9;
     font-family: 'Fira Mono', monospace;
     border-radius: 0.2em;
   }
