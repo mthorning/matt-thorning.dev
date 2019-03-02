@@ -1,10 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'gatsby'
-import { orangeLink } from '../constants'
-import BlogInfo from './blog-info'
-import { css } from '@emotion/core'
-import TagDisplay from './tag-display'
+import { BlogInfo } from 'components/blog'
+import { TagDisplay } from 'components/tags'
 
 const propTypes = {
   post: PropTypes.object.isRequired,
@@ -12,20 +10,14 @@ const propTypes = {
 
 function BlogPostPreview({ post }) {
   return (
-    <div>
-      <BlogInfo
-        css={css`
-          margin-bottom: 20px;
-        `}
-        post={post}
-      >
+    <div css={{ marginTop: '40px' }}>
+      <BlogInfo post={post}>
         <h1>
-          <Link css={orangeLink} to={post.frontmatter.path}>
+          <Link css={theme => theme.orangeLink} to={post.frontmatter.path}>
             {post.frontmatter.title}
           </Link>
         </h1>
       </BlogInfo>
-      <TagDisplay tags={post.frontmatter.tags} />
       <p>{post.excerpt}</p>
     </div>
   )

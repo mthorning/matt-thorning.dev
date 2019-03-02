@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `< Hello Code />`,
+    title: `<HelloCode />`,
     description: `A blog about coding and computing.`,
     author: `@thorning_m`,
     siteUrl: `https://blog.thorning.ovh`,
@@ -13,6 +13,17 @@ module.exports = {
     `gatsby-plugin-catch-links`,
     `gatsby-plugin-offline`,
     `gatsby-plugin-emotion`,
+    {
+      resolve: `gatsby-plugin-alias-imports`,
+      options: {
+        alias: {
+          components: 'src/components',
+          layouts: 'src/layouts',
+          pages: 'src/pages',
+        },
+        extensions: ['js'],
+      },
+    },
     {
       resolve: `gatsby-plugin-favicon`,
       options: {

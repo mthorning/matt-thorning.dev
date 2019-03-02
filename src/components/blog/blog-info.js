@@ -1,15 +1,9 @@
 import React from 'react'
 import { FaCalendarAlt, FaStopwatch } from 'react-icons/fa'
-import { smallScreen, infoItemStyle } from '../constants'
-import { css } from '@emotion/core'
+import { TagDisplay } from 'components/tags'
+import { infoWrapper, infoItemStyle, infoWrapperTopRow } from './style'
 
-const infoWrapperStyle = css`
-  display: flex;
-  ${smallScreen} {
-    flex-direction: column;
-  }
-`
-export default function BlogInfo({ className, post, children }) {
+export default function BlogInfo({ post, children }) {
   const CalendarDate = () => (
     <div css={infoItemStyle}>
       <FaCalendarAlt />
@@ -25,18 +19,13 @@ export default function BlogInfo({ className, post, children }) {
   )
 
   return (
-    <div
-      css={css`
-        h1 {
-          margin-bottom: 10px;
-        }
-      `}
-    >
+    <div css={infoWrapper}>
       {children}
-      <div css={infoWrapperStyle}>
+      <div css={infoWrapperTopRow}>
         <CalendarDate />
         <TimeToRead />
       </div>
+      <TagDisplay tags={post.frontmatter.tags} />
     </div>
   )
 }
