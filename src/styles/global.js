@@ -41,14 +41,14 @@ export default css`
   template {
     display: none;
   }
-  a {
+  p a {
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
     color: dodgerblue;
     text-decoration: none;
   }
-  a:active,
-  a:hover {
+  p a:active,
+  p a:hover {
     outline-width: 0;
     text-decoration: underline;
   }

@@ -11,7 +11,7 @@ export default function Title({ title }) {
   `
   return (
     <Link css={{ textDecoration: 'none' }} to="/">
-      <h1 css={theme => [titleStyle(theme), hover(theme)]}>{title}</h1>
+      <h1 css={theme => [titleStyle, hover].map(a => a(theme))}>{title}</h1>
     </Link>
   )
 }

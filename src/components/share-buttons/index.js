@@ -1,5 +1,5 @@
 import React from 'react'
-import { css } from '@emotion/core'
+import { wrapper, iconWrapper } from './style'
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -29,45 +29,11 @@ const brands = {
 
 export default function ShareButtons({ shareUrl, title }) {
   function IconWrapper({ children, color }) {
-    return (
-      <div
-        css={theme => css`
-          color: ${theme.textColor};
-          font-size: ${theme.footerIconFontSize};
-          width: 40px;
-          height: 40px;
-          display: flex;
-          padding: 8px;
-          align-items: center;
-          justify-content: center;
-          margin-top: 40px;
-
-          div {
-            cursor: pointer;
-            transition: 0.3s ease;
-          }
-          &:hover div {
-            font-size: 45px;
-            color: ${color};
-          }
-        `}
-      >
-        {children}
-      </div>
-    )
+    return <div css={theme => iconWrapper(theme, color)}>{children}</div>
   }
 
   return (
-    <div
-      css={theme => css`
-        display: flex;
-        justify-content: flex-end;
-
-        ${theme.smallScreen} {
-          justify-content: center;
-        }
-      `}
-    >
+    <div css={wrapper}>
       <IconWrapper color={brands.email}>
         <EmailShareButton subject={title} url={shareUrl}>
           <FaEnvelope />

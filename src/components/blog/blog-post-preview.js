@@ -18,7 +18,6 @@ function BlogPostPreview({ post }) {
           </Link>
         </h1>
       </BlogInfo>
-      <TagDisplay tags={post.frontmatter.tags} />
       <p>{post.excerpt}</p>
     </div>
   )

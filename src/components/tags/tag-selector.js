@@ -1,25 +1,7 @@
 import React from 'react'
+import { baseStyle, wrapper, tagNumber } from './style'
 import { css } from '@emotion/core'
 
-const baseStyle = theme => css`
-  border-radius: 4px;
-  background: rgba(0, 0, 0, 0.1);
-  color: ${theme.textColor};
-  padding: 4px;
-  margin: 5px 5px 0 0;
-  cursor: pointer;
-  display: flex;
-  align-items: end;
-`
-const wrapper = css`
-  display: flex;
-  flex-wrap: wrap;
-`
-const tagNumber = theme => css`
-  margin-left: 5px;
-  font-size: 14px;
-  color: ${theme.primaryColor};
-`
 export default function TagSelector({ tags, selectedTags, dispatch }) {
   const tagList = Array.from(new Set(tags))
   const tagCount = tagList.reduce(
@@ -50,10 +32,7 @@ export default function TagSelector({ tags, selectedTags, dispatch }) {
       <span
         key={tag}
         onClick={() => onTagClick(tag)}
-        css={theme => css`
-          ${baseStyle(theme)}
-          ${tagCol(theme)}
-        `}
+        css={theme => [baseStyle, tagCol].map(a => a(theme))}
       >
         {tag}
         {!isSelected && <span css={tagNumber}>{tagCount[tag]}</span>}

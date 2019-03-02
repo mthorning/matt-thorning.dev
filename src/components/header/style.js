@@ -34,3 +34,14 @@ export const title = theme => css`
     font-size: 35px;
   }
 `
+export const whiteBorder = theme => css`
+  border-right: 3px solid ${theme.secondaryColor};
+`
+export const blinkBorder = theme => css`
+  @keyframes blink {
+    50% {
+      border-right: 3px solid ${theme.primaryColor};
+    }
+  }
+  animation: blink 0.5s step-end infinite alternate;
+`

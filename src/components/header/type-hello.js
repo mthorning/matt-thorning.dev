@@ -1,23 +1,10 @@
 import React, { useEffect, useReducer } from 'react'
-import { css } from '@emotion/core'
-import { title as baseStyle } from './style'
-
-const whiteBorder = theme => css`
-  border-right: 3px solid ${theme.secondaryColor};
-`
-const blinkBorder = theme => css`
-  @keyframes blink {
-    50% {
-      border-right: 3px solid ${theme.primaryColor};
-    }
-  }
-  animation: blink 0.5s step-end infinite alternate;
-`
+import { title as baseStyle, blinkBorder, whiteBorder } from './style'
 
 export default function TypeHello() {
   const initialState = {
     text: '',
-    style: theme => [baseStyle, whiteBorder].map(css => css(theme)),
+    style: theme => [baseStyle, whiteBorder].map(a => a(theme)),
   }
   const reducer = (state, action) => {
     switch (action.type) {
@@ -83,7 +70,7 @@ export default function TypeHello() {
     dispatch({
       type: 'updateClasses',
       payload: theme =>
-        [baseStyle, whiteBorder, blinkBorder].map(css => css(theme)),
+        [baseStyle, whiteBorder, blinkBorder].map(a => a(theme)),
     })
     setTimeout(() => {
       dispatch({ type: 'updateClasses', payload: theme => [baseStyle(theme)] })
