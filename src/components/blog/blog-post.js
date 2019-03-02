@@ -26,7 +26,7 @@ export default function Template({ data, location, pageContext }) {
 
   return (
     <Layout>
-      <Helmet title={`HelloCode - ${post.frontmatter.title}`} />
+      <Helmet title={`HC | ${post.frontmatter.title}`} />
       <Title />
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
       <ShareButtons shareUrl={location.href} title={post.frontmatter.title} />

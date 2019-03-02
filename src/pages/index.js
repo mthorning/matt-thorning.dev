@@ -49,7 +49,7 @@ export default function({ data }) {
   return (
     <Layout animateHeader>
       <SEO
-        title="Hello Code"
+        title="Home"
         keywords={[
           `JavaScript`,
           `web`,
