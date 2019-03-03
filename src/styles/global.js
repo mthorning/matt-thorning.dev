@@ -334,10 +334,10 @@ export default css`
   }
   /* single backtick markdown blocks */
   :not(pre) > code[class*='language-'] {
-    background: rgba(133, 133, 131, 0.22);
-    padding: 0 5px;
+    background: rgba(133, 133, 131, 0.22) !important;
+    padding: 0 5px !important;
     color: rgba(9, 9, 9, 0.64);
     font-family: 'Fira Mono', monospace;
-    border-radius: 0.2em;
+    border-radius: 0.2em !important;
   }
 `
