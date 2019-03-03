@@ -333,7 +333,7 @@ export default css`
     }
   }
   /* single backtick markdown blocks */
-  :not(pre) > code[class*='language-text'] {
+  :not(pre) > code[class*='language-'] {
     background: rgba(133, 133, 131, 0.22);
     padding: 0 5px;
     color: rgba(9, 9, 9, 0.64);
