@@ -336,7 +336,7 @@ export default css`
   :not(pre) > code[class*='language-text'] {
     background: #85858338;
     padding: 0 5px;
-    color: #090909c9;
+    color: #090909a3;
     font-family: 'Fira Mono', monospace;
     border-radius: 0.2em;
   }

@@ -1,13 +1,13 @@
 ---
 path: '/css-in-js-2'
-date: '2019-03-02T10:00:00'
+date: '2019-03-03T10:00:00'
 title: 'CSS in JS (part 2)'
-tags: ['javascript', 'css', 'tooling']
+tags: ['javascript', 'css', 'tooling', 'react']
 ---
 
-In my [last blog post](/css-in-js) I wrote about how I had started using [Emotion](https://github.com/emotion-js/emotion) instead of Sass. Initially I had started off by using Emotion's framework-agnostic package, but I have now switched to using the version which they created specifically for use with React because it adds some extra functionality which I liked the look of! As such, this post is going to be talking about React and I'm making the assumption that if you're reading it then you already know how to use React.
+In my [last blog post](/css-in-js) I wrote about how I had started using [Emotion](https://github.com/emotion-js/emotion) instead of Sass. Initially I was using Emotion's framework-agnostic package, but I have now switched to using the version which they created specifically for use with React because it adds some extra functionality which I liked the look of! This post is going to be about using Emotion with React, because of that, I'm going to be making the assumption that if you're reading this then you already know how to use React.
 
-You can install the package with NPM:
+Let's get started, you can install the package with NPM:
 ```
 npm install @emotion/core --save-dev
 ```
@@ -15,7 +15,7 @@ npm install @emotion/core --save-dev
 Then you will need to make some changes to your Babel setting to enable your project to work with this package.
 
 ## Babel
-There are two methods available for making your app work with _@emotion/core_. The quickest way is to import Emotion's `jsx` function at the top of your file and include a [JSX Pragma](https://babeljs.io/docs/en/babel-plugin-transform-react-jsx#pragma) on the line above it like so:
+There are two methods available for making your app work with _@emotion/core_. The quickest way is to import Emotion's `jsx` function at the top of your file and include a [JSX Pragma](https://emotion.sh/docs/css-prop#jsx-pragma) on the line above it like so:
 ```jsx
 /** @jsx jsx */
 import { jsx } from '@emotion/core'
@@ -171,11 +171,11 @@ export default function HelloCode() {
   )
 }
 ```
-Slight disclaimer with this one, I haven't tried it; if you happen to try it and it doesn't work then let me know!
+Slight disclaimer with this one, I haven't tried it (yet); if you happen to try it and it doesn't work then let me know!
 
 ### Theming
 
-With theming you can create an object of keys/values that you want to have access to in the _css_ prop of any component. This is great for maintaining a consistent look and makes changing colours for branding a lot easier because you only need to change the values in one place instead of in every component.
+With theming you can create an object containing settings that you want to have access to in the _css_ prop of any component. This is great for maintaining a consistent look and makes changing colours for branding a lot easier because you only need to change the values in one place instead of in every component.
 
 If you want to use theming with Emotion then you wil first need to install it with NPM:
 ```
@@ -211,7 +211,7 @@ export default function HelloCode(props) {
   return <h1 css={styles}>Hello Code</h1>
 }
 ```
-The `css` prop also accepts a function which is called with the `theme` as an argument. because this is a JavaScript object it can be passed around as you would any other object. Here's another example from earlier:
+The `css` prop also accepts a function which is called with the `theme` as an argument. When React sees this it walks back up the components tree until it finds a `ThemeProvider` and gets the theme object from its prop. Because this is a JavaScript object it can be passed around as you would any other object. Here's another example from earlier:
 ```jsx
 import { css } from '@emotion/core'
 
@@ -235,4 +235,4 @@ export default function HelloCode(props) {
 ```
 Here we are passing the theme object to each function in the array using map. I'm sure you can see how powerful this can be; any `css` prop can very easily be turned into a function with access to everything in your theme object just by prepending it with `theme => `!
 
-That's covered everything I've been doing with Emotion lately. There's more in their documentation that I haven't covered but I've talked about the stuff which I have found most useful. Still, take a look and if you know of anything that I've not mentioned which you think is good then please let me know about it. Cheers! :+1:
+That's covered everything I've been doing with Emotion lately. There's more in their documentation which I haven't covered but I've talked about the stuff which I've found the most useful. Still, take a look and if you see or know of anything that I've not mentioned which you think is useful then please let me know. Cheers! :+1:
