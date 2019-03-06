@@ -50,7 +50,7 @@ export default function({ data }) {
   return (
     <Layout animateHeader>
       <SEO
-        title={siteMetadata.title}
+        title={`HC | Home`}
         description={siteMetadata.description}
         keywords={[
           `javascript`,
