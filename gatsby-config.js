@@ -39,7 +39,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `< Hello Code >`,
+        name: `<HelloCode />`,
         short_name: `<HC />`,
         start_url: `/`,
         background_color: `#fc4445`,
