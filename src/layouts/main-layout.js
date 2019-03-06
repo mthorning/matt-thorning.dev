@@ -22,7 +22,7 @@ const Layout = ({ children, animateHeader }) => {
             {animateHeader ? (
               <TypeHello />
             ) : (
-              <Title title={data.site.siteMetadata.title} />
+              <Title title={`<${data.site.siteMetadata.title} />`} />
             )}
           </Header>
           <div

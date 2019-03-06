@@ -1,9 +1,9 @@
 module.exports = {
   siteMetadata: {
-    title: `<HelloCode />`,
+    title: `HelloCode`,
     description: `A blog about coding and computing.`,
     author: `@thorning_m`,
-    siteUrl: `https://blog.thorning.ovh`,
+    siteUrl: `https://hellocode.dev`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

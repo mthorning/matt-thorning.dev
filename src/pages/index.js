@@ -7,6 +7,7 @@ import { TagSelector } from 'components/tags'
 
 export default function({ data }) {
   const { edges: posts } = data.allMarkdownRemark
+  const { siteMetadata } = data.site
 
   function reducer(state, action) {
     switch (action.type) {
@@ -49,9 +50,10 @@ export default function({ data }) {
   return (
     <Layout animateHeader>
       <SEO
-        title="Home"
+        title={siteMetadata.title}
+        description={siteMetadata.description}
         keywords={[
-          `JavaScript`,
+          `javascript`,
           `web`,
           `development`,
           `frontend`,
@@ -75,6 +77,12 @@ export default function({ data }) {
 
 export const pageQuery = graphql`
   query IndexQuery {
+    site {
+      siteMetadata {
+        description
+        title
+      }
+    }
     allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
       edges {
         node {
