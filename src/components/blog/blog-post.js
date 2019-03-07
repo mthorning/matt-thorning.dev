@@ -30,7 +30,7 @@ export default function Template({ data, location, pageContext }) {
       <Helmet>
         <title>{post.frontmatter.title}</title>
         <meta name="description" content={post.excerpt} />
-        <meta name="keywords" content={post.frontmatter.tags.join('')} />
+        <meta name="keywords" content={post.frontmatter.tags.join(',')} />
         <meta name="author" content={siteMetadata.author} />
       </Helmet>
       <Title />
