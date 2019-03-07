@@ -1,8 +1,8 @@
 module.exports = {
   siteMetadata: {
     title: `HelloCode`,
-    description: `A blog about coding and computing and other things that haven't been decided yet.`,
-    author: `@thorning_m`,
+    description: `A blog about coding, computing and other things that haven't been decided yet.`,
+    author: `Matt Thorning`,
     siteUrl: `https://hellocode.dev`,
   },
   plugins: [
@@ -39,8 +39,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `<HelloCode />`,
-        short_name: `<HC />`,
+        name: `HelloCode`,
+        short_name: `HC`,
         start_url: `/`,
         background_color: `#fc4445`,
         theme_color: `#fc4445`,

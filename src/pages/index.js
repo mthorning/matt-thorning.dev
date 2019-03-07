@@ -50,17 +50,10 @@ export default function({ data }) {
   return (
     <Layout animateHeader>
       <SEO
-        title={`HC | Home`}
+        title="Home"
         description={siteMetadata.description}
-        keywords={[
-          `javascript`,
-          `web`,
-          `development`,
-          `frontend`,
-          `linux`,
-          `networking`,
-          `programming`,
-        ]}
+        author={siteMetadata.author}
+        keywords={Array.from(new Set(tags))}
       />
       <TagSelector {...{ tags, selectedTags, dispatch }} />
       <div>
@@ -81,6 +74,7 @@ export const pageQuery = graphql`
       siteMetadata {
         description
         title
+        author
       }
     }
     allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
