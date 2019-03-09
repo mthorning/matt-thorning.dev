@@ -31,7 +31,6 @@ const Layout = ({ children, animateHeader }) => {
               max-width: ${theme.contentMaxWidth};
               padding: 0px 1.0875rem 1.45rem;
               padding-top: 0;
-              text-align: justify;
             `}
           >
             {children}
