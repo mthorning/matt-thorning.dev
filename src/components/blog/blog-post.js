@@ -14,6 +14,7 @@ export default function Template({ data, location, pageContext }) {
   function Title() {
     const wrapper = css`
       margin-bottom: 30px;
+      margin-top: 50px;
     `
 
     return (
