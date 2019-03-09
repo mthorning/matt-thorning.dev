@@ -1,6 +1,6 @@
 ---
 path: '/bash-tips'
-date: '2019-02-16T20:00'
+date: '2019-03-07T20:00'
 title: 'Bash tips'
 tags: ['linux']
 ---
@@ -27,6 +27,7 @@ Command | Description
 `lsof` | Lists open files. Use with `-i :80` to find process listening on a port (port 80 here).
 `netstat -plt` | Lists network processes, showing port numbers with programme name and PID. Useful if there is a process already listening on a port which you want to use.
 `ctrl-r` | Reverse history search. `Ctrl-r` next item, `ctrl-j` to copy or `enter` to run.
+`ln -s target_path link_path` | Creates a symbolic link from the target path to the link path.
 
 ### Variables
 ```

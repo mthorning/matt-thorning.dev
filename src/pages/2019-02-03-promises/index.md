@@ -1,7 +1,7 @@
 ---
 path: '/promises'
 date: '2019-02-05T21:30'
-title: 'Promises, Promises'
+title: 'Promises, promises'
 tags: ['javascript']
 ---
 

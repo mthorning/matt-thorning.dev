@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: `HelloCode`,
-    description: `A blog about coding, computing and other things that haven't been decided yet.`,
+    description: `A blog about web development, coding, computing and other things that haven't been decided yet.`,
     author: `Matt Thorning`,
     siteUrl: `https://hellocode.dev`,
   },

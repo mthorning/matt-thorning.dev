@@ -1,7 +1,7 @@
 ---
 path: '/ip-addresses'
 date: '2019-02-17T08:00'
-title: 'IP Addresses'
+title: 'IP addresses'
 tags: ['networking']
 ---
 
