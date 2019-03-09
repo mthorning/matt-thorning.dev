@@ -25,7 +25,7 @@ Command | Description
 `head` | Print first 5 lines of file.txt.
 `tail`  | Print last 5 lines of file.txt.
 `lsof` | Lists open files. Use with `-i :80` to find process listening on a port (port 80 here).
-`netstat -plt` | Lists network processes, showing port numbers with programme name and PID. Useful if there is a process already listening on a port which you want to use.
+`netstat` | Lists network processes. If used with `-plt` switch it shows port numbers with programme name and PID. Useful if there is a process already listening on a port which you want to use.
 `ctrl-r` | Reverse history search. `Ctrl-r` next item, `ctrl-j` to copy or `enter` to run.
 
 ### Variables
@@ -35,6 +35,7 @@ $ echo "version is $variable"
 version is 0.15.0
 ```
 
+---
 ### Here Docs
 Input stream which sends the text in each line to a process until a line is reached which contains only the delimiter (`ENDOFSTRING` in the example below).
 ```
