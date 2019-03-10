@@ -6,6 +6,8 @@ const sharedStyles = css`
   font-size: 15px;
 `
 export const wrapper = theme => css`
+  display: flex;
+  align-items: center;
   align-self: center;
   padding: 4px;
   position: relative;

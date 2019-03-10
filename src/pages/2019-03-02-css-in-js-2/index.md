@@ -119,8 +119,6 @@ export default function HelloCode() {
 ```
 So you can see that `useEffect` calls the `animate` function on component mount. This function uses `setTimeout` to dispatch the `addClass` action after a `5000` milliseconds delay. The payload of the action contains the reference to the `animationStyle` which is imported at the top of the file. The reducer matches the action type with `addClass` and updates the component's state with a new array containing both `state.style` and `animationStyle` from `action.payload`.
 
----
-
 ## The Global component
 
 I generally believe it's a good idea to keep your CSS styles scoped to your components. When writing React applications you build up from the smallest level of granularity; creating one large stylesheet which controls styling for the entire app flies in the face of this methodolgy (in my opinion). However, it's still important to maintain consistency in the way the UI looks across your application. There are two options available to help with this, here is the first.
@@ -232,5 +230,7 @@ export default function HelloCode(props) {
 //Text will be red
 ```
 Here we are passing the theme object to each function in the array using map. I'm sure you can see how powerful this can be; any `css` prop can very easily be turned into a function with access to everything in your theme object just by prepending it with `theme => `!
+
+---
 
 That's covered everything I've been doing with Emotion lately. There's more in their documentation which I haven't covered but I've talked about the stuff which I've found the most useful. Still, take a look and if you see or know of anything that I've not mentioned which you think is useful then please let me know. Cheers! :+1:

@@ -11,6 +11,8 @@ _Edit: I've since switched to using @emotion/core, you can read about it in [par
 
 I've been using Emotion with React, there is a React-specific package (_@emotion/core_) which provides some additional features but I have just been using their framework-agnostic version. There are several different ways that you can use Emotion, the examples below use the method that works best for me, check out their [documentation](https://emotion.sh/docs/introduction) if you're interested in what else it can do.
 
+## Basic useage
+
 Emotion uses [tagged templates](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_templates) to create a CSS class which is then applied to the element. Here is the basic pattern for applying styles to a React component:
 ```jsx
 import React from 'react'
@@ -40,6 +42,7 @@ If you look at the markup you can see that Emotion assigns a class to the elemen
 
 This scopes your CSS to the element it is applied to so it won't leak to other components, making your styling _component-based_ as opposed to _document-based_ which fits better with the way that React apps are written. If you want to set global styles then Emotion has a [Global component](https://emotion.sh/docs/globals) you can use, and there is nothing stopping you from using a global stylesheet in addition to your component-level styles.
 
+
 I started off by writing my styles straight into the JSX but things began to look messy. Fortunately it's really easy to extract the rules and move them above the JSX or even into their own file:
 ```jsx
 import React from 'react'
@@ -60,6 +63,10 @@ export default function TestComponent(props) {
   )
 }
 ```
+<br />
+
+## Just like CSS
+
 It's possible to do nested components, pseudo-classes and media queries:
 ```jsx
 const styling = css`
@@ -80,6 +87,8 @@ const styling = css`
 ```
 
 If you check the Emotion documentation there are some pretty clever things you can do with media queries if you have a lot of breakpoints to cater for, I won't go into it here but [take a look](https://emotion.sh/docs/media-queries) if you're interested.
+
+## Just like JS
 
 Because these are just strings you can do interpolation:
 ```jsx
@@ -163,6 +172,8 @@ function TagBlock(tagName) {
 }
 ```
 In this example the component will change the colour of the text to `highlightColor` when `tagSelected` is true.
+
+---
 
 I've only been using Emotion for a very brief time and have only scratched the surface of what it can do. Transitioning to it has been extremely easy because it offers all of the functionality of CSS but with the flexibility of JavaScript. The compositional way in which Emotion allows you to build your CSS compliments React nicely, particularly now that hooks are live. This is particularly noticeable when you reach a point where you want to extract some logic into its own component; simply cut and paste the JSX, hooks and styling out of your component and paste them into a new file.
 
