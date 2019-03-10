@@ -1,9 +1,9 @@
 ---
-path: `/behind-the-scenes`
-date: `2019-03-09T09:00:00`
-title: `Behind the scenes`
-tags: [`deployment`, `networking`, `tooling`, `linux`]
-description: `I describe how I set up my server to serve this website and the techniques I employ to deploy the site each time I want to release some code.`
+path: "/behind-the-scenes"
+date: "2019-03-09T09:00:00"
+title: "Behind the scenes"
+tags: ["deployment", "networking", "tooling", "linux"]
+description: "I describe how I set up my server to serve this website and the techniques I employ to deploy the site each time I want to release some code."
 ---
 
 I want to try to write blog posts about things that I know now that I would have liked to have known before I knew what I now know (or TTIKNTIWHLTHKBIKWINK for short). One of those things is how to get a website onto the internet once you have finished creating it. It seems like there are a limitless number of articles about how to make a website, but when I was searching for information about how to launch it once it was made, I seemed to only find adverts for hosting companies.

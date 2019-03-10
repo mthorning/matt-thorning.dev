@@ -1,9 +1,9 @@
 ---
-path: `/promises`
-date: `2019-02-05T21:30`
-title: `Promises, promises`
-tags: [`javascript`]
-description: `I take a look at promises in JavaScript and how to write asynchronous code.`
+path: "/promises"
+date: "2019-02-05T21:30"
+title: "Promises, promises"
+tags: ["javascript"]
+description: "I take a look at promises in JavaScript and how to write asynchronous code."
 ---
 
 Unlike a lot of other languages, JavaScript is single-threaded which means it can only process one command at a time. We often need to get data from other sources, be it from a database, server or the user and I'm sure you can imagine how bad our applications would be if we had to pause the execution of our program each time we were waiting. Promises solve this problem for us, we request some data from wherever we're getting it from and we set the actions which we want to run once the data is returned. This leaves our single-thread free to carry on with other tasks in the meantime.

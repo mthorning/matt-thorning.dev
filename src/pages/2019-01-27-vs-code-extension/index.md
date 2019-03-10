@@ -1,9 +1,9 @@
 ---
-path: `/vscode-extension`
-date: `2019-01-30T20:00`
-title: `Creating a VS Code extension`
-tags: [`javascript`, `tooling`, `testing`]
-description: `I've written an extension for VS Code, this post is a guide to how I created it and published it to the marketplace`
+path: "/vscode-extension"
+date: "2019-01-30T20:00"
+title: "Creating a VS Code extension"
+tags: ["javascript", "tooling", "testing"]
+description: "I've written an extension for VS Code, this post is a guide to how I created it and published it to the marketplace"
 ---
 
 Where I work we have become quite particular about making our code line up vertically in the import sections and when declaring some objects, so that it looks nice and neat! My colleague commented that it would be nice if there was an extension for VS Code that would do the alignment for us, so I made one, and I suspect that this was his plan all along!.

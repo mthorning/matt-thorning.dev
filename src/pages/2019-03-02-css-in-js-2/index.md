@@ -1,9 +1,9 @@
 ---
-path: `/css-in-js-2`
-date: `2019-03-03T10:00:00`
-title: `CSS in JS (part 2)`
-tags: [`javascript`, `css`, `tooling`, `react`]
-description: `Following on from the first post of this name, I have now started using the Emotion package which has been created for use with React, this post is about how to use it.`
+path: "/css-in-js-2"
+date: "2019-03-03T10:00:00"
+title: "CSS in JS (part 2)"
+tags: ["javascript", "css", "tooling", "react"]
+description: "Following on from the first post of this name, I have now started using the Emotion package which has been created for use with React, this post is about how to use it."
 ---
 
 In my [last blog post](/css-in-js) I wrote about how I had started using [Emotion](https://github.com/emotion-js/emotion) instead of Sass. Initially I was using Emotion's framework-agnostic package, but I have now switched to using the version which they created specifically for use with React because it adds some extra functionality which I liked the look of! This post is going to be about using Emotion with React, because of that, I'm going to be making the assumption that if you're reading this then you already know how to use React.
