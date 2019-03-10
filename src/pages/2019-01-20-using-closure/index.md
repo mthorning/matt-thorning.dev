@@ -3,6 +3,7 @@ path: '/using-closure'
 date: '2019-01-20T19:00:00'
 title: 'Using closures'
 tags: ['javascript']
+description: `In my first blog post I talk about closures and how to use them in JavaScript`
 ---
 
 When I was learning about closures in JavaScript for the first time I saw a lot of examples like this:

@@ -3,6 +3,7 @@ path: '/css-in-js'
 date: '2019-02-20T20:10:00'
 title: 'CSS in JS'
 tags: ['javascript', 'css', 'tooling']
+description: `Disillusioned with Sass, I've decided to see what this CSS-in-JS hype is all about by switching to a library called Emotion.`
 ---
 
 I've looked at CSS in JS libraries before but there always seemed be trade-offs which have made them appear less attractive than Sass or even plain CSS. However, I have recently been playing around with [Emotion](https://github.com/emotion-js/emotion) and I'm pretty impressed so I thought I would write a quick post showing some examples of what it can do.
