@@ -3,7 +3,7 @@ import { graphql } from 'gatsby'
 import Helmet from 'react-helmet'
 import Layout from 'layouts/main-layout'
 import { ShareButtons, PreviousNext } from 'components'
-import { BlogInfo, JumpToHeading } from 'components/blog'
+import { BlogInfo, JumpToSection } from 'components/blog'
 import { blogFunctionsWrapper, blogFunctions } from './styles'
 
 export default function Template({ data, location, pageContext }) {
@@ -17,7 +17,7 @@ export default function Template({ data, location, pageContext }) {
         <h1>{post.frontmatter.title}</h1>
         <div css={blogFunctions}>
           <BlogInfo post={post} />
-          <JumpToHeading
+          <JumpToSection
             headings={post.headings}
             path={post.frontmatter.path}
           />

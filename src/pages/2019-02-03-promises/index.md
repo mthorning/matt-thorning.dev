@@ -18,8 +18,6 @@ promise.then(message => console.log(message))
 ```
 First we create a new `promise` object from the `Promise` constructor. This takes a function as an argument which is called with a function to execute when you want the promise to be resolved. I have just used a `setTimeout` in this example to keep things simple but you would normally make calls to an API or query a database (in [Node](https://nodejs.org/)) here. After that we can use Promise's `then` method to execute something when the promise is resolved.
 
----
-
 ## Error handling
 
 So that's how you use promises... As long as nothing goes wrong! With the above code there isn't anything in place to handle the potential outcome of the API returning an error status. Fortunately, handling errors is pretty straightforward:
@@ -41,8 +39,6 @@ promise.then(
 )
 ```
 The function called in the `Promise` constructor is actually called with two callback functions; the second being one for rejecting the promise. In much the same way, `then` also accepts a second callback which executes if the promise is rejected.
-
----
 
 ## Promise chaining
 
@@ -82,8 +78,7 @@ axios.get('api/endpoint/url')
     hideSpiner()
   )
 ```
-
----
+<br />
 
 ## Async/await
 
@@ -112,8 +107,7 @@ async function getData() {
   }
 }
 ```
-
----
+<br />
 
 ## Asynchronous programming
 
@@ -220,8 +214,6 @@ There's a bit more going on with this function. First we initialise our empty `r
 runTest('three') // Result: one two three, Time: 3.002 seconds
 ```
 Half the time, and you can see that the order of our responses has changed, our code is running asynchronously!
-
----
 
 ## Promise.all()
 

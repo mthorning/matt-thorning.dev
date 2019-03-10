@@ -121,11 +121,9 @@ So you can see that `useEffect` calls the `animate` function on component mount.
 
 ---
 
-## Applying styles across the codebase
+## The Global component
 
-I generally believe it's a good idea to keep your CSS styles scoped to your components. When writing React applications you build up from the smallest level of granularity; creating one large stylesheet which controls styling for the entire app flies in the face of this methodolgy (in my opinion). However, it's still important to maintain consistency in the way the UI looks across your application. Here are two options to help with this.
-
-### The Global component
+I generally believe it's a good idea to keep your CSS styles scoped to your components. When writing React applications you build up from the smallest level of granularity; creating one large stylesheet which controls styling for the entire app flies in the face of this methodolgy (in my opinion). However, it's still important to maintain consistency in the way the UI looks across your application. There are two options available to help with this, here is the first.
 
 _@emotion/core_ provides a `Global` component which can be utilised to apply CSS rules globally to your site. It's used like this:
 ```jsx
@@ -173,7 +171,7 @@ export default function HelloCode() {
 ```
 Slight disclaimer with this one, I haven't tried it (yet); if you happen to try it and it doesn't work then let me know!
 
-### Theming
+## Theming
 
 With theming you can create an object containing settings that you want to have access to in the _css_ prop of any component. This is great for maintaining a consistent look and makes changing colours for branding a lot easier because you only need to change the values in one place instead of in every component.
 

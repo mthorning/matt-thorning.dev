@@ -110,7 +110,6 @@ export default css`
   }
   hr {
     box-sizing: content-box;
-    height: 0;
     overflow: visible;
   }
   button,

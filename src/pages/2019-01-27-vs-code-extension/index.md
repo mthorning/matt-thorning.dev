@@ -11,8 +11,6 @@ The full code can be found on [my Github](https://github.com/mthorning/align-ver
 
 ![Gif of extension in action](action.gif)
 
----
-
 ## Getting started
 
 The first step is to download Yeoman and the VS Code Extension Generator with NPM:
@@ -50,8 +48,6 @@ Once the project has been created and the dependencies have been installed you c
 
 That's all I'm going to say about getting setup, I haven't gone into great detail; if you would like a more in-depth article about getting started then I recommend taking a look at [this tutorial](https://code.visualstudio.com/api/get-started/your-first-extension) on VS Code's website.
 
----
-
 ## Adding a menu item
 
 The first thing I knew that I wanted to do was to add an item to the context menu so that users could right-click on some highlighted text to run the extension. This can be achieved through the _package.json_, just add the following to the `contributes` section. Whilst you have this file open you should also change any references to 'helloWorld' to the name of your extension:
@@ -74,10 +70,9 @@ The first thing I knew that I wanted to do was to add an item to the context men
   }
 }
 ```
+<br />
 
----
-
-## Programing the extension
+## Coding the extension
 
 If you chose to write your extension in JavaScript then you will have a file called _extension.js_ which looks like this when you first open it:
 
@@ -137,8 +132,6 @@ Our `editor` variable from _line 2_ has a method called `edit` which calls a fun
 
 The next couple of sections are about the functions which format the text. If you are only interested in how to create an extension then you should probably skip these and jump down to the [last section](#publishing-the-extension) which is about how to publish your extension to the marketplace. If, however, you're interested in how I formatted the text itself then read on!
 
----
-
 ## Test Driven Development
 
 _Lines 6 - 9_ use five functions which are imported from a separate file. These functions process the text by:
@@ -179,8 +172,6 @@ Watch Usage
  › Press q to quit watch mode.
  › Press Enter to trigger a test run.
  ```
-
----
 
 At the top of the file I `require` in the functions from _functions.js_. The reason I put these functions in a separate file was so that I would not need to mock anything when running the tests; if I left them in _extension.js_ then Jest would attempt to import the `vscode` object.
 
@@ -274,9 +265,9 @@ It is possible to set up the VS Code debugger so that you can breakpoint your co
 This is what we're aiming to achieve, all tests passed:
 
 ![Passed tests output](./passedTest.png)
+<br />
 
----
-## The functions
+## Formatting the text
 
 It's (finally!) time to take a look at the functions themselves. Here's a reminder of _lines 6 - 9_ from _extensions.js_:
 ```jsx{numberLines: 6}
@@ -355,8 +346,7 @@ joinWithKeyword(transformed, keyword) {
 Finally we just need to put our blocks of text back together. We map through the array output by the `transform` function and join each line with the `keyword`. Lastly we join the lines back together using the newline (`\n`) character again.
 
 So that's everything that we need to do to create the extension. All that remains to do is to make it available for people to use.
-
----
+<br />
 
 ## Publishing the extension
 
@@ -380,8 +370,8 @@ This will create a _.vsix_ file which can be shared with whomever you choose and
 ```
 code --install-extension < path/to/file.vsix >
 ```
+<br />
 
 ---
 
-## Fin
 When I was figuring out how to make this basic extension I struggled a little bit to find the information I needed. I hope that if you have stumbled across this post that it has helped to fill in one or two of the blanks. If you have any comments or questions, or have spotted something that is incorrect or could have been done in a better way then please let me know on Twitter. Cheers :smile:
