@@ -11,8 +11,6 @@ When you release code it's a really good idea to assign a version number to it. 
 
 Fortunately the package.json has a `"version"` property (as seen above) so you can just increment that and commit to git right? Well, that would be one way of doing it but it doesn't let other people using your code know whether the changes you've made are small bug fixes or massive, sweeping changes which are going to render all of their code completely useless. It's also not going to be particularly easy to checkout an old version because you are going to have to search back through your git log to find the commit where you altered the package.json (I hope you wrote a descriptive commit message!).
 
----
-
 ## Semantic versioning
 
 How do we convey an understanding of the impact our changes will have on our users using just the version number? Semantic versioning (or semver for short) allows us to let them know which one of three categories the code we are releasing falls in to:
@@ -28,8 +26,6 @@ The version number is in three parts, each part separated by a full stop:
 If our code is at version _2.15.0_ and we fix a bug, we would release the fix on version _2.15.1_. If we then added a new feature which is not going to break anything then the version would be bumped to _2.16.0_. Notice that the patch version goes to zero when the minor version is incremented. Next, say we decide to rewrite a large portion of our code, changing everything; the version goes to _3.0.0_ because it is likely that any applications which use our code will now be broken. Again, the numbers to the right of the change are reset to zero.
 
 It's important to understand that, aside from the numbers to the right being reset to zero, the three sections are completely independent of one another, you don't increment the major version when you hit 100 minor versions or anything like that. It's not uncommon to see version numbers like _2.256.0_ because developers try to limit the number of breaking changes they release.
-
----
 
 ## Git tagging
 
@@ -56,10 +52,9 @@ If, at a later date, we need to rollback to this release then we can easily do s
 ```
 git checkout 0.15.0
 ```
+<br />
 
----
-
-## Npm version
+## NPM version
 
 This is all very useful but that's a lot to do each time you want to release something, especially when you consider that this doesn't _actually release anything!_ Luckily for us, there is a command which will do this for us. To bump the version on the package.json, create a new commit and tag it with the version number you can use one the following commands:
 
@@ -79,7 +74,7 @@ By default, NPM puts a `v` in front of the version number. I'm sure this won't b
 tag-version-prefix=""
 ```
 
----
+<br />
 
 ## Pre and post version scripts
 
@@ -96,6 +91,7 @@ In this app, which is written in [GatsbyJS](https://www.gatsbyjs.org/ "Gatsby's 
 "preversion": "npm run format",
   "postversion": "git push && git push --tags && ./release.sh"
 ```
+<br />
 
 ---
 
