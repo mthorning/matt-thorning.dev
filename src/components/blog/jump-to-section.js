@@ -15,6 +15,10 @@ function JumpToHeading({ headings, path }) {
   if (!headings.length) return null
   const [showDropdown, setShowDropdown] = useState(false)
 
+  function sterilise(value) {
+    return value.replace(/[^\w\s]/gi, '')
+  }
+
   function lower(value) {
     return value
       .split('')
@@ -23,11 +27,11 @@ function JumpToHeading({ headings, path }) {
   }
 
   function hyphenate(value) {
-    return value.replace(/ /gi, '-')
+    return value.replace(/\s/gi, '-')
   }
 
   function onSelectChange(value) {
-    const id = lower(hyphenate(value))
+    const id = lower(hyphenate(sterilise(value)))
     navigate(`${path}#${id}`)
   }
 
