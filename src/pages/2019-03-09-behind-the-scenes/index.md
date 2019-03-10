@@ -2,7 +2,7 @@
 path: '/behind-the-scenes'
 date: '2019-03-09T09:00:00'
 title: 'Behind the scenes'
-tags: ['deployment', 'networking', 'tooling']
+tags: ['deployment', 'networking', 'tooling', 'linux']
 ---
 
 I want to try to write blog posts about things that I know now that I would have liked to have known before I knew what I now know (or TTIKNTIWHLTHKBIKWINK for short). One of those things is how to get a website onto the internet once you have finished creating it. It seems like there are a limitless number of articles about how to make a website, but when I was searching for information about how to launch it once it was made, I seemed to only find adverts for hosting companies.
@@ -29,12 +29,12 @@ In my NGINX configuration file there is a server block which looks like this:
 ```
 server {
   server_name hellocode.dev www.hellocode.dev;
-  root /home/hcuser/websites/blog/;
+  root /home/matt/sites/blog/;
 }
 ```
 NGINX looks at the "Host" header field on each request that comes in and matches the `server_name` values with it. This is how it is possible to point more than one domain at an IP address and serve different websites from the same server. Here, it is looking for `hellocode.dev` or `www.hellocode.dev`, if it matches then it serves the files found at `/home/hcuser/websites/blog`.
 
-Before I bought the _hellocode.dev_ domain I was serving this site from `blog.thorning.ovh`. Because I still want people to be able to find the blog even if they use the old domain, I have a second NGINX configuration file which redirects any users attempting to visit it:
+Before I bought the _hellocode.dev_ domain I was serving this site from _blog.thorning.ovh_. Because I still want people to be able to find the blog even if they use the old domain, I have a second NGINX configuration file which redirects any users attempting to visit it:
 ```
 server {
   server_name blog.thorning.ovh;
@@ -49,3 +49,61 @@ It's a good idea to use HTTPS on your site because it encrypts the traffic betwe
 [Certbot](https://certbot.eff.org/) can be installed on your system to create a certificate for you. For free! It connects with [Let's Encrypt](https://letsencrypt.org/) to fetch and deploy SSL/TLS certificates on your web server and there is even and NGINX plugin which automatically updates your NGINX configuration files for you. It's pretty easy to use, just follow the instructions on their site and you'll be up-and-running with HTTPS in no time.
 
 
+## Shell scripts
+
+The server is set up and serving files over HTTPS from a directory of our choosing, now we just need to get the files from our computer and into the directory. At first I was using a shell script to perform this task for me. The script was run as a `postversion` script by NPM (you can read more about them [here](/npm-version#pre-and-post-version-scripts)). Here's the script:
+```{numberLines: true}
+#! /bin/bash
+
+rm -rf public/*
+npm run build
+
+version=$(git describe --tags)
+tar -cvzf versions/$version.tar.gz public
+
+scp versions/$version.tar.gz vps:~/sites/release.tar.gz
+
+ssh vps <<'ENDSSH'
+    tar -xf ~/sites/release.tar.gz -C ~/sites/
+    rm -rf ~/sites/blog && mv ~/sites/public ~/sites/blog
+    rm ~/sites/release.tar.gz
+ENDSSH
+```
+Let's go through this line-by-line, it looks more complicated than it is!
+
+Line 1 is found at the top of every shell script, it tells the interpreter to run the script using the program at `/bin/bash`.
+
+Lines 3 & 4 clean the public directory and rebuild the app:
+```{numberLines: 3}
+rm -rf public/*
+npm run build
+```
+This site is built with [Gatsby](https://www.gatsbyjs.org/) which builds files and puts them in the `public` directory in both development and production mode. I don't want to send files which aren't needed to the server so the first thing I do is delete everything in the `public` folder on line 3 and then re-run a production build on line 4.
+
+The next section creates a tarball of the app:
+```{numberLines: 6}
+version=$(git describe --tags)
+tar -cvzf versions/$version.tar.gz public
+```
+On line 6, I take the output of `git describe --tags` and assign it to the variable `version` (remember that this script was set to run immediately after the app had been versioned). On line 7, I use `tar` (see [here](/bash-tips#tar)) to create a tarball of the `public` directory, the version is used to name the file, which is saved in the `versions` directory.
+
+On line 9 I use `scp` (see [here](/bash-tips#scp)) to transfer the tarball to the server:
+```{numberLines: 9}
+scp versions/$version.tar.gz vps:~/sites/release.tar.gz
+```
+
+The final section uses something called a heredoc (see [here](/bash-tips#here-docs)) to run commands on the server:
+```{numberLines: 11}
+ssh vps <<'ENDSSH'
+    tar -xf ~/sites/release.tar.gz -C ~/sites/
+    rm -rf ~/sites/blog && mv ~/sites/public ~/sites/blog
+    rm ~/sites/release.tar.gz
+ENDSSH
+```
+The SSH client looks at the SSH config file on my filesystem where I have an entry for `vps`. The configuration file tells the SSH client my username, IP address of the remote host and location of my private ssh key. This is useful because I can now safely check this shell script into source control without including any sensitive information.
+
+The first command run on the server (line 12) extracts the tarball into the `sites` folder in my home directory. This leaves a folder named _public_ in the `sites` directory. The next line (13) deletes the old site files and renames `public` to `blog`. The idea here is that the downtime for the site will be very small because there is only a matter of milliseconds between the old site being deleted and the new folder being renamed. Finally (14), I delete the tarball because it is no longer needed on the server.
+
+Because we have replaced the files in the folder which NGINX is serving from, the new code should now be live on the web. This method worked well for me for a while but I wanted to take things one step further. 
+
+There were occasions where I would be told that there was a typo or mistake in one of my posts. To correct it I would have to wait until I was next at my computer so that I could run the release script (remember that I also need my SSH key to release the files so I couldn't just clone my repository from github to fix it and get the fix up on the site). What I wanted was a way to be able to edit files online from wherever I was (even by using my phone) and to be able to see the fix live on the site within a couple of minutes.

@@ -309,9 +309,10 @@ export default css`
     line-height: 1.42;
   }
   pre[class*='language-'].line-numbers {
-    padding: 0;
+    padding-top: 0;
+    padding-bottom: 5px;
     padding-left: 2.8em !important;
-    overflow: auto;
+    overflow-y: hidden;
     word-wrap: normal;
     white-space: pre;
   }
