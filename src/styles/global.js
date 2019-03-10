@@ -41,6 +41,9 @@ export default css`
   template {
     display: none;
   }
+  p {
+    text-align: justify;
+  }
   p a {
     background-color: transparent;
     -webkit-text-decoration-skip: objects;

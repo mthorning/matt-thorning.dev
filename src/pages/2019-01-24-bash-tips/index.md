@@ -25,7 +25,7 @@ Command | Description
 `head` | Print first 5 lines of file.txt.
 `tail`  | Print last 5 lines of file.txt.
 `lsof` | Lists open files. Use with `-i :80` to find process listening on a port (port 80 here).
-`netstat -plt` | Lists network processes, showing port numbers with programme name and PID. Useful if there is a process already listening on a port which you want to use.
+`netstat` | Lists network processes. If used with `-plt` switch it shows port numbers with programme name and PID. Useful if there is a process already listening on a port which you want to use.
 `ctrl-r` | Reverse history search. `Ctrl-r` next item, `ctrl-j` to copy or `enter` to run.
 `ln -s target_path link_path` | Creates a symbolic link from the target path to the link path.
 
@@ -36,6 +36,7 @@ $ echo "version is $variable"
 version is 0.15.0
 ```
 
+---
 ### Here Docs
 Input stream which sends the text in each line to a process until a line is reached which contains only the delimiter (`ENDOFSTRING` in the example below).
 ```
@@ -50,6 +51,7 @@ It will write every line to the file
 until a line with on ENDOFSTRING
 ```
 
+---
 ### Translate
 Transforms or deletes characters in a string.
 ```
@@ -62,6 +64,7 @@ ewar woowar
 
 As mentioned above, I will keep updating this one. I expect I'll update the date each time to keep bumping it up the list. I'm also planning on starting a similar reference list of Vim commands :)
 
+---
 ### Cat
 Concatenates files. In addition to writing a file to stdout, `cat` can also write to a file. Use cat with redirect ( `>` ) to the file you want to write to, write your message then `ctrl-d` to exit:
 ```
@@ -77,3 +80,10 @@ Hello from file 2
 Hello from file 2
 ```
 
+---
+### Links
+Creates a hard link to a file in another location. Use the `-s` switch to make it a soft link (also called a symbolic link or symlink for short) to a file in another location:
+```
+ln -s target_path link_path
+```
+The files that you see on your filesystem are just pointers to something called an _inode_ which is where the data is actually stored internally. A hard link is another pointer which points to the same inode. A soft link creates a new inode which references the original inode. This is an important distinction to make because deleting a hard link will delete the actual inode whereas deleting a soft link (symlink) does not affect the original file.

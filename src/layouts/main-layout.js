@@ -26,9 +26,9 @@ const Layout = ({ children, animateHeader }) => {
             )}
           </Header>
           <div
-            css={css`
+            css={theme => css`
               margin: 0 auto;
-              max-width: 960px;
+              max-width: ${theme.contentMaxWidth};
               padding: 0px 1.0875rem 1.45rem;
               padding-top: 0;
             `}

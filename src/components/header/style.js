@@ -2,19 +2,23 @@ import { css } from '@emotion/core'
 
 export const wrapper = theme => css`
   background: ${theme.primaryColor};
-  margin-bottom: 1.45rem;
   height: 86px;
+`
+export const innerWrapper = theme => css`
+  max-width: ${theme.headerMaxWidth};
+  margin: auto;
   position: relative;
+  height: 100%;
 `
 export const titleWrapper = css`
   margin: 0 auto;
   max-width: 1200px;
-  padding: 20px;
+  height: 100%;
 `
 export const personalLinks = theme => css`
   position: absolute;
   top: 0;
-  right: 20px;
+  right: 0;
   font-size: 25px;
 
   ${theme.smallScreen} {
@@ -33,6 +37,8 @@ export const title = theme => css`
   ${theme.smallScreen} {
     font-size: 35px;
   }
+  position: absolute;
+  bottom: 10px;
 `
 export const whiteBorder = theme => css`
   border-right: 3px solid ${theme.secondaryColor};
