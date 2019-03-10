@@ -88,7 +88,7 @@ ln -s target_path link_path
 ```
 The files that you see on your filesystem are just pointers to something called an _inode_ which is where the data is actually stored internally. A hard link is another pointer which points to the same inode. A soft link creates a new inode which references the original inode. This is an important distinction to make because deleting a hard link will delete the actual inode whereas deleting a soft link (symlink) does not affect the original file.
 
-### Tar
+## Tar
 Compresses a directory or files(s).
 ```
 tar -czvf name-of-archive.tar.gz /path/to/directory-or-file
@@ -97,16 +97,16 @@ The `c` switch signifies we want to create an archive, `z` says we want to use g
 ```
 tar -xzvf archive.tar.gz
 ```
+<br />
 
----
-### SSH
+## SSH
 Securely connect to a remote host.
 ```
 ssh your_username@remote_host_domain_or_ip_address
 ```
+<br />
 
----
-### SCP
+## SCP
 Secure copy files from remote host to local host or vice-versa. It uses [SSH](bash-tips#ssh) with the same level of security to transfer the files.
 ```
 scp foobar.txt your_username@remotehost:/some/remote/directory
