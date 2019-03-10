@@ -30,7 +30,7 @@ export const wrapper = theme => css`
       list-style-type: none;
     }
     li {
-      margin: 0;
+      margin: 4px 0;
       padding: 0 4px;
     }
     li:hover {
