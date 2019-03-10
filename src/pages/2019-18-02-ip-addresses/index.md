@@ -55,6 +55,6 @@ The address on my parcel contains the street address of the building I work in a
 
 There are many common port numbers (80 is HTTP, 22 is SSH, 20 is FTP, 25 is SMTP) but they can also be assigned as needed. To access a specific port you append a colon to the URL followed by the port number. If a port number is not supplied then it will default to port 80 (HTTP). When we write _google.co.uk_ we really mean _216.58.198.227:80_
 
-## The end?
+---
 
 That's all I want to cover for this post. There's more we could talk about such as subnets, classes, MAC addresses and ARP but I'd prefer to keep this post brief so maybe I will do a part 2 at a later date. I hope you've found this post useful, feel free to get in touch with any comments / questions, see you next time. :smiley:

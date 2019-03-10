@@ -25,7 +25,7 @@ Now, it was pretty clear to me what was happening; the outer function (which is 
 
 So all well and good. The bit that was not clear to me was _why_ this would be useful! As such, I would like to demonstrate a couple of ways in which I use closures in my daily coding.
 
----
+## Example one
 
 The first technique is encapsulation. This is a way of creating a module where the inner workings are private and only certain methods are exposed for other modules to interact with them. It is exactly what is happening in the example above but it is (hopefully!) easier to see why it is useful when we look at some code which has a bit more going on.
 
@@ -58,7 +58,7 @@ console.log(library.getBooks()) // [ Island, 1984, Papillon, catch 22 ]
 
 As you can see, our `books` array is protected from the outside world by the inner function's closure over it. The only way to interact with it is through the public methods; `getBooks()` returns a copy of the array instead of a reference to it and books can only be added or deleted one at a time.
 
----
+## Example two
 
 The second example is a pattern I use frequently. I will use a React component to demonstrate, don't worry if you don't know React, it is pretty easy to see what is happening.
 

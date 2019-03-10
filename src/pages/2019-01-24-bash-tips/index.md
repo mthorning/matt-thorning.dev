@@ -29,15 +29,15 @@ Command | Description
 `ctrl-r` | Reverse history search. `Ctrl-r` next item, `ctrl-j` to copy or `enter` to run.
 `ln -s target_path link_path` | Creates a symbolic link from the target path to the link path.
 
-### Variables
+## Variables
 ```
 $ variable=$(git describe --tags)
 $ echo "version is $variable"
 version is 0.15.0
 ```
+<br />
 
----
-### Here Docs
+## Here Docs
 Input stream which sends the text in each line to a process until a line is reached which contains only the delimiter (`ENDOFSTRING` in the example below).
 ```
 $ cat << ENDOFSTRING
@@ -50,9 +50,9 @@ This is a here doc
 It will write every line to the file
 until a line with on ENDOFSTRING
 ```
+<br />
 
----
-### Translate
+## Translate
 Transforms or deletes characters in a string.
 ```
 $ echo "hello there" | tr a-z A-Z
@@ -63,9 +63,9 @@ ewar woowar
 ```
 
 As mentioned above, I will keep updating this one. I expect I'll update the date each time to keep bumping it up the list. I'm also planning on starting a similar reference list of Vim commands :)
+<br />
 
----
-### Cat
+## Cat
 Concatenates files. In addition to writing a file to stdout, `cat` can also write to a file. Use cat with redirect ( `>` ) to the file you want to write to, write your message then `ctrl-d` to exit:
 ```
 $cat > file1.txt
@@ -79,9 +79,9 @@ cat file3.txt
 Hello from file 2
 Hello from file 2
 ```
+<br />
 
----
-### Links
+## Links
 Creates a hard link to a file in another location. Use the `-s` switch to make it a soft link (also called a symbolic link or symlink for short) to a file in another location:
 ```
 ln -s target_path link_path

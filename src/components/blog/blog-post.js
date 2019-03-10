@@ -3,25 +3,25 @@ import { graphql } from 'gatsby'
 import Helmet from 'react-helmet'
 import Layout from 'layouts/main-layout'
 import { ShareButtons, PreviousNext } from 'components'
-import { BlogInfo } from 'components/blog'
-import { css } from '@emotion/core'
+import { BlogInfo, JumpToSection } from 'components/blog'
+import { blogFunctionsWrapper, blogFunctions } from './styles'
 
 export default function Template({ data, location, pageContext }) {
   const post = data.markdownRemark
   const { siteMetadata } = data.site
   const { previous, next } = pageContext
 
-  function Title() {
-    const wrapper = css`
-      margin-bottom: 30px;
-      margin-top: 50px;
-    `
-
+  function BlogFunctions() {
     return (
-      <div css={wrapper}>
-        <BlogInfo post={post}>
-          <h1>{post.frontmatter.title}</h1>
-        </BlogInfo>
+      <div css={blogFunctionsWrapper}>
+        <h1>{post.frontmatter.title}</h1>
+        <div css={blogFunctions}>
+          <BlogInfo post={post} />
+          <JumpToSection
+            headings={post.headings}
+            path={post.frontmatter.path}
+          />
+        </div>
       </div>
     )
   }
@@ -34,7 +34,7 @@ export default function Template({ data, location, pageContext }) {
         <meta name="keywords" content={post.frontmatter.tags.join(',')} />
         <meta name="author" content={siteMetadata.author} />
       </Helmet>
-      <Title />
+      <BlogFunctions />
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
       <ShareButtons shareUrl={location.href} title={post.frontmatter.title} />
       <PreviousNext previous={previous} next={next} />
@@ -44,12 +44,11 @@ export default function Template({ data, location, pageContext }) {
 
 export const pageQuery = graphql`
   query BlogPostByPath($path: String!) {
-    site {
-      siteMetadata {
-        author
-      }
-    }
     markdownRemark(frontmatter: { path: { eq: $path } }) {
+      headings(depth: h2) {
+        value
+        depth
+      }
       excerpt(pruneLength: 250)
       html
       timeToRead
@@ -58,6 +57,11 @@ export const pageQuery = graphql`
         path
         title
         tags
+      }
+    }
+    site {
+      siteMetadata {
+        author
       }
     }
   }

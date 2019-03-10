@@ -1,7 +1,7 @@
 import React from 'react'
 import { FaCalendarAlt, FaStopwatch } from 'react-icons/fa'
 import { TagDisplay } from 'components/tags'
-import { infoWrapper, infoItemStyle, infoWrapperTopRow } from './style'
+import { infoWrapper, infoItemStyle, infoWrapperTopRow } from './styles'
 
 export default function BlogInfo({ post, children }) {
   const CalendarDate = () => (
@@ -20,7 +20,6 @@ export default function BlogInfo({ post, children }) {
 
   return (
     <div css={infoWrapper}>
-      {children}
       <div css={infoWrapperTopRow}>
         <CalendarDate />
         <TimeToRead />
