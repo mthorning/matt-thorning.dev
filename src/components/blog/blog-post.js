@@ -30,7 +30,7 @@ export default function Template({ data, location, pageContext }) {
     <Layout>
       <Helmet>
         <title>{post.frontmatter.title}</title>
-        <meta name="description" content={post.excerpt} />
+        <meta name="description" content={post.frontmatter.description} />
         <meta name="keywords" content={post.frontmatter.tags.join(',')} />
         <meta name="author" content={siteMetadata.author} />
       </Helmet>
@@ -49,7 +49,6 @@ export const pageQuery = graphql`
         value
         depth
       }
-      excerpt(pruneLength: 250)
       html
       timeToRead
       frontmatter {
@@ -57,6 +56,7 @@ export const pageQuery = graphql`
         path
         title
         tags
+        description
       }
     }
     site {
