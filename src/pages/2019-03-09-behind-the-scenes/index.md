@@ -9,21 +9,21 @@ I want to try to write blog posts about things that I know now that I would have
 
 When I first starting learning how to develop websites and web applications I used an [FTP](https://en.wikipedia.org/wiki/File_Transfer_Protocol) client to transfer my files from my computer onto the server. This worked well enough, but because I didn't understand what was happening after I clicked the upload button I was only ever able to host one website and use one domain. I ended up buying a resellers hosting package and setting up a different CPanel for each site; it works but it's not the cheapest way to do it!
 
-It turns out that there are a lot of different ways to get your website onto the internet. The most popular one at the moment seems to be [Netlify](https://www.netlify.com/) who pull your code from your source control repository, build and deploy it for you at the press of a button (or push to a branch!). Because there are a lot of different ways to achieve the same outcome, I thought it might be interesting to write a post about how I get this website onto the web.
+It turns out that there are a lot of different ways to get your website onto the internet. The most popular one at the moment seems to be [Netlify](https://www.netlify.com/) who pull your code from your source control repository, build and deploy it for you at the press of a button (or push to a branch!). Because there are a lot of different ways to achieve the same outcome, I thought a post about how I get this website onto the web might be of interest to someone.
 
-First, I should explain the reason I don't use Netlify, or any other service like it. Because I'm interested in computers and now work professionally as a developer, I would be passing up on a great opportunity to learn about a number of different tools which are relevant to my job. If you just want get a website online to advertise your business then it's great that there are companies who can manage the technical side of things for you. If, however, you're intending on working as a web developer, it's a worthwhile exercise learning how to do it for yourself.
+First, I should explain the reason I don't use Netlify, or any other service like it. Because I'm interested in computers and now work professionally as a developer, I would be passing up on a great opportunity to learn about a number of different tools which are relevant to my job. If you just want get a website online to advertise your business then it's great that there are companies who can manage the technical side of things for you. If, however, you're intending on working as a web developer, I think it's a worthwhile exercise learning how to do it for yourself.
 
-## The Server
+## The server
 
-I rent a VPS (Virtual Private Server) from a hosting company. A VPS is a virtual machine which is running on a physical server, this physical server runs a number of virtual servers which are all separated from one another using a piece of software called a hypervisor. Using a VPS is good because it is a lot cheaper than renting a dedicated server and it scales easily. This means you can start with a basic plan and then buy more memory or processors if and when you need to. You also get full root access to your VPS which is something you don't get with shared hosting, meaning you can install whatever you want and add extra users should you want to.
+I rent a VPS (Virtual Private Server) from a hosting company. A VPS is a virtual machine which is running on a physical server, this physical server runs a number of virtual servers which are all separated from one another using a piece of software called a hypervisor. Using a VPS is good because it is a lot cheaper than renting a dedicated server and it scales easily. This means you can start with a basic plan and then buy more RAM, disk space or more powerful processors if and when you need to. You also get full root access to your VPS which is something you don't get with shared hosting, meaning you can install whatever you want and add extra users should you want to.
 
-I connect to the server via [SSH](https://en.wikipedia.org/wiki/Secure_Shell), I don't want to get into talking about how SSH works here because there are plenty of resources out there already and it's pretty simple to use, but very basically it allows you to tunnel through to your server from a terminal so you can interact with it as if it were your own computer.
+I connect to the server via [SSH](https://en.wikipedia.org/wiki/Secure_Shell), I don't want to get into talking about how SSH works here (although you can see the basic syntax in my [bash tips](/bash-tips#ssh) post) because there are plenty of resources out there already and it's pretty simple to use, but very basically it allows you to securely tunnel through to your server from a terminal so you can interact with it as if it were your own computer.
 
 ## NGINX
 
 In order to host a website you need to install some web server software. There are only really two contenders in this arena, [NGINX](https://www.nginx.com/) (pronounced "engine-x") and [Apache](https://www.apache.org/). I use NGINX, for no other reason than it's what we use where I work so I'm more familiar with it. NGINX listens for requests on ports 80 ([HTTP](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol)) and 443 ([HTTPS](https://en.wikipedia.org/wiki/HTTPS)) and, in it's most basic form, serves files back to the requesting IP address from a directory on the filesystem. By default, NGINX will serve files from the `/var/www/html/` folder but you can set it to serve files from anywhere; this is important if you want to serve more than one site from your server.
 
-NGINX configuration files are normally found in `/etc/nginx/sites-available/`. You can create and edit files in this folder but they will have no effect until they are moved to `/etc/nginx/sites-enabled`. The easiest way to do this is to symlink the files that you want to be picked up from the `sites-available` to the `sites-enabled` folder (I've added a section covering links to my [bash tips](bash-tips#links) blog post). Doing it this way means you can delete the symlink in the `sites-enabled` folder to stop serving the site without losing your configuration file. Any time you edit/add/remove a configuration file you will need to restart NGINX to see the changes, on newer versions of Ubuntu this is done by typing `sudo systemctl reload nginx`.
+NGINX configuration files are normally found in `/etc/nginx/sites-available/`. You can create and edit files in this folder but they will have no effect until they are moved to `/etc/nginx/sites-enabled`. The easiest way to do this is to symlink (see [here](bash-tips#links)) the files that you want to be picked up from the `sites-available` to the `sites-enabled` folder. Doing it this way means you can delete the symlink in the `sites-enabled` folder to stop serving the site without losing your configuration file. Any time you edit/add/remove a configuration file you will need to restart NGINX to see the changes, in recent versions of Ubuntu this is done by typing `sudo systemctl reload nginx`.
 
 In my NGINX configuration file there is a server block which looks like this:
 ```
@@ -32,26 +32,27 @@ server {
   root /home/matt/sites/blog/;
 }
 ```
-NGINX looks at the "Host" header field on each request that comes in and matches the `server_name` values with it. This is how it is possible to point more than one domain at an IP address and serve different websites from the same server. Here, it is looking for `hellocode.dev` or `www.hellocode.dev`, if it matches then it serves the files found at `/home/hcuser/websites/blog`.
+NGINX looks at the "Host" header field on each request that comes in and matches the `server_name` values with it. This is how it is possible to point more than one domain at an IP address and serve different websites from the same server. Here, it is looking for `hellocode.dev` or `www.hellocode.dev`, if it matches then it serves the files found at `/home/matt/sites/blog`.
 
-Before I bought the _hellocode.dev_ domain I was serving this site from _blog.thorning.ovh_. Because I still want people to be able to find the blog even if they use the old domain, I have a second NGINX configuration file which redirects any users attempting to visit it:
+Before I bought the _hellocode.dev_ domain I was serving this site from _blog.thorning.ovh_. Because I still want people to be able to find the blog even if they use the old URL, I have a second NGINX configuration file which redirects any users attempting to visit it:
 ```
 server {
   server_name blog.thorning.ovh;
   rewrite ^/(.*)$ https://hellocode.dev/$1 permanent;
+}
 ```
-This file matches the URL and rewrites it. The bit in parentheses is a regex (short for [regular expression](https://en.wikipedia.org/wiki/Regular_expression)) capture group which, as its name suggests, captures any characters following the `/` which are then added in place of `$1`. This adds the path to the redirected address so if, for example, you tried to visit `https://blog.thorning.ovh/bash-tips` you will be redirected to `https://hellocode.dev/bash-tips`. The keyword `permanent` makes NGINX return a 301 response code which lets browsers and search engines know this is a permanent redirection. If it is not a permanent redirection then you can use`temporary` to return a 302 response so that browsers and search engines know to continue attempting to request the original URL.
+This file matches the URL and rewrites it with the new domain. The bit in parentheses is a regex (short for [regular expression](https://en.wikipedia.org/wiki/Regular_expression)) capture group which, as its name suggests, captures any characters following the `/` which are then added in place of `$1` on the new URL. This adds the path to the redirected address so if, for example, you try to visit `https://blog.thorning.ovh/bash-tips` you will be redirected to `https://hellocode.dev/bash-tips`. The keyword `permanent` makes NGINX return a 301 response code which lets browsers and search engines know this is a permanent redirection. If it is not a permanent redirection then you can use the `temporary` keyword instead to return a 302 response so that browsers and search engines know to continue attempting to request the original URL.
 
 ## Certbot
 
-It's a good idea to use HTTPS on your site because it encrypts the traffic between the server and the client. Aside from being a must for security reasons, it is also necessary if you want to create a Progressive Web App (PWA), host a site on a _.dev_ Top Level Domain or [place well in search results](https://seo-hacker.com/google-adopt-https/). If you want to enable HTTPS on your website then you're going to need a certificate, but don't buy one...
+It's a good idea to use HTTPS on your site because it encrypts the traffic between the server and the client, preventing things like [Man-in-the middle Attacks](https://en.wikipedia.org/wiki/Man-in-the-middle_attack). Aside from being a must for security reasons, it is also necessary if you want to create a Progressive Web App (PWA), host a site on a _.dev_ Top Level Domain or [place well in search results](https://seo-hacker.com/google-adopt-https/). If you want to enable HTTPS on your website then you're going to need a certificate, but don't buy one...
 
 [Certbot](https://certbot.eff.org/) can be installed on your system to create a certificate for you. For free! It connects with [Let's Encrypt](https://letsencrypt.org/) to fetch and deploy SSL/TLS certificates on your web server and there is even and NGINX plugin which automatically updates your NGINX configuration files for you. It's pretty easy to use, just follow the instructions on their site and you'll be up-and-running with HTTPS in no time.
 
 
 ## Shell scripts
 
-The server is set up and serving files over HTTPS from a directory of our choosing, now we just need to get the files from our computer and into the directory. At first I was using a shell script to perform this task for me. The script was run as a `postversion` script by NPM (you can read more about them [here](/npm-version#pre-and-post-version-scripts)). Here's the script:
+So now the server is set up and serving files over HTTPS from a directory of our choosing, we just need to get the files from our computer and into said directory. At first I was using a shell script to perform this task for me. The script was run as a `postversion` script by NPM (you can read more about them [here](/npm-version#pre-and-post-version-scripts)). Here's the script:
 ```{numberLines: true}
 #! /bin/bash
 
@@ -78,7 +79,7 @@ Lines 3 & 4 clean the public directory and rebuild the app:
 rm -rf public/*
 npm run build
 ```
-This site is built with [Gatsby](https://www.gatsbyjs.org/) which builds files and puts them in the `public` directory in both development and production mode. I don't want to send files which aren't needed to the server so the first thing I do is delete everything in the `public` folder on line 3 and then re-run a production build on line 4.
+This site is built with [Gatsby](https://www.gatsbyjs.org/) which builds files and puts them in the `public` directory in both development and production modes. I don't want to send files left over from previous development builds to the server so the first thing I do is delete everything in the `public` folder on line 3 and then run a production build on line 4.
 
 The next section creates a tarball of the app:
 ```{numberLines: 6}
@@ -104,6 +105,10 @@ The SSH client looks at the SSH config file on my filesystem where I have an ent
 
 The first command run on the server (line 12) extracts the tarball into the `sites` folder in my home directory. This leaves a folder named _public_ in the `sites` directory. The next line (13) deletes the old site files and renames `public` to `blog`. The idea here is that the downtime for the site will be very small because there is only a matter of milliseconds between the old site being deleted and the new folder being renamed. Finally (14), I delete the tarball because it is no longer needed on the server.
 
-Because we have replaced the files in the folder which NGINX is serving from, the new code should now be live on the web. This method worked well for me for a while but I wanted to take things one step further. 
+Because we have replaced the files in the folder which NGINX is serving from, the new code should now be live on the web. This method worked well for me for a while but I wanted to take things one step further.
 
-There were occasions where I would be told that there was a typo or mistake in one of my posts. To correct it I would have to wait until I was next at my computer so that I could run the release script (remember that I also need my SSH key to release the files so I couldn't just clone my repository from github to fix it and get the fix up on the site). What I wanted was a way to be able to edit files online from wherever I was (even by using my phone) and to be able to see the fix live on the site within a couple of minutes.
+There were occasions where I would be told that there was a typo or mistake in one of my posts. To correct it I would have to wait until I was next at my computer so that I could run the release script (remember that I also need my SSH key to release the files so I couldn't just clone my repository from Github to fix it and get the fix up on the site). What I wanted was a way to be able to edit files online from wherever I was (even from my phone) and to be able to see the fix live on the site within a couple of minutes.
+
+---
+
+I'm going to stop here, leave things on a bit of a cliff-hanger: Will he manage to fix typos from his phone? Will the site update automatically when he does? Tune in next time to find out!
