@@ -18,11 +18,9 @@ export const wrapper = theme => css`
   div {
     ${sharedStyles}
     position: absolute;
-    top: 32px;
-    right: -1px;
     width: 280px;
     background: #fff;
-    box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3);
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
     z-index: 1;
 
     ul {
@@ -42,11 +40,6 @@ export const wrapper = theme => css`
 export const selectedStyle = css`
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-
-  div {
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-  }
 `
 export const overlay = css`
   position: fixed;
@@ -54,4 +47,9 @@ export const overlay = css`
   bottom: 0;
   right: 0;
   left: 0;
+`
+export const bySide = side => css`
+  top: 32px;
+  ${side}: -1px;
+  border-top-${side}-radius: 0 !important;
 `
