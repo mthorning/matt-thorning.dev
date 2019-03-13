@@ -113,3 +113,9 @@ Secure copy files from remote host to local host or vice-versa. It uses [SSH](ba
 scp foobar.txt your_username@remotehost:/some/remote/directory
 ```
 Reverse the order of the arguments to copy in the other direction.
+
+## Find
+Recursively searches directories to find files.
+```
+find /start/dir -name "something.*"
+```
