@@ -28,6 +28,8 @@ Command | Description
 `lsof` | Lists open files. Use with `-i :80` to find process listening on a port (port 80 here).
 `netstat` | Lists network processes. If used with `-plt` switch it shows port numbers with programme name and PID. Useful if there is a process already listening on a port which you want to use.
 `ctrl-r` | Reverse history search. `Ctrl-r` next item, `ctrl-j` to copy or `enter` to run.
+`top` | Live feed of processes using memory and how much memory they are using.
+`htop` | Like top but with a graphical interface.
 
 ## Variables
 ```
