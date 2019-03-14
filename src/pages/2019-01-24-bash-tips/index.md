@@ -12,7 +12,7 @@ Command | Description
 ------- | :-----------|
 `man`   | Follow this with any command for full instructions on how to use. Most commands can be followed with `--help` or `-h` as well for a reminder of the basics.
 `set -e` | Sets option to exit a script if a command returns a non-zero exit code.
-`set -z` | Outputs the commands that get run as they run.
+`set -x` | Outputs the commands that get run as they run.
 `grep` | Searches an input and prints out lines that match a pattern.
 `<()` | Treats output as a file such as `diff <(grep something) <(grep nothing)`.
 `!!` | Repeats the last command.
