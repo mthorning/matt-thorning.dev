@@ -30,6 +30,7 @@ Command | Description
 `ctrl-r` | Reverse history search. `Ctrl-r` next item, `ctrl-j` to copy or `enter` to run.
 `top` | Live feed of processes using memory and how much memory they are using.
 `htop` | Like top but with a graphical interface.
+`tee` | Splits the output of a program so that it can be both displayed on screen and saved in a file.
 
 ## Variables
 ```
