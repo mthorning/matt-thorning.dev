@@ -110,6 +110,17 @@ Because we have replaced the files in the folder which NGINX is serving from, th
 
 There were occasions where I would be told that there was a typo or mistake in one of my posts. To correct it I would have to wait until I was next at my computer so that I could run the release script (remember that I also need my SSH key to release the files so I couldn't just clone my repository from Github to fix it and get the fix up on the site). What I wanted was a way to be able to edit files online from wherever I was (even from my phone) and to be able to see the fix live on the site within a couple of minutes.
 
+## Jenkins
+
+I now use [Jenkins](https://jenkins.io/) to handle my deployments. It runs on my server and is triggered by a [webhook](https://developer.github.com/webhooks/) on Github. This means that any time I make a change to the master branch Jenkins is notified, Jenkins then runs a new build if anything has changed. The way it is configured is similar to the process which is run by the shell script:
+* Pulls the changes to the master branch from Github.
+* Runs `npm install --production` which installs all dependencies (not dev-dependencies).
+* Calls Gatsby build to generate the site files.
+* Copies the site files to the server.
+* Deletes the old site files and replaces them with the new ones.
+
+This works really well and it all happens without me having to do anything other than commit to the master branch. Jenkins also keeps hold of any keys or secrets which means they don't need to be included in shell scripts with the potential for accidentally comitting them to your public repos.
+
 ---
 
-I'm going to stop here, leave things on a bit of a cliff-hanger: Will he manage to fix typos from his phone? Will the site update automatically when he does? Tune in next time to find out!
+I'm pretty happy with the setup I have now. My deployments for this site are now completely automated and when I eventually write some tests I can include them in the process. I was intending to talk through the Jenkins configuration in more detail but when I started writing it I thought that it was all pretty straightforward and not really worth the time it would take to write, maybe I'm wrong? If there are any parts of the setup that you're having trouble with then feel free to contact me with them, I'd be happy to help if I can.

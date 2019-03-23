@@ -5,7 +5,7 @@ const secondaryColor = '#fff'
 const textColor = 'rgba(0, 0, 0, 0.5)'
 const footerIconFontSize = '25px'
 const blogInfoIconFontSize = '13px'
-const maxWidth = '750px'
+const maxWidth = '900px'
 
 export default {
   primaryColor,
