@@ -16,7 +16,7 @@ function BlogPostPreview({ post }) {
         </Link>
       </h1>
       <BlogInfo post={post} />
-      <p>{post.frontmatter.description}</p>
+      <p>{post.excerpt}</p>
     </div>
   )
 }

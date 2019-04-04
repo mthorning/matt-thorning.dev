@@ -3,7 +3,6 @@ path: "/goodbye-windows"
 date: "2019-03-31T22:30:00"
 title: "Goodbye Windows!"
 tags: ["linux"]
-description: "I finally switch my home computer's OS from Windows to Linux."
 ---
 
 ![Windows blue screen](bsod-windows.jpg)

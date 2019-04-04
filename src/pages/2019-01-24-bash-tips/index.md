@@ -3,7 +3,6 @@ path: "/bash-tips"
 date: "2019-03-13T08:00"
 title: "Bash tips"
 tags: ["linux"]
-description: "Less of a blog and more of a reference file, this page is a list of linux/bash commands that I don't want to forget!"
 ---
 
 This post is as much for myself as it is for anyone else and I will update it whenever I come across anything that I find that is worth including. The below are all of the cool little bash commands for linux/unix that I have stumbled across.

@@ -3,7 +3,6 @@ path: "/ip-addresses"
 date: "2019-02-17T08:00"
 title: "IP addresses"
 tags: ["networking"]
-description: "I write down what I know about IP addresses and how the browser is able to navigate its way to files you want when you type a URL into the address bar."
 ---
 
 As a web developer it is presumably beneficial to have a basic understanding of how the internet works! This isn't something I've known a great deal about, I've always just taken it for granted so I've decided to write some posts to further my own understanding; I thought IP addresses would be a good place to start. As always you can reach me on Twitter if you see any innacuracies or think that I have missed anything which should be included.

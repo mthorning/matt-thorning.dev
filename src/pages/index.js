@@ -82,12 +82,12 @@ export const pageQuery = graphql`
         node {
           id
           timeToRead
+          excerpt(pruneLength: 250)
           frontmatter {
             title
             date(formatString: "MMMM DD, YYYY")
             path
             tags
-            description
           }
         }
       }

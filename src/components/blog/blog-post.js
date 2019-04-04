@@ -56,7 +56,6 @@ export const pageQuery = graphql`
         path
         title
         tags
-        description
       }
     }
     site {
