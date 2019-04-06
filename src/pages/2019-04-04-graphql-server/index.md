@@ -8,11 +8,11 @@ tags: ["javascript", "backend", "graphql"]
 One of the things I've enjoyed most about using Gatsby is learning to use [Graphql](https://graphql.org/). I've just started creating an app which needs to save calendar events to a database so I thought it would be cool to see if I could create a Graphql server instead of using [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) endpoints like I normally would. It turns out that creating a Graphql server capable of basic [CRUD](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete) is a lot easier than I was expecting, here's how I did it.
 
 ## The packages
-I'm writing this in JavaScript because it's the only language I really *know*, I have dabbled with others but unless you use the language day in and day out, it's difficult to make it stick. Besides which, JavaScript is capable of doing so much that I haven't found a good enough reason other than curiosity to move to another language yet. 
+I'm writing this in JavaScript because it's the only language I really *know*, I have dabbled with others but unless you use a language day in and day out, it's difficult to make it stick. Besides which, JavaScript is capable of doing so much that I haven't found a good enough reason other than curiosity to move to another language yet. 
 
 Ordinarily I write Node servers with Express, this time I thought it would be fun to try [Koa](https://koajs.com/). Koa is made by the creators of Express and uses ansync functions instead of callbacks, it's also pretty lightweight and  doesn't come with any middleware so you can add only the stuff that you need (we'll be using koa-mount which sets up the routes and koa-graphql which lets us use Graphql). If you want to use Express instead then the below code will work just as well, you'll just need to use the Express Graphql middleware instead. 
 
-I'm using [Mongoose](https://mongoosejs.com/) for the database which allows you to create models for your data which are persisted in [MongoDB](https://www.mongodb.com/).
+I'm also using [Mongoose](https://mongoosejs.com/) for the database layer which allows you to create models for your data which are persisted in [MongoDB](https://www.mongodb.com/).
 
 ## Getting started
 The first thing you need to do is set up an empty project with `npm init`, then install the packages mentioned above as well as the main Graphql package which is a collection of constructor functions which we use for creating our schemas and types:
@@ -57,8 +57,57 @@ app.use(
 ```
 At the top of the file we require in all of the packages we're going to use. On _Line 7_ we call `mongoose.connect` which opens a connection to our MongoDB (make sure it's running!) and connects to a database called `calendar`. If the named database doesn't exist then Mongoose will create one for you automatically. Passing the option `{ useNewUrlParser: true }` prevents you from receiving a "DeprecationWarning" message in your console.
 
-Next, we listen for mongoose to let us know whether the connection was successful or not. I just log the message out to stdout in either case.
+Next, we listen for Mongoose to let us know whether the connection was successful or not. I just log the message out to stdout in either case. You can move the lines of code which initialise the database connection into a separate file to make things cleaner if you wish, I'm just going to leave them here for the purposes of this article.
 
 On _line 15_ we create a new Koa app and tell it to listen on port 9000, followed by some error handling which just logs the error message to stdout again.
 
-Finally on _line 22_ we add the middleware. We use `koa-mount` to create the route `/graphql`, any requests to this URL are passed to the koa-graphql middleware. Our Graphql middleware takes our schema, which we will write next, and we're also telling it to use `graphiql`. [Graphiql](https://github.com/graphql/graphiql) is a great tool which lets you run queries against your server whilst you are developing it and also when you are developing the frontend which uses it. Graphiql also creates documentation for you automatically, showing anyone who is using your API which endpoints are available and what each one is capable of.
+Finally on _line 22_ we add the middleware. We use `koa-mount` to create the route `/graphql`, any requests to this URL are passed to the koa-graphql middleware. Our Graphql middleware takes our schema, which we will write [later](#the-schema), and we're also telling it to use `graphiql`. [Graphiql](https://github.com/graphql/graphiql) is a great tool which lets you run queries against your server whilst you are developing it and also when you are developing the frontend which uses it. Graphiql also creates documentation for you automatically, showing anyone who is using your API which endpoints are available and what each one is capable of.
+
+## The Mongoose model
+
+Mongoose uses models which are built from schemas. We're only going to be needing one for this example but it's good practice to keep them in their own folder in case you add more, here's the directory structure so far:
+
+```
+src
+ ├── models
+ │   └── event.js
+ └── server.js
+```
+
+The new file is called `event.js`, here it is:
+```javascript
+const mongoose = require('mongoose');
+
+const EventSchema = new mongoose.Schema({
+  title: String,
+  start: Date,
+  end: Date,
+  allDay: Boolean
+});
+
+module.exports = mongoose.model('Event', EventSchema);
+```
+This should be pretty self-explanatory. First we create a schema where we declare the fields we are going to store in the DB and the data types which they will hold. Mongoose then creates a model from this schema which we export. The one thing I should explain is what the first argument to `mongoose.model` is for. `'Event'` is the singular name of the collection that Mongoose will look for in the database. It will pluralise and lowercase it so in this case Mongoose will look for a collection called _'events'_, if there is no collection of that name then one will be created for us, thanks!
+
+## The Graphql type
+## The schema
+
+```
+src
+ ├── graphql
+ │   ├── list-events.js
+ │   ├── mutations
+ │   │   ├── add-event.js
+ │   │   ├── delete-event.js
+ │   │   ├── edit-event.js
+ │   │   └── index.js
+ │   ├── queries
+ │   │   ├── index.js
+ │   │   └── list-events.js
+ │   ├── schema.js
+ │   └── types
+ │       └── event.js
+ ├── models
+ │   └── event.js
+ └── server.js
+```
