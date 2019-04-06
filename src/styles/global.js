@@ -339,5 +339,6 @@ export default css`
     color: rgba(9, 9, 9, 0.64);
     font-family: 'Fira Mono', monospace;
     border-radius: 0.2em !important;
+    font-size: 18px;
   }
 `
