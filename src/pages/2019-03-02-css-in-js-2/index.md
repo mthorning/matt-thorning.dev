@@ -2,7 +2,7 @@
 path: "/css-in-js-2"
 date: "2019-03-03T10:00:00"
 title: "CSS in JS (part 2)"
-tags: ["javascript", "css", "tooling", "react"]
+tags: ["javascript", "css", "tooling", "react", "frontend"]
 ---
 
 In my [last blog post](/css-in-js) I wrote about how I had started using [Emotion](https://github.com/emotion-js/emotion) instead of Sass. Initially I was using Emotion's framework-agnostic package, but I have now switched to using the version which they created specifically for use with React because it adds some extra functionality which I liked the look of! This post is going to be about using Emotion with React, because of that, I'm going to be making the assumption that if you're reading this then you already know how to use React.
