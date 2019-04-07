@@ -174,7 +174,7 @@ If everything's working correctly you should see the following:
 
 The response is in the right hand pane. At the moment the array is empty because we haven't added anything yet, so let's write a mutation so that we can add some data.
 
-## Mutating - create an Event
+## Create an Event
 First we need to add the root mutation type to our _schema.js_ and add the `create` field.
 ```javascript{numberLines: true}
 const { buildSchema } = require('graphql');
@@ -239,7 +239,7 @@ Hopefully you won't get an error though! You should get something like this:
 
 You can see that the server has responded with the fields we requested from our newly created event. The ID was created for us by MongoDB, this is really useful because we can now use this ID to select the events that we want to update and delete.
 
-## Mutating - update & delete Events
+## Update & delete Events
 By now you should be able to see how easy this is, I'm just going to add the update and delete methods in one hit so that we can demonstrate full CRUD. The schema needs to be updated so that it looks like this:
 ```javascript{numberLines: true}
 const { buildSchema } = require('graphql');
