@@ -1,6 +1,6 @@
 ---
 path: "/graphql-server"
-date: "2019-04-04T20:00:00"
+date: "2019-04-07T21:00:00"
 title: "GraphQL server with MongoDB and Koa"
 tags: ["javascript", "backend", "graphql"]
 ---
