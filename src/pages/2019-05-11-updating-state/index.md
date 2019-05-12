@@ -5,7 +5,7 @@ title: 'Updating state in React with hooks'
 tags: ['javascript', 'react', 'frontend']
 ---
 
-Very often when writing an application in React you will need to update some state from a child component. With components written as ES6 classes, the usual method was to pass a function down to the children as a prop bound to the context of the parent. React's new useState hook has made things simpler; in fact, I haven't written a class since hooks were released so I no longer need to bind functions to the context of the parent component which holds the state. Passing the setState function returned by the useState hookk down to the children is still error-prone though, there is a another way which I would like to show you now.
+Very often when writing an application in React you will need to update some state from a child component. With components written as ES6 classes, the usual method was to pass a function down to the children as a prop bound to the context of the parent. React's new useState hook has made things simpler; in fact, I haven't written a class since hooks were released so I no longer need to bind functions to the context of the parent component which holds the state. Passing the setState function returned by the useState hook down to the children is still error-prone though, there is a another way which I would like to show you now.
 
 ## Prop drilling
 
@@ -37,7 +37,7 @@ ReactDOM.render(<App />, rootElement)
 
 This is our top-level component. It renders an `InputComponent` and an unordered list of items. Before returning the elements to render, the `useState` function is called, this sets up an array of `items` (which are rendered in the `ul` element) and you can see that we're passing both `items` and `setItems` to the `InputComponent` along with another prop called `title`.
 
-It should be pretty clear what this code is going to do even without looking at the `InputComponent`. The user is going to be able to input the name of an item and that item will be added to a list. Still, let's take a look at the `InputComponent` anyway!
+It should be pretty clear what this code is going to do even without looking at the `InputComponent`. The user is going to be able to input the name of an item and that item will be added to the list. Still, let's take a look at the `InputComponent` anyway!
 
 ```javascript
 import React from 'react'
@@ -169,8 +169,8 @@ function InputControls() {
 }
 ```
 
-At the top of the file we need to import both the `useContext` hook and our `ItemsContext` from `App`. On _line 5_ we call `useContext` and pass in the `ItemsContext`, note that we pass the whole object in, not just the Consumer. This returns our `items` and `setItems` function which we can use exactly as we did before. Notice also that this component no longer requires any props to function, we can move it to wherever we want in the application, and as long at the Provider component is above it in the component tree, it will continue to work.
+At the top of the file we need to import both the `useContext` hook and our `ItemsContext` from `App`. On _line 5_ we call `useContext` and pass in the `ItemsContext`, note that we pass the whole object in, not just the Consumer. This returns our `items` and `setItems` function which we can use exactly as we did before. Notice also that this component no longer requires any props to function, we can move it to wherever we want in the application, and as long as the Provider component is above it in the component tree, it will continue to work.
 
 ---
 
-Using these techniques can make your application more robust and less likely break when you add, remove or move components around. It's not something which is ideal for every situation but they're certainly useful tricks to have at your disposal. Thanks for reading, I hope it's been helpful. :smiley:
+Using these techniques can make your application more robust and less likely to break when you add, remove or move components around. It's not something which is ideal for every situation but they're certainly useful methods to have at your disposal. Thanks for reading, I hope it's been helpful. :smiley:
