@@ -28,6 +28,7 @@ const brands = {
 }
 
 export default function ShareButtons({ shareUrl, title }) {
+  const url = shareUrl.split('#')[0]
   function IconWrapper({ children, color }) {
     return <div css={theme => iconWrapper(theme, color)}>{children}</div>
   }
@@ -35,37 +36,37 @@ export default function ShareButtons({ shareUrl, title }) {
   return (
     <div css={wrapper}>
       <IconWrapper color={brands.email}>
-        <EmailShareButton subject={title} url={shareUrl}>
+        <EmailShareButton subject={title} url={url}>
           <FaEnvelope />
         </EmailShareButton>
       </IconWrapper>
 
       <IconWrapper color={brands.twitter}>
-        <TwitterShareButton title={title} url={shareUrl}>
+        <TwitterShareButton title={title} url={url}>
           <FaTwitter />
         </TwitterShareButton>
       </IconWrapper>
 
       <IconWrapper color={brands.facebook}>
-        <FacebookShareButton quote={title} url={shareUrl}>
+        <FacebookShareButton quote={title} url={url}>
           <FaFacebook />
         </FacebookShareButton>
       </IconWrapper>
 
       <IconWrapper color={brands.reddit}>
-        <RedditShareButton title={title} url={shareUrl}>
+        <RedditShareButton title={title} url={url}>
           <FaReddit />
         </RedditShareButton>
       </IconWrapper>
 
       <IconWrapper color={brands.linkedin}>
-        <LinkedinShareButton title={title} url={shareUrl}>
+        <LinkedinShareButton title={title} url={url}>
           <FaLinkedin />
         </LinkedinShareButton>
       </IconWrapper>
 
       <IconWrapper color={brands.whatsapp}>
-        <WhatsappShareButton title={title} url={shareUrl}>
+        <WhatsappShareButton title={title} url={url}>
           <FaWhatsapp />
         </WhatsappShareButton>
       </IconWrapper>
