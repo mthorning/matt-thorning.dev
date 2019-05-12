@@ -28,7 +28,7 @@ const brands = {
 }
 
 export default function ShareButtons({ shareUrl, title }) {
-  const url = shareUrl.split('#')[0]
+  const url = shareUrl && shareUrl.split('#')[0]
   function IconWrapper({ children, color }) {
     return <div css={theme => iconWrapper(theme, color)}>{children}</div>
   }
