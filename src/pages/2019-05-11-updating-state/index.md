@@ -1,6 +1,6 @@
 ---
 path: '/updating-state'
-date: '2019-05-07T21:00:00'
+date: '2019-05-12T10:00:00'
 title: 'Updating state in React with hooks'
 tags: ['javascript', 'react', 'frontend']
 ---
