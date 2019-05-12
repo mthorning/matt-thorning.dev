@@ -35,7 +35,7 @@ const rootElement = document.getElementById('root')
 ReactDOM.render(<App />, rootElement)
 ```
 
-This is our top-level component. It renders a `div` in the DOM which contains an `InputComponent` and an unordered list of items. Before returning the elements to render, the `useState` function is called, this sets up an array of `items` (which are rendered in the `ul` element) and you can see that we're passing both `items` and `setItems` to the `InputComponent` along with another prop called `title`.
+This is our top-level component. It renders an `InputComponent` and an unordered list of items. Before returning the elements to render, the `useState` function is called, this sets up an array of `items` (which are rendered in the `ul` element) and you can see that we're passing both `items` and `setItems` to the `InputComponent` along with another prop called `title`.
 
 It should be pretty clear what this code is going to do even without looking at the `InputComponent`. The user is going to be able to input the name of an item and that item will be added to a list. Still, let's take a look at the `InputComponent` anyway!
 
