@@ -1,5 +1,5 @@
 ---
-path: "/promises"
+slug: "/promises"
 date: "2019-02-05T21:30"
 title: "Promises, promises"
 tags: ["javascript"]

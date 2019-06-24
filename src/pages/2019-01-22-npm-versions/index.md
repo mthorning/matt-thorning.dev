@@ -1,5 +1,5 @@
 ---
-path: "/npm-version"
+slug: "/npm-version"
 date: "2019-01-22T20:00"
 title: "Semantic versioning with NPM"
 tags: ["javascript", "tooling", "deployment"]

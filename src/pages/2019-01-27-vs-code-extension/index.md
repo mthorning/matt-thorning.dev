@@ -1,5 +1,5 @@
 ---
-path: "/vscode-extension"
+slug: "/vscode-extension"
 date: "2019-01-30T20:00"
 title: "Creating a VS Code extension"
 tags: ["javascript", "tooling", "testing"]

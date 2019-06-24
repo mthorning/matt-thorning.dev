@@ -1,5 +1,5 @@
 ---
-path: "/using-closure"
+slug: "/using-closure"
 date: "2019-01-20T19:00:00"
 title: "Using closures"
 tags: ["javascript"]

@@ -1,5 +1,5 @@
 ---
-path: "/bash-tips"
+slug: "/bash-tips"
 date: "2019-03-13T08:00"
 title: "Bash tips"
 tags: ["linux"]

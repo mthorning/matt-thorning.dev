@@ -11,7 +11,7 @@ const defaultProps = {
   headings: [],
 }
 
-function JumpToHeading({ headings, path }) {
+function JumpToHeading({ headings, slug }) {
   if (!headings.length) return null
   const [showDropdown, setShowDropdown] = useState(false)
   const [dropdownSide, setDropdownSide] = useState(0)
@@ -33,7 +33,7 @@ function JumpToHeading({ headings, path }) {
 
   function onSelectChange(value) {
     const id = lower(hyphenate(sterilise(value)))
-    navigate(`${path}#${id}`)
+    navigate(`${slug}#${id}`)
   }
 
   const [windowWidth, setWindowWidth] = useState(0)

@@ -1,5 +1,5 @@
 ---
-path: "/css-in-js-2"
+slug: "/css-in-js-2"
 date: "2019-03-03T10:00:00"
 title: "CSS in JS (part 2)"
 tags: ["javascript", "css", "tooling", "react", "frontend"]

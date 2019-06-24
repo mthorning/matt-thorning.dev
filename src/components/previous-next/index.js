@@ -9,7 +9,7 @@ export default function({ previous, next }) {
     <>
       <div css={iconWrapper}>
         <Link
-          to={previous.path}
+          to={previous.slug}
           css={theme => css`
             ${icon(theme)}
             grid-area: prev;
@@ -47,7 +47,7 @@ export default function({ previous, next }) {
           <div>{next.title}</div>
         </div>
 
-        <Link to={next.path} css={icon}>
+        <Link to={next.slug} css={icon}>
           <FaForward
             css={theme => css`
               ${icon(theme)}

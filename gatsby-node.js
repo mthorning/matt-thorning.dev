@@ -15,7 +15,7 @@ exports.createPages = ({ actions, graphql }) => {
             id
             frontmatter {
               date
-              path
+              slug
               title
             }
           }
@@ -40,7 +40,7 @@ exports.createPages = ({ actions, graphql }) => {
           : posts[posts.length - 1].node.frontmatter
 
       createPage({
-        path: post.node.frontmatter.path,
+        path: post.node.frontmatter.slug,
         component: blogPostTemplate,
         context: { previous, next },
       })

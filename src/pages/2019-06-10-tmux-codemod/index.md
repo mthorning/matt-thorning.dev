@@ -1,5 +1,5 @@
 ---
-path: '/tmux-codemod'
+slug: '/tmux-codemod'
 date: '2019-06-10T10:00:00'
 title: 'Tools for big code changes'
 tags: ['tooling']

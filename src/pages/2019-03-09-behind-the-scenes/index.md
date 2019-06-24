@@ -1,5 +1,5 @@
 ---
-path: "/behind-the-scenes"
+slug: "/behind-the-scenes"
 date: "2019-03-10T18:30:00"
 title: "Behind the scenes"
 tags: ["deployment", "networking", "tooling", "linux"]

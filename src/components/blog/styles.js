@@ -31,3 +31,13 @@ export const blogFunctions = css`
   justify-content: space-between;
   flex-wrap: wrap;
 `
+export const clapIcon = theme => css`
+  fill: green;
+  color: red;
+  font-size: ${theme.blogInfoIconFontSize};
+  stroke: ${theme.textColor};
+`
+export const clapWrapper = css`
+  display: flex;
+  align-items: center;
+`

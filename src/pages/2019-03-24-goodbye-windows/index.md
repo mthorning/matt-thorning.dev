@@ -1,5 +1,5 @@
 ---
-path: "/goodbye-windows"
+slug: "/goodbye-windows"
 date: "2019-03-31T22:30:00"
 title: "Goodbye Windows!"
 tags: ["linux"]

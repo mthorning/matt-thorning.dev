@@ -1,5 +1,5 @@
 ---
-path: '/updating-state'
+slug: '/updating-state'
 date: '2019-05-12T10:00:00'
 title: 'Updating state in React with hooks'
 tags: ['javascript', 'react', 'frontend']

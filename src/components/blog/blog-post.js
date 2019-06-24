@@ -5,26 +5,24 @@ import Layout from 'layouts/main-layout'
 import { ShareButtons, PreviousNext } from 'components'
 import { BlogInfo, JumpToSection } from 'components/blog'
 import { blogFunctionsWrapper, blogFunctions } from './styles'
+import Clap from 'components/clap'
+
+function BlogFunctions({ post }) {
+  return (
+    <div css={blogFunctionsWrapper}>
+      <h1>{post.frontmatter.title}</h1>
+      <div css={blogFunctions}>
+        <BlogInfo post={post} />
+        <JumpToSection headings={post.headings} slug={post.frontmatter.slug} />
+      </div>
+    </div>
+  )
+}
 
 export default function Template({ data, location, pageContext }) {
   const post = data.markdownRemark
   const { siteMetadata } = data.site
   const { previous, next } = pageContext
-
-  function BlogFunctions() {
-    return (
-      <div css={blogFunctionsWrapper}>
-        <h1>{post.frontmatter.title}</h1>
-        <div css={blogFunctions}>
-          <BlogInfo post={post} />
-          <JumpToSection
-            headings={post.headings}
-            path={post.frontmatter.path}
-          />
-        </div>
-      </div>
-    )
-  }
 
   return (
     <Layout>
@@ -34,8 +32,9 @@ export default function Template({ data, location, pageContext }) {
         <meta name="keywords" content={post.frontmatter.tags.join(',')} />
         <meta name="author" content={siteMetadata.author} />
       </Helmet>
-      <BlogFunctions />
+      <BlogFunctions post={post} />
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
+      <Clap slug={post.frontmatter.slug} />
       <ShareButtons shareUrl={location.href} title={post.frontmatter.title} />
       <PreviousNext previous={previous} next={next} />
     </Layout>
@@ -44,7 +43,7 @@ export default function Template({ data, location, pageContext }) {
 
 export const pageQuery = graphql`
   query BlogPostByPath($path: String!) {
-    markdownRemark(frontmatter: { path: { eq: $path } }) {
+    markdownRemark(frontmatter: { slug: { eq: $path } }) {
       headings(depth: h2) {
         value
         depth
@@ -53,7 +52,7 @@ export const pageQuery = graphql`
       timeToRead
       frontmatter {
         date(formatString: "MMMM DD, YYYY")
-        path
+        slug
         title
         tags
       }
