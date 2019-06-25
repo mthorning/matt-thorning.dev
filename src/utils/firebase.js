@@ -16,7 +16,6 @@ function getFirebase(firebase) {
     return firebaseInstance
   }
 
-  console.log('initializing firebase')
   firebase.initializeApp(config)
   firebaseInstance = firebase
 
@@ -27,13 +26,11 @@ export function useDatabase() {
   const [db, setDb] = useState(null)
 
   useEffect(() => {
-    console.log('checking if db exists...')
     if (db === null) {
       const lazyApp = import('firebase/app')
       const lazyDatabase = import('firebase/database')
 
       Promise.all([lazyApp, lazyDatabase]).then(([firebase]) => {
-        console.log('getting firebase')
         setDb(getFirebase(firebase).database())
       })
     }

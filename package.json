@@ -18,6 +18,9 @@
   },
   "dependencies": {
     "@emotion/core": "^10.0.7",
+    "@emotion/styled": "^10.0.12",
+    "@loadable/component": "^5.10.1",
+    "@mthorning/react-clap-button": "^2.1.4",
     "emotion-theming": "^10.0.7",
     "firebase": "^6.2.2",
     "gatsby": "^2.0.76",
@@ -43,7 +46,6 @@
     "prismjs": "^1.15.0",
     "prop-types": "^15.6.2",
     "react": "^16.8.3",
-    "react-clap-button": "git+https://github.com/mthorning/react-clap-button.git#semver:~2.0",
     "react-dom": "^16.8.3",
     "react-helmet": "^5.2.0",
     "react-icons": "^3.4.0",

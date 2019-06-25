@@ -1,8 +1,10 @@
-import React, { useMemo, useRef, useReducer, useEffect } from 'react'
+import React, { useRef, useReducer, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import ClapButton from 'react-clap-button'
 import { css } from '@emotion/core'
-import { useDatabase } from 'utils/firebase'
+import useClaps from 'utils/useClaps'
+import loadable from '@loadable/component'
+
+const ClapButton = loadable(() => import('@mthorning/react-clap-button'))
 
 const reducer = (state, [type, payload]) => {
   switch (type) {
@@ -34,30 +36,21 @@ function Clap({ slug }) {
   }
   const [state, dispatch] = useReducer(reducer, initialState)
   const { clapQueue, totalClaps } = state
-  const database = useDatabase()
-  const clapRef = useMemo(() => database && database.ref(`claps/${slug}`), [
-    database,
-  ])
   const debounce = useRef(null)
+  const [claps, setClaps] = useClaps(slug)
 
   useEffect(() => {
-    if (database) {
-      clapRef.on('value', function(snapshot) {
-        const claps = snapshot.val()
-        if (claps) {
-          dispatch(['SET_TOTAL', claps])
-        }
-      })
+    if (claps) {
+      dispatch(['SET_TOTAL', claps])
     }
-    return () => clapRef && clapRef.off()
-  }, [clapRef])
+  }, [claps])
 
   useEffect(() => {
-    if (clapRef && clapQueue > 0) {
+    if (clapQueue > 0) {
       debounce.current && clearTimeout(debounce.current)
       debounce.current = setTimeout(() => {
         dispatch(['RESET_QUEUE'])
-        clapRef.set(totalClaps)
+        setClaps(totalClaps)
       }, 700)
     }
   }, [clapQueue])

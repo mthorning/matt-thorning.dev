@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { FaTag } from 'react-icons/fa'
+import { FiTag } from 'react-icons/fi'
 import { tagDisplay } from './style'
 
 function TagDisplay({ tags }) {
   return (
     <div css={tagDisplay}>
-      <FaTag />
+      <FiTag />
       <span>{tags.join(', ')}</span>
     </div>
   )

@@ -13,6 +13,8 @@ export const blogFunctionsWrapper = css`
   }
 `
 export const infoItemStyle = theme => css`
+  display: flex;
+  align-items: center;
   color: ${theme.textColor};
   font-size: ${theme.blogInfoIconFontSize};
   margin-right: 10px;
@@ -30,14 +32,4 @@ export const blogFunctions = css`
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-`
-export const clapIcon = theme => css`
-  fill: green;
-  color: red;
-  font-size: ${theme.blogInfoIconFontSize};
-  stroke: ${theme.textColor};
-`
-export const clapWrapper = css`
-  display: flex;
-  align-items: center;
 `
