@@ -304,6 +304,10 @@ export default css`
     background: none;
     line-height: 1.42;
   }
+  pre[class*='language-'] {
+    border-radius: 10px;
+    margin-bottom: 1.45rem;
+  }
   pre[class*='language-'].line-numbers {
     padding-top: 0;
     padding-bottom: 5px;
@@ -326,6 +330,19 @@ export default css`
   pre tt:before,
   pre tt:after {
     content: '';
+  }
+  blockquote {
+    margin: 0 0 1.45rem 0;
+    border-radius: 10px;
+    background-color: rgba(220, 220, 220);
+  }
+  blockquote > p {
+    overflow-x: scroll;
+    unicode-bidi: embed;
+    font-family: monospace;
+    white-space: pre;
+    padding: 16px;
+    overflow-x: auto;
   }
   @media only screen and (max-width: 480px) {
     html {
