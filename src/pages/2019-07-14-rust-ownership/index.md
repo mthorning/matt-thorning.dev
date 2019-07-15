@@ -1,6 +1,6 @@
 ---
 slug: '/rust-ownership'
-date: '2019-07-14T10:00:00'
+date: '2019-07-15T21:00:00'
 title: 'Ownership with Rust'
 tags: ['rust']
 ---
@@ -272,3 +272,9 @@ fn display(hello_from: &Vec<&str>) {
 ```
 
 > hello from ["main", "one", "two"]
+
+---
+
+So that's my first post on Rust, I hope it was useful (and correct!), all being well I intend to write a couple of these as I find that in doing so really helps to increase my own understanding and if they can help somebody else at the same time then that's even better. If you've got any comments then let me know on Twitter. :smiley:
+
+
