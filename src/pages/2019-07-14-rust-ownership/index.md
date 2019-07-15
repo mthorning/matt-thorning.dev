@@ -13,9 +13,9 @@ The basic idea of ownership is a simple one; every value is owned by a variable,
 
 ## Stack or Heap?
 
-First it's probably a good idea to talk about the two types of values that Rust deals with. Some values have a fixed size which is known at compile time and which will not change throughout the life of the programme, for example _u32_. These values can be be stored on the stack and can be passed around freely without needing to worry about ownership. The other type of value has a size which is not known at compile time or could change when the programme is running, for example a _String_. This second type is stored on the heap and a pointer to its location in memory is stored on the stack instead. The data on the heap can change size but its pointer will always be the same size.
+First, it's probably a good idea to talk about the two types of values that Rust deals with. Some values have a fixed size which is known at compile time and which will not change throughout the life of the program, for example _u32_. These values can be be stored on the stack and can be passed around freely without needing to worry about ownership. The other type of value is dynamic, it has a size which is not known at compile time and which could change whilst the program is running, such as a _String_. This second type is stored on the heap and a pointer to its location in memory is stored on the stack instead. The data on the heap can change size but its pointer will always remain the same size.
 
-Ownership exists because of these dynamic values. Other languages encounter problems when pointers are left in the stack which reference memory that has already been cleared, Rust does not have this problem. When a variable owns a value on the heap, no other variable can own it. It is possible to create pointers which reference the variable that owns the value and ownership can be moved to a different variable. When the variable that owns the value goes out of scope, the value is removed from the heap so that the memory can be reallocated.
+Ownership exists because of these dynamic values. Other languages encounter problems when pointers are left in the stack which reference memory that has already been reallocated; Rust does not have this problem. When a variable owns a value on the heap, no other variable can own it. It is possible to create pointers which reference the variable that owns the value and ownership can be moved to a different variable. When the variable that owns the value goes out of scope, the value is removed from the heap so that the memory can be reallocated.
 
 To illustrate this, please take a look at the two examples below, the first uses _&str_ (size known at compile time) and the second _String_ (size not known at compile time).
 
@@ -29,8 +29,8 @@ fn main() {
     println!("{} again from the main function", hello);
 }
 
-fn other(hello: &str) {
-    println!("{} from the other function", hello);
+fn other(greeting: &str) {
+    println!("{} from the other function", greeting);
 }
 ```
 
@@ -40,7 +40,7 @@ fn other(hello: &str) {
 
 ### With String
 
-```rust
+```rust{numberLines:true}
 fn main() {
     let hello = String::from("hello");
     println!("{} from the main function", hello);
@@ -48,8 +48,8 @@ fn main() {
     println!("{} again from the main function", hello);
 }
 
-fn other(hello: String) {
-    println!("{} from the other function", hello);
+fn other(greeting: String) {
+    println!("{} from the other function", greeting);
 }
 ```
 
@@ -64,11 +64,11 @@ fn other(hello: String) {
 > 5 | println!("{} again from the main function", hello);
 > | ^^^^^ value borrowed here after move
 
-The compiler has told us that we've moved the `hello` value to the `other` function and therefore cannot be used again by the `main` function. The message also says "_move occurs because \`hello\` has type \`std::string::String\`, which does not implement the \`Copy\` trait_". I'll probably do a post about traits at some point so I won't go into them here but what the compiler is saying is that this is not a type that can be copied. All types that can be stored on the stack can be copied, this is why the ownership rules do not apply to them; because their size is known, the performance cost of copying the values is not worth worrying about so that is what happens.
+The compiler has told us that we've moved ownership of the value from the `hello` variable in the `main` function to the `greeting` variable in the `other` function and therefore it cannot be used again by the `main` function at _line 5_. The message also says "_move occurs because \`hello\` has type \`std::string::String\`, which does not implement the \`Copy\` trait_". I'll probably do a post about traits at some point so I won't go into them here but what the compiler is saying is that this is not a type that can be copied, hence why it has been moved. All types that can be stored on the stack can be copied, this is why the ownership rules do not apply to them; because their size is known, the performance cost of copying the values is not worth worrying about so that is what happens.
 
 ## Cloning
 
-This doesn't mean that we can't copy values on the heap though, that is one way we can make our code compile:
+This doesn't mean that we can't copy values on the heap though, cloning the value is one way we can make our code compile:
 
 ```rust{numberLines:true}
 fn main() {
@@ -78,8 +78,8 @@ fn main() {
     println!("{} again from the main function", hello);
 }
 
-fn other(hello: String) {
-    println!("{} from the other function", hello);
+fn other(greeting: String) {
+    println!("{} from the other function", greeting);
 }
 ```
 
@@ -87,7 +87,7 @@ fn other(hello: String) {
 > hello from the other function
 > hello again from the main function
 
-Can you spot the difference? Now, on _line 4_, we call the `other` function with a clone of the value held by the `hello` variable. Obviously this is not the most efficient way to write you programme, especially if you don't know the size of the values which are going to be getting copied. Also, if your functions mutate the value in some way then this is not a good solution:
+Can you spot the difference? Now, on _line 4_, we call the `other` function with a clone of the value held by the `hello` variable. Obviously this is not the most efficient way to write your program, and it can be risky if you don't know the size of the values which are going to be getting cloned. Also, if your functions mutate the value in some way then this is not a good solution:
 
 ```rust{numberLines:true}
 fn main() {
@@ -121,8 +121,8 @@ The first solution you might arrive at is to return the variable each time:
 fn main() {
     let mut hello_from = Vec::new();
     hello_from.push("main");
-    let hello_from = one(hello_from);
-    let hello_from = two(hello_from);
+    hello_from = one(hello_from);
+    hello_from = two(hello_from);
     println!("hello from {:?}", hello_from)
 }
 
@@ -139,7 +139,7 @@ fn two(mut hello_from: Vec<&str>) -> Vec<&str> {
 
 > hello from ["main", "one", "two"]
 
-In this example we are moving the ownership of the value to a new variable in each function scope. This is perfectly valid but in my opinion it has its downsides. First, it requires there to be a lot more code written. The `one` and `two` functions both now need to declare a return type and we need to overload the `hello_from` variable in the `main` function each time the value is returned _(lines 4 & 5)_. Secondly, I think its easier to understand code where the owner stays in one scope, this is made possible with borrowing.
+In this example we are moving the ownership of the value to a new variable in each function scope. This is perfectly valid but in my opinion it has its downsides. First, it requires more code to be written, the `one` and `two` functions both now need to declare a return type and we need to overload the `hello_from` variable in the `main` function each time the value is returned _(lines 4 & 5)_. Secondly, I think it's easier to understand code when the owner of values stays in one scope; this is made possible with borrowing.
 
 ## Borrowing
 
@@ -148,9 +148,9 @@ fn main() {
     let mut hello_from = Vec::new();
     hello_from.push("main");
 
-    let hello_pointer = &mut hello_from;
-    one(hello_pointer);
-    two(hello_pointer);
+    let hello_ref = &mut hello_from;
+    one(hello_ref);
+    two(hello_ref);
 
     println!("hello from {:?}", hello_from)
 }
@@ -166,15 +166,21 @@ fn two(hello_from: &mut Vec<&str>) {
 
 > hello from ["main", "one", "two"]
 
+Here we create a mutable reference to our variable and pass that to the functions instead. Because it is a mutable reference we can push the values and they will be added to vector as if we had passed the vector itself, however the ownership of the value never leaves the `hello_from` variable in the `main` function.
+
+## Some Caveats
+
+As well as ensuring memory safety, Rust also protects us from race conditions with some rules around references. You can create as many immutable references as you wish, but you are not allowed to create more than one mutable reference at a time:
+
 ```rust
 fn main() {
     let mut hello_from = Vec::new();
     hello_from.push("main");
 
-    let hello_pointer1 = &mut hello_from;
-    let hello_pointer2 = &mut hello_from;
-    one(hello_pointer1);
-    two(hello_pointer2);
+    let hello_ref1 = &mut hello_from;
+    let hello_ref2 = &mut hello_from;
+    one(hello_ref1);
+    two(hello_ref2);
 
     println!("hello from {:?}", hello_from)
 }
@@ -188,27 +194,29 @@ fn two(hello_from: &mut Vec<&str>) {
 }
 ```
 
-> error[E0499]: cannot borrow \`hello_from\` as mutable more than once at a time
+> error[E0499]: cannot borrow \`hello\_from\` as mutable more than once at a time
 > --> src/main.rs:6:26
 > |
-> 5 | let hello_pointer1 = &mut hello_from;
+> 5 | let hello\_ref1 = &mut hello\_from;
 > | --------------- first mutable borrow occurs here
-> 6 | let hello_pointer2 = &mut hello_from;
+> 6 | let hello\_ref2 = &mut hello\_from;
 > | ^^^^^^^^^^^^^^^ second mutable borrow occurs here
-> 7 | one(hello_pointer1);
+> 7 | one(hello\_ref1);
 > | -------------- first borrow later used here
+
+You are also not allowed to create a mutable reference whilst there are already one or more immutable references:
 
 ```rust
 fn main() {
     let mut hello_from = Vec::new();
     hello_from.push("main");
 
-    let display_pointer = &hello_from;
-    let hello_pointer = &mut hello_from;
-    one(hello_pointer);
-    two(hello_pointer);
+    let display_ref = &hello_from;
+    let hello_ref = &mut hello_from;
+    one(hello_ref);
+    two(hello_ref);
 
-    display(display_pointer)
+    display(display_ref)
 }
 
 fn one(hello_from: &mut Vec<&str>) {
@@ -224,28 +232,30 @@ fn display(hello_from: &Vec<&str>) {
 }
 ```
 
-> error[E0502]: cannot borrow \`hello_from\` as mutable because it is also borrowed as immutable
+> error[E0502]: cannot borrow \`hello\_from\` as mutable because it is also borrowed as immutable
 > --> src/main.rs:6:25
 > |
-> 5 | let display_pointer = &hello_from;
+> 5 | let display\_ref = &hello\_from;
 > | ----------- immutable borrow occurs here
-> 6 | let hello_pointer = &mut hello_from;
+> 6 | let hello\_ref = &mut hello\_from;
 > | ^^^^^^^^^^^^^^^ mutable borrow occurs here
 > ...
-> 10 | display(display_pointer)
+> 10 | display(display\_ref)
 > | --------------- immutable borrow later used here
+
+But the compiler can tell when no further changes can be made via a mutable reference and allows you to start creating immutable references again!
 
 ```rust
 fn main() {
     let mut hello_from = Vec::new();
     hello_from.push("main");
 
-    let hello_pointer = &mut hello_from;
-    one(hello_pointer);
-    two(hello_pointer);
+    let hello_ref = &mut hello_from;
+    one(hello_ref);
+    two(hello_ref);
 
-    let display_pointer = &hello_from;
-    display(display_pointer)
+    let display_ref = &hello_from;
+    display(display_ref)
 }
 
 fn one(hello_from: &mut Vec<&str>) {
