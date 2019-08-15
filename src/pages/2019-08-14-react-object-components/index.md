@@ -5,13 +5,13 @@ title: 'React Object Components'
 tags: ['javascript', 'react']
 ---
 
-With the release of React Hooks I have seen a lot of posts comparing class components to function components. Function components are nothing new in React however it has not been possible before the 16.8.0 release to create a stateful component with access to lifecycle hooks using only a function. Or has it?
+With the release of React Hooks I have seen a lot of posts comparing class components to function components. Function components are nothing new in React, however it was not possible before version 16.8.0 to create a stateful component with access to lifecycle hooks using only a function. Or was it?
 
-Call me a pedant (many people already do!) but when we talk about class components we are actually (technically) talking about components created by functions. In this post I would like to use React to demonstrate what is actually happening when we write a class.
+Call me a pedant (many people already do!) but when we talk about class components we are actually (technically) talking about components created by functions. In this post I would like to use React to demonstrate what is actually happening when we write a class in JavaScript.
 
 ## Classes vs Functions
 
-First, I would like to very briefly show how, what we refer to as function and class components, relate to one another. Here's a simple component written as a class:
+First, I would like to very briefly show how, what are commonly referred to as function and class components, relate to one another. Here's a simple component written as a class:
 ```js
 class Hello extends React.Component {
   render() {
@@ -19,13 +19,13 @@ class Hello extends React.Component {
   }
 }
 ```
-And here it is written as a function component:
+And here it is written as a function:
 ```js
 function Hello() {
   return <p>Hello!</p>
 }
 ```
-Function components are just the render method from classes. Because of this they were never previously able to hold their own state or perform side effects on mount or update. Since React 16.8.0 it has been possible to create stateful function component thanks to hooks, making it possible to write this:
+Function components are just the render method from classes. Because of this they were never previously able to hold their own state or perform any side effects at points during their lifecycle. Since React 16.8.0 it has been possible to create stateful function component thanks to hooks, making it possible to write a component like this:
 ```js
 class Hello extends React.Component {
   
@@ -47,7 +47,7 @@ class Hello extends React.Component {
   }
 }
 ```
-Like this:
+As a function like this:
 ```js
 function Hello({ name }) {
 
@@ -62,7 +62,7 @@ function Hello({ name }) {
   return sayHello ? <p>{`Hello ${name}!`}</p> : null;
 }
 ```
-The purpose of this article isn't to get into arguing that one is better than the other, there are hundreds of posts on that topic already! The reason for showing the two components above is so that we can be clear about what React does with them.
+The purpose of this article isn't to get into arguing that one is better than the other, there are hundreds of posts on that topic already! The reason for showing the two components above is so that we can be clear about what React actually does with them.
 
 In the case of the class component, React creates an instance of the class using the `new` keyword:
 ```js
@@ -109,7 +109,31 @@ this.state = {
 this.handleClick = this.handleClick.bind(this);
 }
 ```
-This is the function which React will call with the `new` keyword. When the function is called with `new`, a new object is created, and the `this` context is bound to it. 
+This is the function which React will call with the `new` keyword. When a function is called with `new`, a new object is created, and the `this` context is bound to it. 
+
+Next, we need to find a home for the `render` and `handleClick` methods and for that we need to talk about the prototype chain.
+
+## The Prototype Chain
+
+JavaScript allows inheritence of properties and methods between objects through something know as the prototype chain. Every object has a link to another object called its prototype. 
+
+When you call a method or access a property on an object, JavaScript first checks for the property on the object itself. If it can't find it there then it checks the object's prototype, if it still can't find it then it checks the prototype's prototype and so on up the chain until it either finds it or runs out of prototypes to check.
+
+Nearly all objects in JavaScript are instances of `Object`; this is how you have access to methods such as `toString` and `hasOwnProperty` on all objects. The chain ends when an object is reached with `null` as its prototype, this is normally at `Object`.
+
+Let's try to make things clearer with an example.
+
+```js
+const parentObject = { name: 'parent' };
+const childObject = Object.create(parentObject, { name: { value: 'child' } });
+console.log(childObject);
+```
+First we create `parentObject`. Because we haven't specified otherwise, this object will be linked to `Object`. Next we use `Object.create` to create a new object using `parentObject` as its prototype. Notice that `Object.create` is only available from `Object` itself, it is not on `Object.prototype` so it is not available on instances of `Object`.
+
+Now, when we use `console.log` to print our `childObject` we should see:
+[image of {name: 'child', \_\_proto__]
+
+
 
 FOR KEEPS:
 ```
