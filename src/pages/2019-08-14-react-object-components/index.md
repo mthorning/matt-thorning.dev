@@ -115,9 +115,7 @@ Next, we need to find a home for the `render` and `handleClick` methods and for 
 
 ## The Prototype Chain
 
-JavaScript allows inheritance of properties and methods between objects through something know as the prototype chain. Every object has a link to another object called its prototype. 
-
-When you call a method or access a property on an object, JavaScript first checks for the property on the object itself. If it can't find it there then it checks the object's prototype, if it still can't find it then it checks the prototype's prototype and so on up the chain until it either finds it or runs out of prototypes to check.
+JavaScript allows inheritance of properties and methods between objects through something known as the prototype chain. Every object has a link to another object called its prototype, when you call a method or access a property on an object, JavaScript first checks for the property on the object itself. If it can't find it there then it checks the object's prototype, if it still can't find it then it checks the prototype's prototype and so on up the chain until it either finds it or runs out of prototypes to check.
 
 Nearly all objects in JavaScript are instances of `Object`; this is how you have access to methods such as `toString` and `hasOwnProperty` on all objects. The chain ends when an object is reached with `null` as its prototype, this is normally at `Object`.
 
@@ -220,3 +218,4 @@ Counter.prototype.handleClick = function() {
 
 Object.setPrototypeOf(Counter.prototype, React.Component.prototype);
 ```
+
