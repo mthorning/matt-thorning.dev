@@ -5,13 +5,13 @@ title: 'React Object Components'
 tags: ['javascript', 'react']
 ---
 
-With the release of React Hooks I have seen a lot of posts comparing class components to function components. Function components are nothing new in React, however it was not possible before version 16.8.0 to create a stateful component with access to lifecycle hooks using only a function. Or was it?
+With the release of React Hooks I have seen a lot of posts comparing class components to functional components. Functional components are nothing new in React, however it was not possible before version 16.8.0 to create a stateful component with access to lifecycle hooks using only a function. Or was it?
 
 Call me a pedant (many people already do!) but when we talk about class components we are actually (technically) talking about components created by functions. In this post I would like to use React to demonstrate what is actually happening when we write a class in JavaScript.
 
 ## Classes vs Functions
 
-First, I would like to very briefly show how, what are commonly referred to as function and class components, relate to one another. Here's a simple component written as a class:
+First, I would like to very briefly show how, what are commonly referred to as functional and class components, relate to one another. Here's a simple component written as a class:
 ```js
 class Hello extends React.Component {
   render() {
@@ -25,7 +25,7 @@ function Hello() {
   return <p>Hello!</p>
 }
 ```
-Notice that the Function component is just the render method. Because of this, these components were never able to hold their own state or perform any side effects at points during their lifecycle. Since React 16.8.0 it has been possible to create stateful function components thanks to hooks, meaning we can turn a component like this:
+Notice that the Functional component is just the render method. Because of this, these components were never able to hold their own state or perform any side effects at points during their lifecycle. Since React 16.8.0 it has been possible to create stateful functional components thanks to hooks, meaning we can turn a component like this:
 ```js
 class Hello extends React.Component {
   
@@ -47,7 +47,7 @@ class Hello extends React.Component {
   }
 }
 ```
-Into a function like this:
+Into a functional component like this:
 ```js
 function Hello({ name }) {
 
@@ -70,7 +70,7 @@ const instance = new Component(props);
 ```
 This instance is an object; when we say a component is a class, what we actually mean is that it is an object. This new object component can have its own state and methods, some of which can be lifecycle methods (render, componentDidMount, etc.) which React will call at the appropriate points during the app's lifetime.
 
-With a function component, React just calls it like an ordinary function (which it is!) and it returns either HTML markup or more React components. The lifecycle methods and access to component state now needs to be imported so that they can be used in the component, they work entirely based on the order in which they are called by each component which uses them; this is why you can only call hooks at the top level of the component and they can't be called conditionally.
+With a functional component, React just calls it like an ordinary function (which it is!) and it returns either HTML markup or more React components. The lifecycle methods and access to component state now needs to be imported so that they can be used in the component, they work entirely based on the order in which they are called by each component which uses them; this is why you can only call hooks at the top level of the component and they can't be called conditionally.
 
 ## The Constructor Function
 JavaScript doesn't have classes. I know it looks like it has classes, we've just written two! But under-the-hood JavaScript is not a class-based language, it is prototype-based. Classes were added with the ECMAScript 2015 specification (also referred to as ES6) and are just a cleaner syntax for existing functionality.
@@ -189,7 +189,7 @@ Example.staticMethod()
 
 Our component is almost ready, there are just two problems left to fix. The first problem is that React needs to be able to work out whether our function is a constructor function or just a regular function because it needs to know whether to call it with the `new` keyword or not. Dan Abramov wrote a great blog post [about this](https://overreacted.io/how-does-react-tell-a-class-from-a-function/), but to cut a long story short, React looks for a property on the component called `isReactComponent`. We could get around this by adding `isReactComponent: {}` to `Counter.prototype` (I know, you would expect it to be a boolean but `isReactComponent`'s value is an empty object, you'll have to read his article if you want to know why!) but that would only be cheating the system and it wouldn't solve problem number two.
 
-In the `handleClick` method we make a call to `this.setState`. This method is not on our component, it is "inherited" from `React.Component` along with `isReactComponent`. If you remember the [prototype chain section](#the-prototype-chain) from earlier, we want our component instance to first inherit the methods on `Counter.prototype` and then the methods from `React.Component`. This means that we want to link the properties on `React.Component.prototype` to `Counter.prototype.__proto__`. Fortunately there's a function on `Object` which can help us with this:
+In the `handleClick` method we make a call to `this.setState`. This method is not on our component, it is "inherited" from `React.Component` along with `isReactComponent`. If you remember the [prototype chain section](#the-prototype-chain) from earlier, we want our component instance to first inherit the methods on `Counter.prototype` and then the methods from `React.Component`. This means that we want to link the properties on `React.Component.prototype` to `Counter.prototype.__proto__`. Fortunately there's a method on `Object` which can help us with this:
 ```js
 Object.setPrototypeOf(Counter.prototype, React.Component.prototype);
 
@@ -222,4 +222,8 @@ Counter.prototype.handleClick = function() {
 
 Object.setPrototypeOf(Counter.prototype, React.Component.prototype);
 ```
-As you can see, it's not as nice to look at as before! In addtion to making JavaScript more accessible to developers who are used to working with traditional class-based languages, the class syntax also makes the code a lot more readable. I'm not suggesting that you should start writing your React components in this way (in fact, I would actively discourage it!), I only thought it would be an interesting exercise which would provide some insight into how JavaScript inheritence works. Although you don't need to understand this stuff to write React components, it certainly can't hurt and I expect there will be occassions when you are fixing a tricky bug where understanding how prototypal inheritence works will make all the difference.
+As you can see, it's not as nice to look at as before! In addtion to making JavaScript more accessible to developers who are used to working with traditional class-based languages, the class syntax also makes the code a lot more readable. I'm not suggesting that you should start writing your React components in this way (in fact, I would actively discourage it!), I only thought it would be an interesting exercise which would provide some insight into how JavaScript inheritence works.
+
+---
+
+Although you don't need to understand this stuff to write React components, it certainly can't hurt and I expect there will be occassions when you are fixing a tricky bug where understanding how prototypal inheritence works will make all the difference. I hope you have found this article interesting and/or enjoyable, if you have any thoughts on the subject then please let me know. :)
