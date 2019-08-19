@@ -72,7 +72,7 @@ This instance is an object; when we say a component is a class, what we actually
 
 With a function component, React just calls it like an ordinary function (which it is!) and it returns either HTML markup or more React components. The lifecycle methods and access to component state now needs to be imported so that they can be used in the component, they work entirely based on the order in which they are called by each component which uses them; this is why you can only call hooks at the top level of the component and they can't be called conditionally.
 
-## Classes __are__ Functions
+## The Constructor Function
 JavaScript doesn't have classes. I know it looks like it has classes, we've just written two! But under-the-hood JavaScript is not a class-based language, it is prototype-based. Classes were added with the ECMAScript 2015 specification (also referred to as ES6) and are just a cleaner syntax for existing functionality.
 
 Let's have a go at rewriting a React class component without using the class syntax. Here is the component which we are going to recreate:
@@ -222,4 +222,4 @@ Counter.prototype.handleClick = function() {
 
 Object.setPrototypeOf(Counter.prototype, React.Component.prototype);
 ```
-
+As you can see, it's not as nice to look at as before! In addtion to making JavaScript more accessible to developers who are used to working with traditional class-based languages, the class syntax also makes the code a lot more readable. I'm not suggesting that you should start writing your React components in this way (in fact, I would actively discourage it!), I only thought it would be an interesting exercise which would provide some insight into how JavaScript inheritence works. Although you don't need to understand this stuff to write React components, it certainly can't hurt and I expect there will be occassions when you are fixing a tricky bug where understanding how prototypal inheritence works will make all the difference.
