@@ -1,7 +1,7 @@
 ---
 slug: '/react-object-components'
 date: '2019-08-14T21:00:00'
-title: 'React Object Components'
+title: 'Have you used React Object Components?'
 tags: ['javascript', 'react']
 ---
 
@@ -25,7 +25,7 @@ function Hello() {
   return <p>Hello!</p>
 }
 ```
-Notice that the Functional component is just the render method. Because of this, these components were never able to hold their own state or perform any side effects at points during their lifecycle. Since React 16.8.0 it has been possible to create stateful functional components thanks to hooks, meaning we can turn a component like this:
+Notice that the Functional component is just a render method. Because of this, these components were never able to hold their own state or perform any side effects at points during their lifecycle. Since React 16.8.0 it has been possible to create stateful functional components thanks to hooks, meaning that we can turn a component like this:
 ```js
 class Hello extends React.Component {
   
@@ -70,10 +70,10 @@ const instance = new Component(props);
 ```
 This instance is an object; when we say a component is a class, what we actually mean is that it is an object. This new object component can have its own state and methods, some of which can be lifecycle methods (render, componentDidMount, etc.) which React will call at the appropriate points during the app's lifetime.
 
-With a functional component, React just calls it like an ordinary function (which it is!) and it returns either HTML markup or more React components. The lifecycle methods and access to component state now needs to be imported so that they can be used in the component, they work entirely based on the order in which they are called by each component which uses them; this is why you can only call hooks at the top level of the component and they can't be called conditionally.
+With a functional component, React just calls it like an ordinary function (because it is an ordinary function!) and it returns either HTML or more React components. Methods with which to handle component state and trigger effects at points during the component's lifecycle now need to be imported if they are required. These work entirely based on the order in which they are called by each component which uses them, they do not know which component has called them; this is why you can only call hooks at the top level of the component and they can't be called conditionally.
 
 ## The Constructor Function
-JavaScript doesn't have classes. I know it looks like it has classes, we've just written two! But under-the-hood JavaScript is not a class-based language, it is prototype-based. Classes were added with the ECMAScript 2015 specification (also referred to as ES6) and are just a cleaner syntax for existing functionality.
+JavaScript doesn't have classes. I know it looks like it has classes, we've just written two! But under the-hood JavaScript is not a class-based language, it is prototype-based. Classes were added with the ECMAScript 2015 specification (also referred to as ES6) and are just a cleaner syntax for existing functionality.
 
 Let's have a go at rewriting a React class component without using the class syntax. Here is the component which we are going to recreate:
 ```js
@@ -113,7 +113,7 @@ function Counter(props) {
   this.handleClick = this.handleClick.bind(this);
 }
 ```
-This is the function which React will call with the `new` keyword. When a function is called with `new`, a new object is created, and the `this` context is bound to it. 
+This is the function which React will call with the `new` keyword. When a function is called with `new` it is treated as a constructor function, a new object is created, the `this` variable is pointed to it and the function is executed with the new object being used wherever `this` is mentioned. 
 
 Next, we need to find a home for the `render` and `handleClick` methods and for that we need to talk about the prototype chain.
 
@@ -136,15 +136,15 @@ Now, when we use `console.log` to print our `childObject` we should see:
 
 ![console output of childObject](childObject.jpg)
 
-The object has two properties, there is the `name` property which we just set and the `__proto___` property. `__proto__` isn't an actual property like `name`, it is  an accessor property to the internal prototype of the object. We can open these to see our prototype chain:
+The object has two properties, there is the `name` property which we just set and the `__proto___` property. `__proto__` isn't an actual property like `name`, it is  an accessor property to the internal prototype of the object. We can expand these to see our prototype chain:
 
 ![expanded output of childObject](childObject_expanded.jpg)
 
-The first `__proto___` contains the contents of `parentObject` which has its own `__proto___` containing the contents of `Object`.
+The first `__proto___` contains the contents of `parentObject` which has its own `__proto___` containing the contents of `Object`. These are all of the properties and methods that are available to `childObject`.
 
-It can be quite confusing that the prototypes are found on a property called `__proto__`! It's important to realise that `__proto__` is only a reference the linked object. If you use `Object.create` like we have above, the linked object can be anything you choose, if you use a constructor function then this linking happens automatically to the constructor function's `prototype` property.
+It can be quite confusing that the prototypes are found on a property called `__proto__`! It's important to realise that `__proto__` is only a reference to the linked object. If you use `Object.create` like we have above, the linked object can be anything you choose, if you use the `new` keyword to call a constructor function then this linking happens automatically to the constructor function's `prototype` property.
 
-Ok, back to our component. To make the methods available in our component's prototype chain we just need to add them to the `prototype` property of the constructor function, like this:
+Ok, back to our component. Since React calls our function with the `new` keyword, we now know that to make the methods available in our component's prototype chain we just need to add them to the `prototype` property of the constructor function, like this:
 
 ```js
 Counter.prototype.render = function() {
@@ -165,7 +165,7 @@ Counter.prototype.handleClick = function () {
 
 ## Static Methods
 
-This seems like a good time to mention static methods. Sometimes you might want to create a function which performs some action that pertains to the instances you are creating but it doesn't really make sense for the function to be available on each object's `this` context. When used with classes they are called Static Methods, I'm not sure if they have a name when not used with classes! We haven't used any static methods in our example but React does have a few static lifecycle methods and we did use one earlier with `Object.create`. It's easy to declare a static method on a class, you just need to prefix the method with the `static` keyword:
+This seems like a good time to mention static methods. Sometimes you might want to create a function which performs some action that pertains to the instances you are creating but it doesn't really make sense for the function to be available on each object's `this`. When used with classes they are called Static Methods, I'm not sure if they have a name when not used with classes! We haven't used any static methods in our example but React does have a few static lifecycle methods and we did use one earlier with `Object.create`. It's easy to declare a static method on a class, you just need to prefix the method with the `static` keyword:
 ```js
 class Example {
   static staticMethod() {
