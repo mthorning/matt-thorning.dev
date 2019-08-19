@@ -226,4 +226,4 @@ As you can see, it's not as nice to look at as before! In addtion to making Java
 
 ---
 
-Although you don't need to understand this stuff to write React components, it certainly can't hurt and I expect there will be occassions when you are fixing a tricky bug where understanding how prototypal inheritence works will make all the difference. I hope you have found this article interesting and/or enjoyable, if you have any thoughts on the subject then please let me know. :)
+Although you don't need to understand this stuff to write React components, it certainly can't hurt and I expect there will be occassions when you are fixing a tricky bug where understanding how prototypal inheritence works will make all the difference. I hope you have found this article interesting and/or enjoyable, if you have any thoughts on the subject then please let me know. :smiley:
