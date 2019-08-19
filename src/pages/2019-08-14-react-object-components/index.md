@@ -142,7 +142,7 @@ The object has two properties, there is the `name` property which we just set an
 
 The first `__proto___` contains the contents of `parentObject` which has its own `__proto___` containing the contents of `Object`.
 
-It can be quite confusing that the prototypes are be found on a property called `__proto__`! It's important to realise that `__proto__` is only a reference the linked object. If you use `Object.create` like we have above, the linked object can be anything you choose, if you use a constructor function then this linking happens automatically to the constructor function's `prototype` property.
+It can be quite confusing that the prototypes are found on a property called `__proto__`! It's important to realise that `__proto__` is only a reference the linked object. If you use `Object.create` like we have above, the linked object can be anything you choose, if you use a constructor function then this linking happens automatically to the constructor function's `prototype` property.
 
 Ok, back to our component. To make the methods available in our component's prototype chain we just need to add them to the `prototype` property of the constructor function, like this:
 
