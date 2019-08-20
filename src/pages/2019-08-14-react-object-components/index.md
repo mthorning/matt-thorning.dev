@@ -113,7 +113,7 @@ function Counter(props) {
   this.handleClick = this.handleClick.bind(this);
 }
 ```
-This is the function which React will call with the `new` keyword. When a function is called with `new` it is treated as a constructor function, a new object is created, the `this` variable is pointed to it and the function is executed with the new object being used wherever `this` is mentioned. 
+This is the function which React will call with the `new` keyword. When a function is called with `new` it is treated as a constructor function; a new object is created, the `this` variable is pointed to it and the function is executed with the new object being used wherever `this` is mentioned. 
 
 Next, we need to find a home for the `render` and `handleClick` methods and for that we need to talk about the prototype chain.
 
