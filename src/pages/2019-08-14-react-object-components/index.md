@@ -121,7 +121,7 @@ Next, we need to find a home for the `render` and `handleClick` methods and for 
 
 JavaScript allows inheritance of properties and methods between objects through something known as the prototype chain. Well, I say inheritence, but I actually mean delegation. Unlike in other languages with classes, where properties are copied from a class to its instances, JavaScript objects have an internal protoype link which points to another object. When you call a method or attempt to access a property on an object, JavaScript first checks for the property on the object itself, if it can't find it there then it checks the object's prototype (the link to the other object), if it still can't find it then it checks the prototype's prototype and so on up the chain until it either finds it or runs out of prototypes to check.
 
-Generally, all objects in JavaScript have `Object` at the top of their prototype chain; this is how you have access to methods such as `toString` and `hasOwnProperty` on all objects. The chain ends when an object is reached with `null` as its prototype, this is normally at `Object`.
+Generally speaking, all objects in JavaScript have `Object` at the top of their prototype chain; this is how you have access to methods such as `toString` and `hasOwnProperty` on all objects. The chain ends when an object is reached with `null` as its prototype, this is normally at `Object`.
 
 Let's try to make things clearer with an example.
 
