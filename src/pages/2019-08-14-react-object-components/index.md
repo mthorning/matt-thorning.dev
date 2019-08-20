@@ -73,7 +73,7 @@ This instance is an object; when we say a component is a class, what we actually
 With a functional component, React just calls it like an ordinary function (because it is an ordinary function!) and it returns either HTML or more React components. Methods with which to handle component state and trigger effects at points during the component's lifecycle now need to be imported if they are required. These work entirely based on the order in which they are called by each component which uses them, they do not know which component has called them; this is why you can only call hooks at the top level of the component and they can't be called conditionally.
 
 ## The Constructor Function
-JavaScript doesn't have classes. I know it looks like it has classes, we've just written two! But under the-hood JavaScript is not a class-based language, it is prototype-based. Classes were added with the ECMAScript 2015 specification (also referred to as ES6) and are just a cleaner syntax for existing functionality.
+JavaScript doesn't have classes. I know it looks like it has classes, we've just written two! But under the hood JavaScript is not a class-based language, it is prototype-based. Classes were added with the ECMAScript 2015 specification (also referred to as ES6) and are just a cleaner syntax for existing functionality.
 
 Let's have a go at rewriting a React class component without using the class syntax. Here is the component which we are going to recreate:
 ```js
