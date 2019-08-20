@@ -7,7 +7,7 @@ tags: ['javascript', 'react']
 
 With the release of React Hooks I have seen a lot of posts comparing class components to functional components. Functional components are nothing new in React, however it was not possible before version 16.8.0 to create a stateful component with access to lifecycle hooks using only a function. Or was it?
 
-Call me a pedant (many people already do!) but when we talk about class components we are actually (technically) talking about components created by functions. In this post I would like to use React to demonstrate what is actually happening when we write a class in JavaScript.
+Call me a pedant (many people already do!) but when we talk about class components we are technically talking about components created by functions. In this post I would like to use React to demonstrate what is actually happening when we write a class in JavaScript.
 
 ## Classes vs Functions
 
