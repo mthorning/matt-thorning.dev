@@ -5,7 +5,7 @@ import { personalLinks } from './style'
 export default function PersonalLinks() {
   return (
     <div css={personalLinks}>
-      <a href="https://twitter.com/thorning_m">
+      <a href="https://twitter.com/MattThorning">
         <FaTwitter />
       </a>
       <a href="https://github.com/mthorning">

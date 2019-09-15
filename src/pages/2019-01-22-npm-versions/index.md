@@ -95,4 +95,4 @@ In this app, which is written in [GatsbyJS](https://www.gatsbyjs.org/ "Gatsby's 
 
 ---
 
-That's how I use semantic versioning with NPM to make my releases quick and painless, leaving me with more time to do the important stuff! Thanks for reading, if you have any comments, questions or corrections then feel free to send me a message on [Twitter](https://twitter.com/thorning_m).
+That's how I use semantic versioning with NPM to make my releases quick and painless, leaving me with more time to do the important stuff! Thanks for reading, if you have any comments, questions or corrections then feel free to send me a message on [Twitter](https://twitter.com/MattThorning).
