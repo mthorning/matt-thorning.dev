@@ -1,6 +1,6 @@
 ---
 slug: '/using-hooks-with-classes'
-date: '2019-11-02T17:00:00'
+date: '2019-11-05T23:00:00'
 title: 'Using React Hooks with Class Components'
 tags: ['javascript', 'react', 'frontend']
 ---
