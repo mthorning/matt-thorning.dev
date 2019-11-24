@@ -12,7 +12,6 @@ const defaultProps = {
 }
 
 function JumpToHeading({ headings, slug }) {
-  if (!headings.length) return null
   const [showDropdown, setShowDropdown] = useState(false)
   const [dropdownSide, setDropdownSide] = useState(0)
 
@@ -52,6 +51,8 @@ function JumpToHeading({ headings, slug }) {
       el.getBoundingClientRect().x < windowWidth / 2 ? 'left' : 'right'
     )
   }
+
+  if (!headings.length) return null
 
   return (
     <>
