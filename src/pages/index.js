@@ -6,7 +6,7 @@ import { BlogPostPreview } from 'components/blog'
 import { TagSelector } from 'components/tags'
 
 export default function({ data }) {
-  const { edges: posts } = data.allMarkdownRemark
+  const { edges: posts } = data.allMdx
   const { siteMetadata } = data.site
 
   function reducer(state, action) {
@@ -77,7 +77,7 @@ export const pageQuery = graphql`
         author
       }
     }
-    allMarkdownRemark(sort: { order: DESC, fields: [frontmatter___date] }) {
+    allMdx(sort: { order: DESC, fields: [frontmatter___date] }) {
       edges {
         node {
           id
