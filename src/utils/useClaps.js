@@ -5,9 +5,12 @@ export default function useClaps(reference) {
   const [clapQueue, setClapQueue] = useState(0)
   const [claps, clapSetter] = useState(0)
   const database = useDatabase()
+  const development = process.env.NODE_ENV === 'development'
 
   const clapRef = useMemo(
-    () => database && database.ref(`claps/${reference}`),
+    () =>
+      database &&
+      database.ref(`${development ? 'test' : 'claps'}/${reference}`),
     [database]
   )
 
