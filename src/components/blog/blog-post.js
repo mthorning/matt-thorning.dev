@@ -6,6 +6,7 @@ import { ShareButtons, PreviousNext } from 'components'
 import { BlogInfo, JumpToSection } from 'components/blog'
 import { blogFunctionsWrapper, blogFunctions } from './styles'
 import Clap from 'components/clap'
+import { MDXRenderer } from 'gatsby-plugin-mdx'
 
 function BlogFunctions({ post }) {
   return (
@@ -20,7 +21,7 @@ function BlogFunctions({ post }) {
 }
 
 export default function Template({ data, location, pageContext }) {
-  const post = data.markdownRemark
+  const post = data.mdx
   const { siteMetadata } = data.site
   const { previous, next } = pageContext
 
@@ -33,7 +34,7 @@ export default function Template({ data, location, pageContext }) {
         <meta name="author" content={siteMetadata.author} />
       </Helmet>
       <BlogFunctions post={post} />
-      <div dangerouslySetInnerHTML={{ __html: post.html }} />
+      <MDXRenderer>{post.body}</MDXRenderer>
       <Clap slug={post.frontmatter.slug} />
       <ShareButtons shareUrl={location.href} title={post.frontmatter.title} />
       <PreviousNext previous={previous} next={next} />
@@ -42,13 +43,14 @@ export default function Template({ data, location, pageContext }) {
 }
 
 export const pageQuery = graphql`
-  query BlogPostByPath($path: String!) {
-    markdownRemark(frontmatter: { slug: { eq: $path } }) {
+  query BlogPostQuery($id: String!) {
+    mdx(id: { eq: $id }) {
       headings(depth: h2) {
         value
         depth
       }
-      html
+      body
+      id
       timeToRead
       frontmatter {
         date(formatString: "MMMM DD, YYYY")
