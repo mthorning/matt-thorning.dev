@@ -291,6 +291,7 @@ export default css`
     line-height: 1.1;
   }
   tt,
+/*
   code {
     background-color: hsla(0, 0%, 0%, 0.04);
     border-radius: 3px;
@@ -306,6 +307,7 @@ export default css`
   }
   pre[class*='language-'] {
     border-radius: 10px;
+    background: #252424;
     margin-bottom: 1.45rem;
   }
   pre[class*='language-'].line-numbers {
@@ -350,12 +352,29 @@ export default css`
     }
   }
   /* single backtick markdown blocks */
+/*
   :not(pre) > code[class*='language-'] {
     background: rgba(133, 133, 131, 0.22) !important;
     padding: 0 5px !important;
-    color: rgba(9, 9, 9, 0.64);
+    color: rgba(9, 9, 9, 0.64) !important;
     font-family: 'Fira Mono', monospace;
     border-radius: 0.2em !important;
     font-size: 18px;
   }
+  /* diff highlighting */
+/*
+  pre.language-diff > code .token.deleted:not(.prefix),
+  pre > code.language-diff .token.deleted:not(.prefix) {
+    background-color: rgba(98, 27, 27, 0.27);
+    color: rgba(238, 88, 88);
+    display: block;
+  }
+
+  pre.language-diff > code .token.inserted:not(.prefix),
+  pre > code.language-diff .token.inserted:not(.prefix) {
+    background-color: rgba(61, 137, 101, 0.51);
+    color: rgb(85, 227, 73);
+    display: block;
+  }
+*/
 `

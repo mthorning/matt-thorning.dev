@@ -1,11 +1,14 @@
 import React from 'react'
 import { graphql } from 'gatsby'
+import Highlight, { defaultProps } from 'prism-react-renderer'
+import nightOwl from 'prism-react-renderer/themes/nightOwl'
 import Helmet from 'react-helmet'
 import Layout from 'layouts/main-layout'
 import { ShareButtons, PreviousNext } from 'components'
 import { BlogInfo, JumpToSection } from 'components/blog'
 import { blogFunctionsWrapper, blogFunctions } from './styles'
 import Clap from 'components/clap'
+import { MDXProvider } from '@mdx-js/react'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
 
 function BlogFunctions({ post }) {
@@ -25,6 +28,39 @@ export default function Template({ data, location, pageContext }) {
   const { siteMetadata } = data.site
   const { previous, next } = pageContext
 
+  console.log(defaultProps)
+  const components = {
+    // Prism code block component
+    pre: props => {
+      const className = props.children.props.className || ''
+      const matches = className.match(/language-(?<lang>.*)/)
+      return (
+        <Highlight
+          {...defaultProps}
+          theme={nightOwl}
+          code={props.children.props.children.trim()}
+          language={
+            matches && matches.groups && matches.groups.lang
+              ? matches.groups.lang
+              : ''
+          }
+        >
+          {({ className, style, tokens, getLineProps, getTokenProps }) => (
+            <pre className={className} style={style}>
+              {tokens.map((line, i) => (
+                <div {...getLineProps({ line, key: i })}>
+                  {line.map((token, key) => (
+                    <span {...getTokenProps({ token, key })} />
+                  ))}
+                </div>
+              ))}
+            </pre>
+          )}
+        </Highlight>
+      )
+    },
+  }
+
   return (
     <Layout>
       <Helmet>
@@ -33,11 +69,13 @@ export default function Template({ data, location, pageContext }) {
         <meta name="keywords" content={post.frontmatter.tags.join(',')} />
         <meta name="author" content={siteMetadata.author} />
       </Helmet>
-      <BlogFunctions post={post} />
-      <MDXRenderer>{post.body}</MDXRenderer>
-      <Clap slug={post.frontmatter.slug} />
-      <ShareButtons shareUrl={location.href} title={post.frontmatter.title} />
-      <PreviousNext previous={previous} next={next} />
+      <MDXProvider {...{ components }}>
+        <BlogFunctions post={post} />
+        <MDXRenderer>{post.body}</MDXRenderer>
+        <Clap slug={post.frontmatter.slug} />
+        <ShareButtons shareUrl={location.href} title={post.frontmatter.title} />
+        <PreviousNext previous={previous} next={next} />
+      </MDXProvider>
     </Layout>
   )
 }
