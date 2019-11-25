@@ -10,7 +10,9 @@ Deconstruction and composition are important techniques in software development;
 
 ## Starting Out
 
-To try to demonstrate, this we're going to create a simple component which renders an input box where the user can enter a number. The component will then calculate 20% of the input value and write it back onto the screen like this:
+To try to demonstrate, this we're going to create a simple component which renders an input box where the user can enter a number. The component will then calculate 20% of the input value and write it back onto the screen.
+
+Here's the component:
 
 <ExampleComponent example="one" />
 
@@ -57,15 +59,15 @@ export default function GetTwentyPercent() {
   );
 }
 ```
-If you look at the return, you will see that the component renders an `input` and conditionally renders a `span` if `inputNumber` is truthy. The `input`'s `onChange` event calls a function, `handleInputChange`, which sets the value as state on the component using a `useState` hook. There is a `useEffect` hook which watches for changes to this state variable; when the number changes, the calculation takes place and the result is stored in the `result` state variable which is displayed by the `span`.
+If you look at the `return`, you will see that the component renders an `input` and conditionally renders a `span` if `inputNumber` is truthy. The `input`'s `onChange` event calls a function, `handleInputChange`, which sets the value as state on the component using a `useState` hook. There is a `useEffect` hook which watches for changes to this state variable; when the number changes, the calculation takes place and the result is stored in the `result` state variable which is displayed by the `span`.
 
-The problem with this component is that it only does one thing, it is completely inflexible. If we wanted to also display 30% of a value then we would be unable to do so with this component. This is where composition comes in, by breaking your code into smaller parts it is possible to then compose those parts into solutions for different problems. Hooks allow us to do this very effectively, let's abstract the logic away from this component so that it can be reused in a second component to display the 30% value.
+The problem with this component is that it only does one thing, it is completely inflexible. If we wanted to also display 30% of the input value then we would be unable to do so with this component. This is where composition comes in, by breaking your code into smaller parts it is possible to then compose those parts into solutions for different problems. Hooks allow us to do this very effectively. Let's abstract the logic away from this component so that it can be reused by a second component to display a different percentage.
 
-One thing I should probably mention here is that it might not always be right to do what we are about to do. If you know that, in your application, you will only ever need this component to display 20% of a number then there is nothing wrong with it as it is. It may be that we just need to add a prop so that the percentage can be changed from 20% to any other number. In software there are always trade-offs to be aware of, where you gain in one area, you lose in another. By making your component more flexible you are also adding more complexity which means the chance of there being bugs in the code increases, this means that more unit tests are required which incurs more maintenance cost. This is worthwhile if the flexibility is utilised but if the additional functionality is never used then it is all cost with no benefit.
+One thing I should probably mention here is that it might not always be right to do what we are about to do. If you know that, in your application, you will only ever need this component to display 20% of a number then there is nothing wrong with it as it is. It may be that we just need to add a prop so that the percentage can be changed from 20% to any other number. In software there are always trade-offs to be aware of; where you gain in one area, you lose in another. By making your component more flexible you are also adding more complexity which means the chance of there being bugs in the code increases. This means that more unit tests are required which incurs more maintenance cost. This is worthwhile if the flexibility is utilised but if the additional functionality is never used then it is all cost with no benefit.
 
-There are two principles which we should keep in mind whilst developing the solution for our problem, these are [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself), _Don't Repeat Yourself_ which is aimed at reducing repetitive code and [YAGNI](https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it), _You Aren't Gonna Need It_, which is about not adding functionality until it is needed. Both of these principles work towards making code more maintainable. This isn't to say that you shouldn't be thinking about different ways in which your components may be used in the future; making a component that can easily be extended for use in other situations is very different to making a component which can already be used in many situations which don't (and may never) exist.
+There are two principles which we should keep in mind whilst developing the solution for our problem. These are [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself), (Don't Repeat Yourself) which is aimed at reducing repetitive code and [YAGNI](https://en.wikipedia.org/wiki/You_aren%27t_gonna_need_it), (You Aren't Gonna Need It), which is about not adding functionality until it is needed. Both of these principles work towards making code more maintainable. This isn't to say that you shouldn't be thinking about different ways in which your components may be used in the future; making a component that can easily be extended for use in other situations is very different to making a component which attempts to account for a multitude of uses which don't (and may never) exist.
 
-We are going to iterate over this component several times, each time adding further layers of abstraction. Ultimately you need to decide how far you go with the abstractions when writing your own components.
+We are going to iterate over our component several times, each time adding further layers of abstraction. First though we will move the calculation logic into a custom hook.
 
 ## Creating a Hook
 
@@ -280,7 +282,9 @@ The first instance of the component uses the `usePercentage` hook and displays t
 
 ## Adding Defaults
 
-You can see that now the component can be used for any number of different uses. There is, however, now a lot of configuration required each time the component is used. If the component is going to be used in a different way each time then this is fine, but if the component is going to be used to calculate 20% nine out of ten times and only used in a different way occasionally then it would be better if it were possible to do this: 
+You can see that now the component can be used for any number of different uses, we could continue with the abstractions but and allow other input types but I think we'll move on! 
+
+One downside here is that there is now a lot of configuration required each time the component is used. If the component is going to be used in a different way each time then this is fine, but if the component is going to be used to calculate 20% a lot of times and only used for a different purpose occasionally then it would be better if it were possible to do this: 
 
 ```js
 function App() {
