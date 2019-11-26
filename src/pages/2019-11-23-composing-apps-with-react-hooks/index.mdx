@@ -89,7 +89,7 @@ This is our new `usePercentage` hook. It performs the same function as the logic
 
 Now lets change our component to use the hook:
 
-```diff
+```jsx
   import React from 'react';
 + import usePercentage from './usePercentage';
 
@@ -123,7 +123,7 @@ The change handler is still called by the `input` but this time it calls the `se
 
 We can now clone the component and make a few small changes for the `GetThirtyPercent` component:
 
-```diff
+```jsx
   import React from 'react';
   import usePercentage from './usePercentage';
   
@@ -174,7 +174,7 @@ Job done! But hang on, there's still a lot of redundant repetition there, the tw
 
 Let's get rid of the `GetTwentyPercent` and `GetThirtyPercent` components and replace them with `GetPercentage`:
 
-```diff
+```jsx
   import React from 'react';
   import usePercentage from './usePercentage';
   
@@ -224,7 +224,7 @@ function App() {
 But maybe we are still thinking too small. Is our application only concerned with percentages or are there other calculations to be made as well? If we look at what our component does we can see that it just takes a number from an input, passes it to a function (our hook) and displays the result. We can abstract the problem away further by removing any mention of percentages, passing a hook in instead of importing it and changing the display message so that it can be configured for each use case:
 
 
-```diff
+```jsx
   import React from 'react';
 - import usePercentage from './usePercentage';
 + import PropTypes from 'prop-types';
@@ -327,7 +327,7 @@ Notice that I have created a new variable call `GetTwentyPercent` which just ref
 
 We can use `defaultProps` in the same way as `propTypes`. We will again import the `usePercentage` hook into the component and use it if no `useCalculation` prop is supplied:
 
-```diff
+```jsx
   import React from 'react';
   import PropTypes from 'prop-types';
 + import usePercentage from './usePercentage';

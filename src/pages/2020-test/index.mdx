@@ -1,0 +1,34 @@
+---
+slug: '/test'
+date: '2020-11-23T18:00:00'
+title: 'Test'
+tags: ['javascript', 'react', 'frontend', 'testing']
+---
+```jsx
+  import React from 'react';
++ import usePercentage from './usePercentage';
+
+  export default function GetTwentyPercent() {
+-   const [inputNumber, setInputNumber] = useState(null);
++   const [result, inputNumber, setInputNumber] = usePercentage(20);
+    function handleInputChange(event) {
+      setInputNumber(event.target.value);
+    }
+  
+-   const [result, setResult] = useState(null);
+-   useEffect(() => {
+-     setResult((inputNumber * 2) / 100);
+-   }, [inputNumber]);
+
+    return (
+      <>
+        <input type="number" onChange={handleInputChange} />
+        {inputNumber && (
+          <span>
+            20% of {inputNumber} is {result}
+          </span>
+        )}
+      </>
+    );
+  }
+```

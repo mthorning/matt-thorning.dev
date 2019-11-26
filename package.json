@@ -48,7 +48,6 @@
     "gatsby-remark-prismjs": "^3.3.24",
     "gatsby-source-filesystem": "^2.0.16",
     "prism-react-renderer": "^1.0.2",
-    "prismjs": "^1.17.1",
     "prop-types": "^15.6.2",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
