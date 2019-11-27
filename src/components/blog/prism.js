@@ -32,8 +32,6 @@ function Line(props) {
   // Add the bg color to the row if it is a diff
   const style = css`
     padding: 0 12px 0 12px;
-    text-overflow: ellipsis;
-    overflow: hidden;
     ${diff === 'removed' &&
       `
         .token {
@@ -121,6 +119,7 @@ export default function Prism({ children: { props } }) {
               css`
                 border-radius: 10px;
                 padding: 12px 0 12px;
+                overflow-y: auto;
               `,
             ]}
           >
@@ -132,6 +131,8 @@ export default function Prism({ children: { props } }) {
                   // eg. value is either 'true' or '4'
                   // Number('4') == 4 || 4 == '4'
                   // Number('true') === 'NaN' || 'NaN' != 'true'
+
+                  // eslint-disable-next-line
                   Number(options.numberLines) == options.numberLines
                     ? key + Number(options.numberLines)
                     : key + 1

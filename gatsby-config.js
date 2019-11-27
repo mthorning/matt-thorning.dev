@@ -20,6 +20,7 @@ module.exports = {
           utils: 'src/utils',
           layouts: 'src/layouts',
           pages: 'src/pages',
+          mdx: 'src/mdx-components',
         },
         extensions: ['js'],
       },
@@ -72,16 +73,6 @@ module.exports = {
               maxWidth: 960,
             },
           },
-          /*
-          {
-            resolve: `gatsby-remark-prismjs`,
-            options: {
-              inlineCodeMarker: null,
-              showLineNumbers: false,
-              noInlineHighlight: false,
-            },
-          },
-*/
         ],
       },
     },

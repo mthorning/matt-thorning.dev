@@ -4,7 +4,7 @@ date: '2019-11-23T18:00:00'
 title: 'Composing Apps with React Hooks'
 tags: ['javascript', 'react', 'frontend', 'testing']
 ---
-import ExampleComponent from './ExampleComponent.jsx';
+import ExampleComponent from 'mdx/ExampleComponent.jsx';
 
 Deconstruction and composition are important techniques in software development; this is the act of taking a complex problem, dividing it into smaller problems and then composing the solutions to those problems (functions) into working software. By creating a layer of abstraction in those functions (that is to remove any details which make the function specific to that one problem), we can make our functions reusable so that they can then be combined with other functions to solve different problems. 
 
@@ -20,7 +20,7 @@ Granted, it's not the best looking component but it will do for the purpose of t
 
 The component is _currently_ called `GetTwentyPercent` and is used by the application like this:
 
-```js
+```jsx
 function App() {
   return (
     <>
@@ -32,7 +32,7 @@ function App() {
 ```
 This is the code for the component itself: 
 
-```js
+```jsx
 import React, { useState, useEffect } from 'react';
 
 export default function GetTwentyPercent() {
@@ -71,7 +71,7 @@ We are going to iterate over our component several times, each time adding furth
 
 ## Creating a Hook
 
-```js
+```jsx
 import { useEffect, useState } from 'react';
 
 export default function usePercentage(percentage) {
@@ -152,7 +152,7 @@ We can now clone the component and make a few small changes for the `GetThirtyPe
 
 And use it like this:
 
-```js
+```jsx
 function App() {
   return (
     <>
@@ -204,7 +204,7 @@ Let's get rid of the `GetTwentyPercent` and `GetThirtyPercent` components and re
 This is only a small change but it means that we can use this component for any percentage we want, think of the possibilities!
 
 
-```js
+```jsx
 function App() {
   return (
     <>
@@ -268,7 +268,7 @@ I have also added [PropTypes](https://reactjs.org/docs/typechecking-with-proptyp
 
 This is how the component could now be used by our application:
 
-```js
+```jsx
 function App() {
   return (
     <>
@@ -302,7 +302,7 @@ You can see that now the component can be used for any number of different uses,
 
 One downside here is that there is now a lot of configuration required each time the component is used. If the component is going to be used in a different way each time then this is fine, but if the component is going to be used to calculate 20% a lot of times and only used for a different purpose occasionally then it would be better if it were possible to do this: 
 
-```js
+```jsx
 function App() {
 
   const GetTwentyPercent = GetCalculation;
@@ -385,7 +385,7 @@ I have used [Jest](https://jestjs.io/) with [React Testing Library](https://test
 
 In order to test a hook, you need to use it in a component. What I do is create a component which uses the hook and passes the hook's values into a child component which is a mock function:
 
-```js
+```jsx
 import React, { useEffect } from 'react';
 import { cleanup, render } from '@testing-library/react';
 import usePercentage from './usePercentage';
@@ -423,3 +423,6 @@ If we run the test we can see that it passes:
 
 ![screenshot of tests passing](tests_passed_screenshot.png)
 
+---
+
+I hope this post has been useful, I feel like there is more text than usual so I apologise if it's been a bit much but well done for reaching the end!
