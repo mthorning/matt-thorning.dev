@@ -20,6 +20,7 @@ module.exports = {
           utils: 'src/utils',
           layouts: 'src/layouts',
           pages: 'src/pages',
+          mdx: 'src/mdx-components',
         },
         extensions: ['js'],
       },
@@ -70,15 +71,6 @@ module.exports = {
               // the content container as this plugin uses this as the
               // base for generating different widths of each image.
               maxWidth: 960,
-            },
-          },
-          {
-            resolve: `gatsby-remark-prismjs`,
-            options: {
-              classPrefix: 'language-',
-              inlineCodeMarker: null,
-              showLineNumbers: false,
-              noInlineHighlight: false,
             },
           },
         ],

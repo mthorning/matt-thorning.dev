@@ -147,7 +147,7 @@ The VS Code generator creates your project with Mocha already installed, however
 ```
 npm install Jest -D
 ```
-This will add Jest to the _node\_modules_ binaries (_.bin_) folder, the easiest way to run Jest then is to add this line to the `scripts` section in your _package.json_:
+This will add Jest to the _node\_modules binaries (_.bin_) folder, the easiest way to run Jest then is to add this line to the `scripts` section in your _package.json_:
 ```json
 "scripts": {
   "test": "jest"
@@ -322,7 +322,9 @@ transform(lines, mask, getSpaces) {
   const max = Math.max(...mask);
   return lines.map((line, i) => {
     if (mask[i]) {
-      const extended = [line[0], ...getSpaces(max, mask[i])].join("");
+      const extended = [
+        line[0], ...getSpaces(max, mask[i])
+      ].join("");
       line.splice(0, 1, extended);
     }
     return line;
@@ -374,4 +376,4 @@ code --install-extension < path/to/file.vsix >
 
 ---
 
-When I was figuring out how to make this basic extension I struggled a little bit to find the information I needed. I hope that if you have stumbled across this post that it has helped to fill in one or two of the blanks. If you have any comments or questions, or have spotted something that is incorrect or could have been done in a better way then please let me know on Twitter. Cheers :smile:
+When I was figuring out how to make this basic extension I struggled a little bit to find the information I needed. I hope that if you have stumbled across this post that it has helped to fill in one or two of the blanks. If you have any comments or questions, or have spotted something that is incorrect or could have been done in a better way then please let me know on Twitter. Cheers

@@ -6,7 +6,9 @@ import { ShareButtons, PreviousNext } from 'components'
 import { BlogInfo, JumpToSection } from 'components/blog'
 import { blogFunctionsWrapper, blogFunctions } from './styles'
 import Clap from 'components/clap'
+import { MDXProvider } from '@mdx-js/react'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
+import Prism from './prism'
 
 function BlogFunctions({ post }) {
   return (
@@ -18,6 +20,10 @@ function BlogFunctions({ post }) {
       </div>
     </div>
   )
+}
+
+const components = {
+  pre: props => <Prism {...props} />,
 }
 
 export default function Template({ data, location, pageContext }) {
@@ -34,7 +40,9 @@ export default function Template({ data, location, pageContext }) {
         <meta name="author" content={siteMetadata.author} />
       </Helmet>
       <BlogFunctions post={post} />
-      <MDXRenderer>{post.body}</MDXRenderer>
+      <MDXProvider {...{ components }}>
+        <MDXRenderer>{post.body}</MDXRenderer>
+      </MDXProvider>
       <Clap slug={post.frontmatter.slug} />
       <ShareButtons shareUrl={location.href} title={post.frontmatter.title} />
       <PreviousNext previous={previous} next={next} />

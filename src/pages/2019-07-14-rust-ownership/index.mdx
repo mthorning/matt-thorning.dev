@@ -21,7 +21,7 @@ To illustrate this, please take a look at the two examples below, the first uses
 
 ### With &str
 
-```rust
+```ocaml
 fn main() {
     let hello = "hello";
     println!("{} from the main function", hello);
@@ -40,7 +40,7 @@ fn other(greeting: &str) {
 
 ### With String
 
-```rust{numberLines:true}
+```ocaml{numberLines:true}
 fn main() {
     let hello = String::from("hello");
     println!("{} from the main function", hello);
@@ -70,7 +70,7 @@ The compiler has told us that we've moved ownership of the value from the `hello
 
 This doesn't mean that we can't copy values on the heap though, cloning the value is one way we can make our code compile:
 
-```rust{numberLines:true}
+```ocaml{numberLines:true}
 fn main() {
     let hello = String::from("hello");
     println!("{} from the main function", hello);
@@ -89,7 +89,7 @@ fn other(greeting: String) {
 
 Can you spot the difference? Now, on _line 4_, we call the `other` function with a clone of the value held by the `hello` variable. Obviously this is not the most efficient way to write your program, and it can be risky if you don't know the size of the values which are going to be getting cloned. Also, if your functions mutate the value in some way then this is not a good solution:
 
-```rust{numberLines:true}
+```ocaml{numberLines:true}
 fn main() {
     let mut hello_from = Vec::new();
     hello_from.push("main");
@@ -117,7 +117,7 @@ Here, we're creating a Vector in which we want to collect the names of the funct
 
 The first solution you might arrive at is to return the variable each time:
 
-```rust{numberLines:true}
+```ocaml{numberLines:true}
 fn main() {
     let mut hello_from = Vec::new();
     hello_from.push("main");
@@ -143,7 +143,7 @@ In this example we are moving the ownership of the value to a new variable in ea
 
 ## Borrowing
 
-```rust
+```ocaml
 fn main() {
     let mut hello_from = Vec::new();
     hello_from.push("main");
@@ -172,7 +172,7 @@ Here we create a mutable reference to our variable and pass that to the function
 
 As well as ensuring memory safety, Rust also protects us from race conditions with some rules around references. You can create as many immutable references as you wish, but you are not allowed to create more than one mutable reference at a time:
 
-```rust
+```ocaml
 fn main() {
     let mut hello_from = Vec::new();
     hello_from.push("main");
@@ -206,7 +206,7 @@ fn two(hello_from: &mut Vec<&str>) {
 
 You are also not allowed to create a mutable reference whilst there are already one or more immutable references:
 
-```rust
+```ocaml
 fn main() {
     let mut hello_from = Vec::new();
     hello_from.push("main");
@@ -245,7 +245,7 @@ fn display(hello_from: &Vec<&str>) {
 
 But the compiler can tell when no further changes can be made via a mutable reference and allows you to start creating immutable references again!
 
-```rust
+```ocaml
 fn main() {
     let mut hello_from = Vec::new();
     hello_from.push("main");
@@ -275,6 +275,6 @@ fn display(hello_from: &Vec<&str>) {
 
 ---
 
-So that's my first post on Rust, I hope it was useful (and correct!), all being well I intend to write a couple of these as I find that in doing so really helps to increase my own understanding and if they can help somebody else at the same time then that's even better. If you've got any comments then let me know on Twitter. :smiley:
+So that's my first post on Rust, I hope it was useful (and correct!), all being well I intend to write a couple of these as I find that in doing so really helps to increase my own understanding and if they can help somebody else at the same time then that's even better. If you've got any comments then let me know on Twitter.
 
 
