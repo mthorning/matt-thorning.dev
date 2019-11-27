@@ -4,13 +4,13 @@ date: '2020-11-23T18:00:00'
 title: 'Test'
 tags: ['javascript', 'react', 'frontend', 'testing']
 ---
-```jsx
+```
   import React from 'react';
-+ import usePercentage from './usePercentage';
+ import usePercentage from './usePercentage';
 
   export default function GetTwentyPercent() {
 -   const [inputNumber, setInputNumber] = useState(null);
-+   const [result, inputNumber, setInputNumber] = usePercentage(20);
++   const [result, inputNumber, setInputNumber] = usePercentage(20000000);
     function handleInputChange(event) {
       setInputNumber(event.target.value);
     }

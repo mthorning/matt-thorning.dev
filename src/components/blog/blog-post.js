@@ -8,7 +8,7 @@ import { blogFunctionsWrapper, blogFunctions } from './styles'
 import Clap from 'components/clap'
 import { MDXProvider } from '@mdx-js/react'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
-import Prism from './Prism'
+import Prism from './prism'
 
 function BlogFunctions({ post }) {
   return (
