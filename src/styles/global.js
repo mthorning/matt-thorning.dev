@@ -9,6 +9,9 @@ export default css`
   body {
     margin: 0;
     color: rgba(0, 0, 0, 0.55);
+    @media (max-width: 480px) {
+      font-size: 15px;
+    }
   }
   article,
   aside,
