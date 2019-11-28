@@ -5,13 +5,13 @@ export default css`
     font-family: sans-serif;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
+    @media (max-width: 480px) {
+      font-size: 15px;
+    }
   }
   body {
     margin: 0;
     color: rgba(0, 0, 0, 0.55);
-    @media (max-width: 480px) {
-      font-size: 15px;
-    }
   }
   article,
   aside,
@@ -25,6 +25,12 @@ export default css`
   nav,
   section,
   summary {
+    @media (max-width: 480px) {
+      font-size: 15px;
+    }
+    @media (max-width: 480px) {
+      font-size: 15px;
+    }
     display: block;
   }
   audio,
@@ -102,8 +108,14 @@ export default css`
   kbd,
   pre,
   samp {
-    font-family: monospace, monospace;
-    font-size: 1em;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    line-height: 1.3rem;
+  }
+  code {
+    background: #edecec;
+    padding: 0px 4px;
+    border-radius: 5px;
   }
   figure {
     margin: 1em 40px;

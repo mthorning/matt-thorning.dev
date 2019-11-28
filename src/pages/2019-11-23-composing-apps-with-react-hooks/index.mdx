@@ -264,7 +264,7 @@ But maybe we are still thinking too small. Is our application only concerned wit
 
 We now accept `useCalculation` from the parent instead of importing the usePercentage hook. We have also renamed the percentage variable to `operand` because we don't know what the `useCalculation` hook is going to use that number for. `resultMessage` is a function which is called with the two numbers used by the calculation and the result, this means that a different message can be constructed for each use case. 
 
-I have also added [PropTypes](https://reactjs.org/docs/typechecking-with-proptypes.html) to the component. When you start creating components which will be used for different purposes you should start thinking about the set of props it accepts as an API which will be used by other developers. Therefore, it is a good idea to add PropTypes as an easy way of documenting and enforcing which props the component accepts, the type of each prop and whether it is required or optional. 
+I have also added [PropTypes](https://reactjs.org/docs/typechecking-with-proptypes.html) to the component. When you start creating components which will be used for different purposes you should start thinking about the set of props it accepts as an API. Therefore, it is a good idea to add PropTypes as an easy way of documenting and enforcing which props the component accepts, the type of each prop and whether it is required or optional. 
 
 This is how the component could now be used by our application:
 
@@ -292,13 +292,13 @@ function App() {
   )
 }
 ```
-The first instance of the component uses the `usePercentage` hook and displays the same message we've already seen. Below that it is used with a different hook, `useMultiplication`, for a different purpose: 
+The first instance of the component uses the `usePercentage` hook and displays the same message we've already seen. Below that it is used with a different hook, `radiusCalc`, for a different purpose: 
 
 <ExampleComponent example="three" />
 
 ## Adding Defaults
 
-You can see that now the component can be used for any number of different uses, we could continue with the abstractions but and allow other input types but I think we'll move on! 
+You should now be able to see now that the component could be used for any number of different uses. We could continue adding layers of abstraction; for example, we don't need to restrict  the component to only processing numbers, we could easily manipulate text as well with only a few small changes, give it a try if you like!
 
 One downside here is that there is now a lot of configuration required each time the component is used. If the component is going to be used in a different way each time then this is fine, but if the component is going to be used to calculate 20% a lot of times and only used for a different purpose occasionally then it would be better if it were possible to do this: 
 
@@ -375,17 +375,17 @@ Now the component will default to calculating 20% of the input value but each pr
 
 ## Testing Hooks
 
-A big advantage of writing reusable code is that you can write one set of tests and feel happy that you have covered a good percentage of the functionality of your application. Splitting logic up also makes testing easier; if I am struggling to write a set of test I see that as an indication that the code that I am testing is probably doing too much and should possibly be broken down into smaller parts.
+A big advantage of writing reusable code is that you can write one set of tests and feel happy that you have covered a good percentage of the functionality of your application. Splitting logic up also makes testing easier; if I am struggling to write a set of tests, I see that as an indication that the code that I am testing is probably doing too much and could likely be broken down into smaller parts.
 
 Testing our `GetCalculation` component is now fairly straightforward. We can pass mock functions into the component in place of `useCalculation` and `resultMessage` and assert on what our component is calling those functions with. 
 
 Testing the hooks themselves is a little different. Hooks are still pretty new and I haven't seen any best practices about how to test them yet. I want to share a method that I have been using, maybe you will find it helpful, maybe you will think it is completely wrong!
 
-I have used [Jest](https://jestjs.io/) with [React Testing Library](https://testing-library.com/docs/react-testing-library/intro). I like React Testing Library although I'm not really using it in the way that it has been designed to be used here. The concept is that you should be using your component as your user might use it, however we are not doing that here. The main reason I use it is that it plays nicely with hooks whereas I have had problems getting other test libraries to work with them.
+I normally use [Jest](https://jestjs.io/) with [React Testing Library](https://testing-library.com/docs/react-testing-library/intro). I like React Testing Library although I'm not really using it in the way that it has been designed to be used here. The concept is that you should be interacting with your component as a user would, but that's not what we're going to do. The main reason I'm using it is that it works well with hooks whereas I've had problems getting other testing libraries to work with them.
 
-In order to test a hook, you need to use it in a component. What I do is create a component which uses the hook and passes the hook's values into a child component which is a mock function:
+In order to test the hook, we need to use it in a component, so we will create a simple component which uses the hook and then passes the hook's return values into a mock function:
 
-```jsx
+```jsx{ numberLines: true }
 import React, { useEffect } from 'react';
 import { cleanup, render } from '@testing-library/react';
 import usePercentage from './usePercentage';
@@ -417,7 +417,9 @@ describe('Testing the usePercentage hook', () => {
 });
 ```
 
-In our test, we render the `TestComponent` with the props which we want to pass into the hook. We can then assert on the `StubComponent`, here I am using Jest' `toHaveBeenLastCalledWith` method because we are only interested in the last set of props passed into the `StubComponent`. You may have noticed that we are expecting the `StubComponent` to be called with two arguments, one is our set of props and the other is an empty object. React calls all components with a second argument called `refOrContext`, if we don't `expect` it to be included then our tests will fail.
+First we create the stub function on _line 7_. This function needs to return `null` (or another component/ HTML element) because it has to act like a React component. Next, on _line 9_ is the `TestComponent` which uses the hook and passes the resultant values into the `StubComponent` on _line15_.
+
+In our test on _line 18_, we `render` the `TestComponent` with the props which we want to pass into the hook. We can then assert on the `StubComponent`. Here I am using Jest's `toHaveBeenLastCalledWith` method because we are only interested in the last set of props passed into the `StubComponent`. You may have noticed that we are expecting the `StubComponent` to be called with two arguments, one is our set of props and the other is an empty object. React calls all components with a second argument called `refOrContext`, if we don't `expect` it to be included then our tests will fail.
 
 If we run the test we can see that it passes:
 
