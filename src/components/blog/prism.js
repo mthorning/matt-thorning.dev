@@ -31,6 +31,7 @@ function Line(props) {
 
   // Add the bg color to the row if it is a diff
   const style = css`
+    width: fit-content;
     padding: 0 12px 0 12px;
     ${diff === 'removed' &&
       `
