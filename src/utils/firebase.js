@@ -34,7 +34,7 @@ export function useDatabase() {
         setDb(getFirebase(firebase).database())
       })
     }
-  }, [])
+  }, [db])
 
   return db
 }

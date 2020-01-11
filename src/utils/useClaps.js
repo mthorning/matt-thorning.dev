@@ -11,7 +11,7 @@ export default function useClaps(reference) {
     () =>
       database &&
       database.ref(`${development ? 'test' : 'claps'}/${reference}`),
-    [database]
+    [database, development, reference]
   )
 
   useEffect(() => {
@@ -24,14 +24,14 @@ export default function useClaps(reference) {
       })
     }
     return () => clapRef && clapRef.off()
-  }, [clapRef])
+  }, [clapRef, database])
 
   useEffect(() => {
     if (database && clapQueue > 0) {
       clapRef.set(clapQueue)
       setClapQueue(0)
     }
-  }, [clapQueue])
+  }, [clapRef, database, clapQueue])
 
   function setClaps(claps) {
     setClapQueue(claps)

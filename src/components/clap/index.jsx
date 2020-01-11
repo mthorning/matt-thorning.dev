@@ -53,20 +53,20 @@ function Clap({ slug }) {
         setClaps(totalClaps)
       }, 700)
     }
-  }, [clapQueue])
+  }, [clapQueue, setClaps, totalClaps])
 
   return (
     <div
-	css={theme => css`
+      css={theme => css`
         padding: 8px;
-	  display: flex;
-	  align-items: center;
-	  max-width: 50%;
-	  font-size: 16px;
-	    ${theme.smallScreen} {
-		max-width: 100%;
-		font-size: 12px;
-	    }
+        display: flex;
+        align-items: center;
+        max-width: 50%;
+        font-size: 16px;
+        ${theme.smallScreen} {
+          max-width: 100%;
+          font-size: 12px;
+        }
       `}
     >
       <ClapButton
@@ -74,10 +74,13 @@ function Clap({ slug }) {
         countTotal={totalClaps}
         incrementCount={() => dispatch(['INC_QUEUE'])}
       />
-      <p css={css`
-	  margin: 0 10px;
-      `}
-	>If you've found this helpful then let me know with a clap or two!</p>
+      <p
+        css={css`
+          margin: 0 10px;
+        `}
+      >
+        If you've found this helpful then let me know with a clap or two!
+      </p>
     </div>
   )
 }

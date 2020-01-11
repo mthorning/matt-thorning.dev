@@ -1,7 +1,9 @@
-import React, { useEffect, useReducer } from 'react'
+import React, { useRef, useEffect, useReducer } from 'react'
 import { title as baseStyle, blinkBorder, whiteBorder } from './style'
 
 export default function TypeHello() {
+  const mounted = useRef(true)
+
   const initialState = {
     text: '',
     style: theme => [baseStyle, whiteBorder].map(a => a(theme)),
@@ -39,8 +41,8 @@ export default function TypeHello() {
       let i = 0
       function cb() {
         const payload = stringToType[i]
-        dispatch({ type: 'add', payload })
-        if (i < stringToType.length) {
+        mounted.current && dispatch({ type: 'add', payload })
+        if (mounted.current && i < stringToType.length) {
           tick(cb)
           i++
         } else {
@@ -56,9 +58,9 @@ export default function TypeHello() {
     return new Promise(resolve => {
       let i = 0
       const tick = setInterval(() => {
-        dispatch({ type: 'del' })
+        mounted.current && dispatch({ type: 'del' })
         i++
-        if (i === stop) {
+        if (mounted.current && i === stop) {
           clearInterval(tick)
           resolve()
         }
@@ -86,6 +88,7 @@ export default function TypeHello() {
 
   useEffect(() => {
     type()
+    return () => (mounted.current = false)
   }, [])
 
   return <h1 css={theme => state.style(theme)}>{state.text}</h1>

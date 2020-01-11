@@ -10,7 +10,7 @@ function useCalculation(operand, calc) {
   const [result, setResult] = useState(null)
   useEffect(() => {
     setResult(calc(inputNumber, operand))
-  }, [inputNumber, operand])
+  }, [inputNumber, calc, operand])
 
   return [result, inputNumber, setInputNumber]
 }
