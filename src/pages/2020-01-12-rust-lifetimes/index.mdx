@@ -1,0 +1,227 @@
+---
+slug: '/rust-lifetimes'
+date: '2020-01-12T11:00:00'
+title: 'Rust lifetime parameters'
+tags: ['rust']
+---
+import RustOutput from 'mdx/RustOutput'
+
+I have found lifetimes in Rust to be one of the most difficult aspects of the language to get my head around, I hope that in this post I can explain what they are and how to use them. I'm going to assume a basic understanding of the syntax and concentrate on covering the bits that caused me confusion when I first started learning Rust.
+
+## What are lifetimes?
+
+Lifetimes are used to ensure that references to values (data in memory) do not live longer than the values themselves. Rust manages its memory by deleting any values which are not owned by a variable (see my post on ownership [here](/rust-ownership)). Variables can only own a value whilst they are in scope, once a variable goes out of scope the value is deleted from memory. In order to ensure memory safety, lifetimes exist to make sure that any references to these values are also unable to still exist once the memory has been freed. 
+
+Here's an example of some code where a reference is used after its value has gone out of scope:
+
+```ocaml
+fn main() {
+  let hello;
+    {
+      let greeting = "hello";
+      hello = &greeting;
+    }
+    println!("{}", hello);
+}
+```
+<RustOutput 
+  error
+  output={`
+  error[E0597]: \`greeting\` does not live long enough
+  --> src/bin/the_problem.rs:5:17
+  |
+  5 |         hello = &greeting;
+  |                 ^^^^^^^^^ borrowed value does not live long enough
+  6 |     }
+  |     - \`greeting\` dropped here while still borrowed
+  7 |     println!("{}", hello);
+  |                    ----- borrow later used here
+  `} 
+/>
+
+The compiler is complaining because the variable `hello` is referencing a value (`greeting`) which is no longer in scope. Now look at this code:
+
+```ocaml
+fn main() {
+    let hello;
+    let unnecessary_argument = "ignore_this!";
+    {
+        let greeting = "hello";
+        hello = &greeting;
+    }
+    let output_string = get_output(hello, unnecessary_argument);
+    println!("{}", hello);
+}
+
+fn get_output(main: &str, extra: &str) -> &str {
+    main
+}
+```
+<RustOutput 
+  error
+  output={`
+    error[E0106]: missing lifetime specifier
+    --> src/bin/example_1_2.rs:12:43
+    |
+    12 | fn get_output(main: &str, extra: &str) -> &str {
+    |                                           ^ expected lifetime parameter
+    |
+    = help: this function's return type contains a borrowed value, but the signature does not say whether it is borrowed from \`main\` or \`extra\`
+  `}
+/>
+
+Lifetime parameters are a kind of generic type. Rust's type inference is able to infer them in the body of functions but type inference is not allowed in function signatures so we need to annotate the lifetime parameters ourself, with a few exceptions.
+
+Every reference has a lifetime parameter but we don't see them normally because, in certain situations, Rust is able to work them out for itself (this is known as Lifetime Elision and you can read about it [here](https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html?highlight=elision#lifetime-elision)). One of the rules for elision is that if there is only one input lifetime parameter then that lifetime is assigned to all output parameters. We need to break this rule for the purposes of this example in order to get the error which I want to talk about, hence the `unnecessary_argument`.
+
+Here, we are using a function to get the `hello` value but the compiler is unable to work out that `greeting` doesn't live long enough because it doesn't have enough information about how the arguments to `get_output` and its return value are related to one another. This is an important point which warrants repeating:
+
+### Lifetime parameters help the compiler fill in the blanks. They are a way of annotating a function signature to map the relationship between any references that are used as arguments or returned.
+
+
+Let's fix the signature to the `get_output` function so the compiler can work out that our code is still broken!
+
+```ocaml
+fn get_output<'a>(main: &'a str, extra: &str) -> &'a str {
+    main
+}
+```
+This function signature is now telling the compiler that the reference which is returned is borrowed from `main`. Notice that we have not added any lifetime parameters to `extra`, this is because it is irrelevant in this instance. It's quite common (and I am also guilty of this) to spam all references with a lifetime parameter when you get this error. Doing so in this case does make the error go away, and is technically correct because we are saying that `extra` lives _at least_ as long as `'a`, it's just that the compiler doesn't need to know about it, also it's good if we can only add the lifetime parameters which are needed because it makes us look like we know what we're doing!
+
+If we run the code then we get our original error, it might not seem like a success but it is!
+<RustOutput 
+  error
+  output={`
+  error[E0597]: \`greeting\` does not live long enough
+  --> src/bin/the_problem.rs:5:17
+  |
+  5 |         hello = &greeting;
+  |                 ^^^^^^^^^ borrowed value does not live long enough
+  6 |     }
+  |     - \`greeting\` dropped here while still borrowed
+  7 |     println!("{}", hello);
+  |                    ----- borrow later used here
+  `} 
+/>
+
+## Lifetimes on structs
+
+If you want to include a reference in any of a struct's fields then you are going to need to add lifetime parameters there too:
+
+```ocaml
+struct Thing {
+    name: &str,
+    category: &str,
+}
+
+impl Thing {
+    pub fn new(name: &str, category: &str) -> Thing {
+        Thing { name, category }
+    }
+}
+
+pub fn main() {
+    let category = "strange";
+    {
+        let name = "this";
+        let thing = Thing::new(name, category);
+        println!("{} is a {} thing", thing.name, thing.category);
+    }
+}
+```
+<RustOutput 
+  error
+  output={`
+    error[E0106]: missing lifetime specifier
+    --> src/bin/example_2_1.rs:2:11
+    |
+    2 |     name: &str,
+    |           ^ expected lifetime parameter
+    error[E0106]: missing lifetime specifier
+    --> src/bin/example_2_1.rs:3:15
+    |
+    3 |     category: &str,
+    |               ^ expected lifetime parameter  
+  `}
+/>
+
+Let's add some lifetimes to get our programme to compile:
+
+```ocaml
+struct Thing<'a> {
+    name: &'a str,
+    category: &'a str,
+}
+
+impl<'a> Thing<'a> {
+    pub fn new(name: &'a str, category: &'a str) -> Thing<'a> {
+        Thing { name, category }
+    }
+}
+```
+The `struct` needs to declare a lifetime which is then used by each field, this says that the references on the fields need to at least live as long as the struct. The `impl` declares a lifetime which is then used by the struct. The lifetime also remains in scope for any functions in the block so we do not need to declare the lifetime parameter again on the `new` function, we can just use its signature. 
+
+The signature for the `new` function tells the compiler that `name` and `category` need to live for at least as long as the returned instance of `Thing`. Let's run the code, this time it should be successful! 
+
+<RustOutput output={`
+  this is a strange thing
+`} />
+
+We may, however, want to make our signature more representative of what is actually happening and show that `name` has a different lifetime to `category`. 
+
+```ocaml
+struct Thing<'a> {
+    name: &'a str,
+    category: &'a str,
+}
+
+impl<'a, 'b> Thing<'b> {
+    pub fn new(name: &'b str, category: &'a str) -> Thing<'b> {
+        Thing { name, category }
+    }
+}
+
+pub fn main() {
+    let category = "strange";
+    {
+        let name = "this";
+        let thing = Thing::new(name, category);
+        println!("{} is a {} thing", thing.name, thing.category);
+    }
+}
+```
+<RustOutput 
+  error
+  output={`
+    error[E0495]: cannot infer an appropriate lifetime for lifetime parameter \`'a\` due to conflicting requirements
+    --> src/bin/example_2_3.rs:8:9
+    |
+    8 |         Thing { name, category }
+    |         ^^^^^
+    |
+    note: first, the lifetime cannot outlive the lifetime \`'a\` as defined on the impl at 6:6...
+    --> src/bin/example_2_3.rs:6:6
+    |
+    6 | impl<'a, 'b> Thing<'b> {
+    |      ^^
+    note: ...so that reference does not outlive borrowed content
+    --> src/bin/example_2_3.rs:8:23
+    |
+    8 |         Thing { name, category }
+    |                       ^^^^^^^^
+    note: but, the lifetime must be valid for the lifetime \`'b\` as defined on the impl at 6:10...
+    --> src/bin/example_2_3.rs:6:10
+    |
+    6 | impl<'a, 'b> Thing<'b> {
+    |          ^^
+    = note: ...so that the expression is assignable:
+    expected Thing<'b>
+    found Thing<'_>
+  `}
+  />
+
+  Because we have told the compiler that `name` and `category` have different lifetimes, it can no longer be sure that both references will live for at least as long as the instance of `Thing`. We can let the compiler know that `'a` lasts for at least as long as `'b` like so: 
+ ```ocaml
+  impl<'a: 'b, 'b> Thing<'b> {
+```
+And now our programme compiles again.
