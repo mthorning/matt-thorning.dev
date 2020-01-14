@@ -2,11 +2,11 @@ import { css } from '@emotion/core'
 
 export default css`
   html {
-    font-family: sans-serif;
+    font-family: font-family: 'Quicksand', sans-serif;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
     @media (max-width: 480px) {
-      font-size: 15px;
+      font-size: 16px;
     }
   }
   body {

@@ -12,7 +12,7 @@ I have found lifetimes in Rust to be one of the most difficult aspects of the la
 
 Lifetimes are used to ensure that references to values (data in memory) do not live longer than the values themselves. Rust manages its memory by deleting any values which are not owned by a variable (see my post on ownership [here](/rust-ownership)). Variables can only own a value whilst they are in scope, once a variable goes out of scope the value is deleted from memory. In order to ensure memory safety, lifetimes exist to make sure that any references to these values are also unable to still exist once the memory has been freed. 
 
-Here's an example of some code where a reference is used after its value has gone out of scope:
+Here's an example of lifetimes in action:
 
 ```ocaml
 fn main() {
@@ -39,7 +39,9 @@ error[E0597]: \`greeting\` does not live long enough
   `} 
 />
 
-The compiler is complaining because the variable `hello` is referencing a value (`greeting`) which is no longer in scope. Now look at this code:
+The compiler is complaining because the variable `hello` is referencing a value (`greeting`) which is no longer in scope. It is preventing us from writing code which could leave us in a situation where a reference exists that points to memory which no longer holds the value which we expect it to be holding.
+
+Things do not work so well when functions are involved though:
 
 ```ocaml
 fn main() {
@@ -70,14 +72,14 @@ error[E0106]: missing lifetime specifier
   `}
 />
 
-Lifetime parameters are a kind of generic type. Rust's type inference is able to infer them in the body of functions but type inference is not allowed in function signatures so we need to annotate the lifetime parameters ourself, with a few exceptions.
+Now the compiler needs some help from us in the form of lifetime parameters. Lifetime parameters are a kind of generic type which Rust's type inference is able to work out in the body of functions but, since type inference is not allowed in function signatures (apart from in limited cases which I'll mention next), responsibility for annotating the lifetime parameters falls to the developer.
 
-Every reference has a lifetime parameter but we don't see them normally because, in certain situations, Rust is able to work them out for itself (this is known as Lifetime Elision and you can read about it [here](https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html?highlight=elision#lifetime-elision)). One of the rules for elision is that if there is only one input lifetime parameter then that lifetime is assigned to all output parameters. We need to break this rule for the purposes of this example in order to get the error which I want to talk about, hence the `unnecessary_argument`.
+Every reference has a lifetime parameter but we don't always get to see them because, in certain situations, Rust is able to add them at compile time (this is known as Lifetime Elision and you can read about it [here](https://doc.rust-lang.org/book/ch10-03-lifetime-syntax.html?highlight=elision#lifetime-elision)). One of the rules for elision is that if there is only one input lifetime parameter then that lifetime is assigned to all output parameters. We need to break this rule for the purposes of this example in order to get the error which I want to talk about, hence the `unnecessary_argument`!
 
-Here, we are using a function to get the `hello` value but the compiler is unable to work out that `greeting` doesn't live long enough because it doesn't have enough information about how the arguments to `get_output` and its return value are related to one another. This is an important point which warrants repeating:
+This time, we are using a function to get the `hello` value but the compiler is unable to work out that `greeting` doesn't live long enough because it doesn't have enough information about how the arguments to `get_output` and its return value are related to one another. This is the important piece of the puzzle which I failed to grasp at first:
 
 <p style={{fontSize:'25px',backgroundColor:'#ffff0042', padding: '5px'}}>
-  Lifetime parameters help the compiler fill in the blanks. They are a way of annotating a function signature to map the relationship between any references which are used by the function.
+  Lifetime parameters help the compiler fill in the blanks. They only map the relationship between the references which are given to and returned from a function. This means that the compiler can ensure the data being referenced will still be in memory when it is accessed.
 </p>
 
 
@@ -88,7 +90,7 @@ fn get_output<'a>(main: &'a str, extra: &str) -> &'a str {
     main
 }
 ```
-This function signature is now telling the compiler that the reference which is returned is borrowed from `main`. Notice that we have not added any lifetime parameters to `extra`, this is because it is irrelevant in this instance. It's quite common (and I am also guilty of this) to spam all references with a lifetime parameter when you get this error. Doing so in this case does make the error go away, and is technically correct because we are saying that `extra` lives _at least_ as long as `'a`, it's just that the compiler doesn't need to know about it, also it's good if we can only add the lifetime parameters which are needed because it makes us look like we know what we're doing!
+This function's signature is now telling the compiler that the reference which is returned is borrowed from the first argument, `main`. Notice that we have not added any lifetime parameters to `extra`, this is because it is irrelevant in this case. It's quite common (and I am also guilty of this) to spam all references with a lifetime parameter when you get this error and hope for the best. Doing so in this case does make the error go away, and is technically correct because we are saying that `extra` lives _at least_ as long as `main`, it's just that, in this function, the compiler doesn't care about it because there is no situation which results in it being returned. Also, it's good if we can only add the lifetime parameters which are needed because then it makes us look like we know what we're doing!
 
 If we run the code then we get our original error, it might not seem like a success but it is!
 <RustOutput 
