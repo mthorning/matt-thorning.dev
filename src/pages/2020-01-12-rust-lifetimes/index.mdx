@@ -6,7 +6,7 @@ tags: ['rust']
 ---
 import RustOutput from 'mdx/RustOutput'
 
-I have found lifetimes in Rust to be one of the most difficult aspects of the language to get my head around, I hope that in this post I can explain what they are and how to use them. I'm going to assume a basic understanding of the syntax and concentrate on covering the bits that caused me confusion when I first started learning Rust.
+I have found lifetime parameters in Rust (also called lifetime specifiers) to be one of the most difficult aspects of the language to get my head around, I hope that in this post I can explain what they are and how to use them. I'm going to assume a basic understanding of the syntax and concentrate on covering the bits that caused me confusion when I first started learning Rust.
 
 ## What are lifetimes?
 
@@ -149,7 +149,7 @@ error[E0106]: missing lifetime specifier
   `}
 />
 
-Let's add some lifetimes to get our program to compile:
+Let's add some lifetime parameters to get our program to compile:
 
 ```ocaml
 struct Thing<'a> {
@@ -163,7 +163,7 @@ impl<'a> Thing<'a> {
     }
 }
 ```
-First we declare a lifetime parameter on the struct, then we can use it on the fields. Here we are saying that both of the references on the fields need to live at least as long as the struct. Methods on the struct may also need lifetime parameters if they use references, these parameters can either be declared on the method signature (as we did earlier) or on the `impl` itself. Here we declare a lifetime which is then used by the struct. The lifetime also remains in scope for any functions in the block so we do not need to declare the lifetime parameter again on the `new` function, we can just use it in its signature. 
+First we declare a lifetime parameter on the struct, then we can use it on the fields. Here we are saying that both of the references on the fields need to live at least as long as the struct. Methods on the struct may also need lifetime parameters if they use references, these parameters can either be declared on the method signature (as we did earlier) or on the `impl` itself. Here we declare a lifetime which is then used by the struct. The parameter also remains in scope for any functions in the block so we do not need to declare the lifetime parameter again on the `new` function, we can just use it in its signature. 
 
 The signature for the `new` function tells the compiler that `name` and `category` need to live for at least as long as the returned instance of `Thing`. Let's run the code, this time it should be successful! 
 
@@ -233,7 +233,7 @@ And now our programme compiles again.
 
 ## A challenge
 
-The thing with programming, and it's especially true for the complicated bits, is that reading about the theory only gets you part way towards understanding what's going on. Lifetimes only really started to click with me after I had spent some time experimenting with them. That being said, I would like to propose that you copy & paste the following code into your editor or go to the [Rust Playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=struct%20IntStruct%3C%27a%3E%20%7B%0A%20%20%20%20ref_to_int%3A%20%26%27a%20i32%2C%0A%7D%0A%0Apub%20fn%20main()%20%7B%0A%20%20%20%20let%20a%3A%20i32%20%3D%20100%3B%0A%20%20%20%20let%20b%3A%20i32%20%3D%20487%3B%0A%20%20%20%20let%20c%3A%20i32%20%3D%2012%3B%0A%0A%20%20%20%20let%20int_struct%3A%20IntStruct%20%3D%20IntStruct%20%7B%20ref_to_int%3A%20%26a%20%7D%3B%0A%0A%20%20%20%20let%20answer%3B%0A%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20let%20scoped_struct%20%3D%20int_struct%3B%0A%20%20%20%20%20%20%20%20answer%20%3D%20some_process(%26a%2C%20%26b%2C%20%26c%2C%20%26scoped_struct)%3B%0A%20%20%20%20%7D%0A%20%20%20%20println!(%22%7B%7D%22%2C%20answer)%3B%0A%7D%0A%0Afn%20some_process%3C%27a%2C%20%27b%3E(a%3A%20%26%27a%20i32%2C%20b%3A%20%26i32%2C%20c%3A%20%26i32%2C%20a_struct%3A%20%26%27b%20IntStruct)%20-%3E%20%26%27a%20i32%20%7B%0A%20%20%20%20if%20*a%20%3D%3D%20101%20%7B%0A%20%20%20%20%20%20%20%20a_struct.ref_to_int%0A%20%20%20%20%7D%20else%20%7B%0A%20%20%20%20%20%20%20%20a%0A%20%20%20%20%7D%0A%7D%0A) and have a go at getting it to compile for yourself.
+The thing with programming, and it's especially true for the complicated bits, is that reading about the theory only gets you part way towards understanding what's going on. Lifetimes parameters only really started to click with me after I had spent some time experimenting with them. That being said, I would like to propose that you copy & paste the following code into your editor or go to the [Rust Playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&code=struct%20IntStruct%3C%27a%3E%20%7B%0A%20%20%20%20ref_to_int%3A%20%26%27a%20i32%2C%0A%7D%0A%0Apub%20fn%20main()%20%7B%0A%20%20%20%20let%20a%3A%20i32%20%3D%20100%3B%0A%20%20%20%20let%20b%3A%20i32%20%3D%20487%3B%0A%20%20%20%20let%20c%3A%20i32%20%3D%2012%3B%0A%0A%20%20%20%20let%20int_struct%3A%20IntStruct%20%3D%20IntStruct%20%7B%20ref_to_int%3A%20%26a%20%7D%3B%0A%0A%20%20%20%20let%20answer%3B%0A%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20let%20scoped_struct%20%3D%20int_struct%3B%0A%20%20%20%20%20%20%20%20answer%20%3D%20some_process(%26a%2C%20%26b%2C%20%26c%2C%20%26scoped_struct)%3B%0A%20%20%20%20%7D%0A%20%20%20%20println!(%22%7B%7D%22%2C%20answer)%3B%0A%7D%0A%0Afn%20some_process%3C%27a%2C%20%27b%3E(a%3A%20%26%27a%20i32%2C%20b%3A%20%26i32%2C%20c%3A%20%26i32%2C%20a_struct%3A%20%26%27b%20IntStruct)%20-%3E%20%26%27a%20i32%20%7B%0A%20%20%20%20if%20*a%20%3D%3D%20101%20%7B%0A%20%20%20%20%20%20%20%20a_struct.ref_to_int%0A%20%20%20%20%7D%20else%20%7B%0A%20%20%20%20%20%20%20%20a%0A%20%20%20%20%7D%0A%7D%0A) and have a go at getting it to compile for yourself.
 
 ```ocaml
 struct IntStruct {
@@ -364,4 +364,4 @@ fn some_process<'a, 'b>(a: &'a i32, _b: &i32, _c: &i32, a_struct: &'b IntStruct<
 
 ---
 
-So that's what I've managed to work out with regards to lifetime specifiers, it's taken a while to click and I still wouldn't class myself as proficient but I'm getting there! The main lesson I have learnt is that oftentimes it's a lot easier to stop, trace the references and work out their scopes and relationships, than it is to blindly start adding lifetime parameters based on where the compiler says there are errors. I hope you have found this post useful, until next time. 
+So that's what I've managed to work out with regards to lifetime parameters, it's taken a while to click and I still wouldn't class myself as proficient but I'm getting there! The main lesson I have learnt is that oftentimes it's a lot easier to stop, trace the references and work out their scopes and relationships, than it is to blindly start adding lifetime parameters based on where the compiler says there are errors. I hope you have found this post useful, until next time. 
