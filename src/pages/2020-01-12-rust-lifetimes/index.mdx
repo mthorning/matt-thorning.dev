@@ -4,7 +4,7 @@ date: '2020-01-16T22:00:00'
 title: 'Rust lifetime parameters'
 tags: ['rust']
 ---
-import RustOutput from 'mdx/RustOutput'
+import CliOutput from 'mdx/CliOutput'
 
 I have found lifetime parameters in Rust (also called lifetime specifiers) to be one of the most difficult aspects of the language to get my head around, I hope that in this post I can explain what they are and how to use them. I'm going to assume a basic understanding of the syntax and concentrate on covering the bits that caused me confusion when I first started learning Rust.
 
@@ -24,7 +24,7 @@ fn main() {
     println!("{}", hello);
 }
 ```
-<RustOutput 
+<CliOutput 
   error
   output={`
 error[E0597]: \`greeting\` does not live long enough
@@ -59,7 +59,7 @@ fn get_output(main: &str, extra: &str) -> &str {
     main
 }
 ```
-<RustOutput 
+<CliOutput 
   error
   output={`
 error[E0106]: missing lifetime specifier
@@ -93,7 +93,7 @@ fn get_output<'a>(main: &'a str, extra: &str) -> &'a str {
 This function's signature is now telling the compiler that the reference which is returned is borrowed from the first argument, `main`. Notice that we have not added any lifetime parameters to `extra`, this is because it is irrelevant in this case. It's quite common (and I am also guilty of this) to spam all references with a lifetime parameter when you get this error and hope for the best. Doing so in this case does make the error go away, and is technically correct because we are saying that `extra` lives _at least_ as long as `main`, it's just that, in this function, the compiler doesn't care about it because there is no situation which results in it being returned. Also, it's good if we can only add the lifetime parameters which are needed because then it makes us look like we know what we're doing!
 
 If we run the code then we get our original error, it might not seem like a success but it is!
-<RustOutput 
+<CliOutput 
   error
   output={`
 error[E0597]: \`greeting\` does not live long enough
@@ -133,7 +133,7 @@ pub fn main() {
     }
 }
 ```
-<RustOutput 
+<CliOutput 
   error
   output={`
 error[E0106]: missing lifetime specifier
@@ -167,7 +167,7 @@ First we declare a lifetime parameter on the struct, then we can use it on the f
 
 The signature for the `new` function tells the compiler that `name` and `category` need to live for at least as long as the returned instance of `Thing`. Let's run the code, this time it should be successful! 
 
-<RustOutput output="this is a strange thing" />
+<CliOutput output="this is a strange thing" />
 
 However, if we look at `main` we can see that `name` and `category` have different lifetimes:
 
@@ -195,7 +195,7 @@ impl<'a, 'b> Thing<'b> {
     }
 }
 ```
-<RustOutput 
+<CliOutput 
   error
   output={`
 error[E0495]: cannot infer an appropriate lifetime for lifetime parameter \`'a\` due to conflicting requirements
@@ -307,7 +307,7 @@ From this we can see that the first argument to `some_process`(`a`) has a lifeti
 fn some_process<'a, 'b>(a: &'a i32, _b: &i32, _c: &i32, a_struct: &'b IntStruct) -> &'a i32 {
 ```
 
-<RustOutput 
+<CliOutput 
   error
   output={`
 error[E0621]: explicit lifetime required in the type of \`a_struct\`
@@ -329,7 +329,7 @@ a_struct: &'b IntStruct<'a>
 If you take a look at the snippet where we marked out the scopes you should be able to see that we can assign the lifetime parameter `'a` to `IntStruct` because the instance we are referencing was created on line 6.
 
 Let's run it again:
-<RustOutput output="100" />
+<CliOutput output="100" />
 
 Success! Here's the working code in full:
 
