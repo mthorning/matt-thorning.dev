@@ -1,7 +1,7 @@
 ---
 slug: '/reason'
 date: '2020-02-01T22:00:00'
-title: 'First experience with Reason'
+title: 'Getting to grips with Reason'
 tags: ['reason', 'frontend', 'react']
 ---
 
@@ -11,7 +11,7 @@ After spending some time writing Rust I have found myself yearning for a good ty
 
 Reason is a new syntax based on OCaml which has a very good type system. For me, the syntax sits nicely between JavaScript and Rust which is ideal and the project was started by Jordan Walke which means the language also has first-class support for React! On top of this, the compiler is crazy fast and starting a new project takes mere seconds.
 
-I thought it would be a good exercise to create myself a profile site with Reason, this is something I have been meaning to do anyway for a while but haven't gotten around to. I've spent the last week making the site, during which I have run into a couple of issues which I found difficult to resolve; the language is quite new so finding the information you need can be a little tricky at times, therefore I thought it would be a good idea to make a note of them (and my solutions to them) here.
+I have been meaning to make myself a simple profile site for a while and I thought it would be the perfect excuse to give Reason and ReasonReact a try. I've spent the last week making the site, during which I have run into a couple of issues which I found difficult to resolve; the language is quite new so finding the information you need can be a little tricky at times, therefore I thought it would be a good idea to make a note of them (and my solutions to them) here.
 
 ## Pipes
 
@@ -35,7 +35,7 @@ If you spend some time looking at examples of code written in Reason you are lik
 
 First we have Reason's old syntax for its Pipe First operator (`|.`), this was replaced by the thin arrow symbol at number 2 (`->`) but you may still come across it when looking for tutorials online. Number 3 (`|>`) is OCaml's own Pipe operator, this is also valid in Reason and you will likely see it being used in places because the Pipe (`|>`) and Pipe First (`->`) have different behaviours.
 
-If you compare a standard library function like `List.map` with a function from Bucklescript such as `Belt.List.map`, you will see that `List.map` takes the list as its second argument whereas `Belt.List.map` takes the list as its second argument. The former order is the order in which Ocaml functions expect arguments, therefore OCaml's Pipe operator adds the value being piped as the righter-most argument. Pipe First (as its name suggests) puts it in as the first argument; I'm guessing that when Bucklescript was being created, they decided to go with the latter order because that is what would feel most familiar to developers coming from JavaScript.
+If you compare a standard library function like `List.map` with a function from Bucklescript such as `Belt.List.map`, you will see that `List.map` takes the list as its second argument whereas `Belt.List.map` takes the list as its first. The former order is the order in which Ocaml functions expect arguments, therefore OCaml's Pipe operator adds the value being piped as the righter-most argument. Pipe First (as its name suggests) puts it in as the first argument; I'm guessing that when Bucklescript was being created, they decided to go with the latter order because that is what would feel most familiar to developers coming from JavaScript.
 
 ```reason
 let items = [1, 2, 3];
@@ -50,11 +50,11 @@ let doubled = Belt.List.map(items, double);
 let doubled = items->Belt.List.map(double);
 ```
 
-If the function you are piping to only takes a single argument then you can use either operator.
+You can use either operator if the function you are piping to only takes a single argument.
 
 ## Creating HTML lists
 
-This seems like the right time to discuss creating HTML lists, `<ul>` and `<ol>`. It's quite common to have to build lists when you're creating a UI, if you use React a lot then you can probably do this with your eyes closed:
+Writing lists (`<ul>` and `<ol>`) is a pretty common occurrence when you are creating a user interface, I suspect that if you are using React regularly that you would be able to write the following with your eyes closed:
 
 ```js
 function UnorderedList({ items }) {
@@ -92,7 +92,7 @@ ReasonReact.reactElement (defined as React.element)
 `}
 />
 
-This is because `List.map` returns a list and not React elements which is expected to be returned from the `make` function. In order to get this to work we need to jump through some hoops, first we need to map through our list, then we need to convert our list to an array and finally we can convert that array to some React elements.
+This is because `List.map` returns a list and not a React element which is what the compiler is expecting to be returned from the `make` function. In order to get this to work we need to jump through some hoops, first we need to map through our list, then we need to convert our list to an array and finally we can convert that array to a React element or group of.
 
 This is something which you may find yourself doing several times whilst developing an application, for that reason I found it best to create a function which could be reused any time I needed to convert a list of data into some elements:
 
