@@ -146,7 +146,7 @@ let make = _ => {
 
 Here's some further reading which might help:
 
-- [ReasonMl Objects](https://reasonml.github.io/docs/en/object)
+- [Reason Objects](https://reasonml.github.io/docs/en/object)
 - [Bucklescript Js.t](https://bucklescript.github.io/docs/en/object-2)
 
 ## Clashing with keywords
@@ -200,3 +200,7 @@ Because I have `"in-source"` set to `false`, the generated JavaScript files are 
 With both module types in the array, the lib folder get a js directory **and** an es6 directory. This means that the index.html file used for development can use the commonJs files from the js directory and the Webpack config for production can use the es6 files.
 
 I also wanted to bundle the CSS files, I found the easiest way to do this was to just add an an extra index.js file to the Webpack entry array and in this array import the CSS files that I need.
+
+---
+
+Hopefully this has been helpful, I've really enjoyed my first foray into Reason and I look forward to making more with it in future. Watch this space for more on the subject. Bye!
