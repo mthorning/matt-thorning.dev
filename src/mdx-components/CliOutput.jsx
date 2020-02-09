@@ -12,7 +12,7 @@ const errorStyle = css`
   outline: 0.5em solid #e8111294;
   padding: 0;
 `
-export default function RustOutput({ output, error }) {
+export default function CliOutput({ output, error }) {
   const styles = [style]
   if (error) styles.push(errorStyle)
   return <pre css={styles}>{output}</pre>

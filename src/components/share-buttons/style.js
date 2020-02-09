@@ -23,8 +23,8 @@ export const iconWrapper = (theme, color) => css`
     cursor: pointer;
     transition: 0.3s ease;
   }
-  &:hover div {
-    font-size: 45px;
+  &:hover {
+    font-size: 40px;
     color: ${color};
   }
 `
