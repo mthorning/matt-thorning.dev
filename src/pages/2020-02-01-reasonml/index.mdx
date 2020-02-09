@@ -9,7 +9,7 @@ import CliOutput from 'mdx/CliOutput'
 
 After spending some time writing Rust I have found myself yearning for a good type system whilst writing front-end code. After a brief spell messing around with TypeScript, I stumbled across Reason or ReasonML (not really sure which one is right!).
 
-Reason is a new syntax based on OCaml which has a very good type system. For me, the syntax sits nicely between JavaScript and Rust which is ideal and the project was started by Jordan Walke which means the language also has first-class support for React! On top of this, the compiler is crazy fast and starting a new project takes mere seconds.
+Reason is a new syntax based on OCaml which has a very good type system. For me, the syntax sits nicely between JavaScript and Rust and the project was started by Jordan Walke which means the language also has first-class support for React! On top of this, the compiler is crazy fast and starting a new project takes mere seconds.
 
 I have been meaning to make myself a simple profile site for a while and I thought it would be the perfect excuse to give Reason and ReasonReact a try. I've spent the last week making the site, during which I have run into a couple of issues which I found difficult to resolve; the language is quite new so finding the information you need can be a little tricky at times, therefore I thought it would be a good idea to make a note of them (and my solutions to them) here.
 
@@ -18,6 +18,7 @@ I have been meaning to make myself a simple profile site for a while and I thoug
 Pipes work by taking the output of a function and piping it into the input of another function. They are quite a nice piece of syntax which can change some code which looks like this:
 
 ```js
+// JavaScript:
 lastDoThis(thenDoThis(firstDoThis(value)))
 ```
 
@@ -27,13 +28,13 @@ Into this:
 value |> firstDoThis |> thenDoThis |> lastDoThis;
 ```
 
-If you spend some time looking at examples of code written in Reason you are likely to see three different pipe operators:
+If you spend some time looking at examples of code written in Reason you are likely to see three different pipe operators and at first I wasn't sure why:
 
 1. <code>|.</code>
 1. <code>-></code> ( -> )
 1. <code>|></code> ( |> )
 
-First we have Reason's old syntax for its Pipe First operator (`|.`), this was replaced by the thin arrow symbol at number 2 (`->`) but you may still come across it when looking for tutorials online. Number 3 (`|>`) is OCaml's own Pipe operator, this is also valid in Reason and you will likely see it being used in places because the Pipe (`|>`) and Pipe First (`->`) have different behaviours.
+First we have Reason's old syntax for its Pipe First operator `|.`, this was replaced by the thin arrow symbol at number 2 `->` but you may still come across it when looking for tutorials online. Number 3 `|>` is OCaml's own Pipe operator, this is also valid in Reason and you will likely see it being used in places because the Pipe `|>` and Pipe First `->` have different behaviours.
 
 If you compare a standard library function like `List.map` with a function from Bucklescript such as `Belt.List.map`, you will see that `List.map` takes the list as its second argument whereas `Belt.List.map` takes the list as its first. The former order is the order in which Ocaml functions expect arguments, therefore OCaml's Pipe operator adds the value being piped as the righter-most argument. Pipe First (as its name suggests) puts it in as the first argument; I'm guessing that when Bucklescript was being created, they decided to go with the latter order because that is what would feel most familiar to developers coming from JavaScript.
 
@@ -57,6 +58,7 @@ You can use either operator if the function you are piping to only takes a singl
 Writing lists (`<ul>` and `<ol>`) is a pretty common occurrence when you are creating a user interface, I suspect that if you are using React regularly that you would be able to write the following with your eyes closed:
 
 ```js
+// JavaScript:
 function UnorderedList({ items }) {
   return (
     <ul>
@@ -123,14 +125,15 @@ module UnorderedList = {
 
 If you want to get the value from an input (or any property from the target of an event) then you can't just do this as you would normally do:
 
-```reason
-let make = _ => {
-  let onChange = event => Js.log(event.target.value);
-  <input onChange />;
+```js
+// JavaScript:
+function Input() {
+  const onChange = event => console.log(event.target.value)
+  return <input onChange={onChange} />
 }
 ```
 
-Instead you need to pass the synthetic `event` to a function which will return an object of type Js.t, this is a type provided by Bucklescript which does not translate into a Reason record so Bucklescript provides its own syntax for accessing fields on a Js.t object:
+Instead you need to pass the synthetic `event` to a function which will return an object of type Js.t, this is a type provided by Bucklescript which wraps a Reason object (different to a record) and is accessed in a slightly strange way:
 
 ```reason
 let make = _ => {
@@ -139,7 +142,12 @@ let make = _ => {
 }
 ```
 
-The double hash (`##`) is the accessor which can be used to get any property which you would normally get from `event.target` when using JavaScript. It looks a bit strange when you first encounter it but I soon got used to it and find I don't have to think about what I need to type any more!
+`React.Form.target` is the function which takes the event and returns the Js.t object. The double hash (`##`) is the accessor which can be used to get any property which you would normally get from `event.target` when using JavaScript. Normally, properties on objects in Reason are accessed using a single hash, I guess the double hash is needed because first you need to access the object within the Js.t and then you access the property you want on the Reason object. It looks a bit strange at first but I soon got used to it and find I don't have to think about what I need to type any more!
+
+Here's some further reading which might help:
+
+- [ReasonMl Objects](https://reasonml.github.io/docs/en/object)
+- [Bucklescript Js.t](https://bucklescript.github.io/docs/en/object-2)
 
 ## Clashing with keywords
 
@@ -189,6 +197,6 @@ Unfortunately this meant that my app would no longer work in development mode wi
 
 Because I have `"in-source"` set to `false`, the generated JavaScript files are put in the lib folder instead of alongside the Reason files. I prefer it this way if the app is entirely written in Reason, I can see why it would be better to keep the JS and Re files together if you're converting a codebase though.
 
-With both module types in the array, the lib folder get a js directory **and** and es6 directory. This means that the index.html file used for development can use the commonJs files from the js directory and the Webpack config for production can use the es6 files.
+With both module types in the array, the lib folder get a js directory **and** an es6 directory. This means that the index.html file used for development can use the commonJs files from the js directory and the Webpack config for production can use the es6 files.
 
-I also wanted to bundle the CSS files, I found the easiest way was to just add an index.js file to the CSS directory where I could import the css files, and then just add that to the Webpack `"entry"` array.
+I also wanted to bundle the CSS files, I found the easiest way to do this was to just add an an extra index.js file to the Webpack entry array and in this array import the CSS files that I need.
