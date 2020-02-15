@@ -13,7 +13,7 @@ const ClapWrapChildren = styled.div`
 `
 
 export default class ClapWrap extends React.Component {
-  render () {
+  render() {
     const { children } = this.props
     return (
       <Wrap>
