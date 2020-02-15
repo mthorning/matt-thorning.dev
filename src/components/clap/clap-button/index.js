@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { ThemeProvider } from 'emotion-theming'
 import ClapWrap from './components/ClapWrap'
-import ClapIcon from './components/ClapIcon'
+import ClapIcon from '../ClapIcon'
 import ClapButton from './components/ClapButton'
 import ClapCount from './components/ClapCount'
 import ClapCountTotal from './components/ClapCountTotal'
@@ -137,7 +137,14 @@ const Clap = class extends React.Component {
             onMouseLeave={e => this.setState({ isHover: false })}
             isHover={isHover && count === 0}
           >
-            <ClapIcon id="clap--icon" isClicked={isClicked} />
+            <ClapIcon
+              id="clap--icon"
+              styles={{
+                width: '45px',
+                height: '45px',
+              }}
+              fill={isClicked ? 'var(--linkHover)' : 'var(--color)'}
+            />
             <ClapCount id="clap--count">+{count}</ClapCount>
             <ClapCountTotal id="clap--count-total">
               {Number(countTotal).toLocaleString()}

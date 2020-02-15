@@ -3,9 +3,9 @@ import styled from '@emotion/styled'
 import { css } from '@emotion/core'
 
 const Icon = styled.svg`
-  ${({ styles, theme: { textColor, blogInfoIconFontSize } }) => {
+  ${({ fill, styles }) => {
     return css`
-      fill: ${textColor};
+      fill: ${fill};
       width: 21px;
       ${styles}
     `

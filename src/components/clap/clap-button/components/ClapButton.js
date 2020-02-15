@@ -51,11 +51,9 @@ const ClapButton = styled.button`
       height: ${size - 1}px;
       border-color: var(--color);
       color: var(--color);
-      fill: var(--secondaryColor);
     }
 
-    &:hover,
-    &:focus {
+    &:hover {
       #clap--icon {
         fill: var(--linkHover);
       }

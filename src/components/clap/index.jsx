@@ -5,7 +5,7 @@ import { withTheme } from 'emotion-theming'
 import useClaps from 'utils/useClaps'
 import loadable from '@loadable/component'
 
-const ClapButton = loadable(() => import('./react-clap-button'))
+const ClapButton = loadable(() => import('./clap-button'))
 
 const reducer = (state, [type, payload]) => {
   switch (type) {
@@ -63,9 +63,11 @@ function Clap({ slug, theme }) {
         display: flex;
         align-items: center;
         max-width: 50%;
+        margin-top: 70px;
         font-size: 16px;
         ${theme.smallScreen} {
           max-width: 100%;
+          margin-top: 50px;
           font-size: 12px;
         }
       `}

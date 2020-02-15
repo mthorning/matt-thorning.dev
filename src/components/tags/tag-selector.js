@@ -1,6 +1,7 @@
 import React from 'react'
 import { baseStyle, wrapper, tagNumber } from './style'
 import { css } from '@emotion/core'
+import { a11yButton } from 'utils'
 
 export default function TagSelector({ tags, selectedTags, dispatch }) {
   const tagList = Array.from(new Set(tags))
@@ -31,7 +32,7 @@ export default function TagSelector({ tags, selectedTags, dispatch }) {
     return (
       <span
         key={tag}
-        onClick={() => onTagClick(tag)}
+        {...a11yButton(() => onTagClick(tag))}
         css={theme => [baseStyle, tagCol].map(a => a(theme))}
       >
         {tag}
