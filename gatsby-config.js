@@ -6,6 +6,7 @@ module.exports = {
     siteUrl: `https://hellocode.dev`,
   },
   plugins: [
+    'gatsby-plugin-dark-mode',
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-catch-links`,
     `gatsby-plugin-sharp`,

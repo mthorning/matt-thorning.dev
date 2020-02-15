@@ -9,7 +9,7 @@ export const tagDisplay = theme => css`
 `
 export const baseStyle = theme => css`
   border-radius: 4px;
-  background: rgba(0, 0, 0, 0.1);
+  background: var(--tagBg);
   color: ${theme.textColor};
   padding: 4px;
   margin: 5px 5px 0 0;
@@ -25,5 +25,5 @@ export const wrapper = css`
 export const tagNumber = theme => css`
   margin-left: 5px;
   font-size: 14px;
-  color: ${theme.primaryColor};
+  color: var(--tagColor);
 `

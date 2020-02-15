@@ -26,7 +26,7 @@ export default function TagSelector({ tags, selectedTags, dispatch }) {
     const tagCol = theme =>
       isSelected &&
       css`
-        color: ${theme.primaryColor};
+        color: var(--tagColor);
       `
     return (
       <span

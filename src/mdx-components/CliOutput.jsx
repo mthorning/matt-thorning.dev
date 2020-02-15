@@ -7,6 +7,11 @@ const style = css`
   background: #f1f1f1;
   color: #6e6b5e;
   padding: 0.5em;
+
+  body.dark & {
+    background: #1e1e1e;
+    color: rgb(212, 212, 212);
+  }
 `
 const errorStyle = css`
   outline: 0.5em solid #e8111294;

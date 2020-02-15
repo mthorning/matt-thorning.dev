@@ -21,14 +21,17 @@ export const personalLinks = theme => css`
   right: 0;
   font-size: 25px;
 
-  ${theme.smallScreen} {
-    right: 0;
-  }
   a {
-    color: ${theme.secondaryColor};
+    color: var(--white);
     font-size: 30px;
     margin: 10px;
   }
+`
+export const themeToggle = theme => css`
+  position: absolute;
+  bottom: 0;
+  right: 13px;
+  font-size: 25px;
 `
 export const title = theme => css`
   margin: 0;

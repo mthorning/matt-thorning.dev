@@ -1,10 +1,11 @@
 import React, { useRef, useReducer, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { css } from '@emotion/core'
+import { withTheme } from 'emotion-theming'
 import useClaps from 'utils/useClaps'
 import loadable from '@loadable/component'
 
-const ClapButton = loadable(() => import('@mthorning/react-clap-button'))
+const ClapButton = loadable(() => import('./react-clap-button'))
 
 const reducer = (state, [type, payload]) => {
   switch (type) {
@@ -29,7 +30,7 @@ const reducer = (state, [type, payload]) => {
   }
 }
 
-function Clap({ slug }) {
+function Clap({ slug, theme }) {
   const initialState = {
     clapQueue: 0,
     totalClaps: 0,
@@ -70,6 +71,7 @@ function Clap({ slug }) {
       `}
     >
       <ClapButton
+        theme={theme}
         count={clapQueue}
         countTotal={totalClaps}
         incrementCount={() => dispatch(['INC_QUEUE'])}
@@ -86,4 +88,4 @@ function Clap({ slug }) {
 }
 
 Clap.propTypes = { slug: PropTypes.string.isRequired }
-export default Clap
+export default withTheme(Clap)

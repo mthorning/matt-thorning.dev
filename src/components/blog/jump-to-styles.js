@@ -1,7 +1,7 @@
 import { css } from '@emotion/core'
 
 const sharedStyles = css`
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--color);
   border-radius: 2px;
   font-size: 15px;
 `
@@ -11,7 +11,7 @@ export const wrapper = theme => css`
   align-self: center;
   padding: 4px;
   position: relative;
-  border: 2px solid rgba(0, 0, 0, 0.5);
+  border: 2px solid var(--color);
   cursor: pointer;
   ${sharedStyles}
 
@@ -19,8 +19,8 @@ export const wrapper = theme => css`
     ${sharedStyles}
     position: absolute;
     width: 280px;
-    background: #fff;
-    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    background: var(--bg);
+    box-shadow: 1px 1px 2px var(--color);
     z-index: 1;
 
     ul {
@@ -32,8 +32,8 @@ export const wrapper = theme => css`
       padding: 0 4px;
     }
     li:hover {
-      color: ${theme.primaryColor};
-      background: rgba(200, 200, 200, 0.1);
+      color: var(--linkHover);
+      background: var(--tagBg);
     }
   }
 `
