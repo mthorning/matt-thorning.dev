@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useReducer } from 'react'
+import React, { useCallback, useRef, useEffect, useReducer } from 'react'
 import { title as baseStyle, blinkBorder, whiteBorder } from './style'
 
 export default function TypeHello() {
@@ -29,32 +29,35 @@ export default function TypeHello() {
 
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  function tick(cb) {
+  const tick = useCallback(cb => {
     let rand = Math.random() * 100 + 200
     setTimeout(() => {
       cb()
     }, rand)
-  }
+  }, [])
 
-  function writeText(stringToType) {
-    return new Promise(resolve => {
-      let i = 0
-      function cb() {
-        const payload = stringToType[i]
-        mounted.current && dispatch({ type: 'add', payload })
-        if (mounted.current && i < stringToType.length) {
-          tick(cb)
-          i++
-        } else {
-          resolve()
+  const writeText = useCallback(
+    stringToType => {
+      return new Promise(resolve => {
+        let i = 0
+        function cb() {
+          const payload = stringToType[i]
+          mounted.current && dispatch({ type: 'add', payload })
+          if (mounted.current && i < stringToType.length) {
+            tick(cb)
+            i++
+          } else {
+            resolve()
+          }
         }
-      }
 
-      tick(cb)
-    })
-  }
+        tick(cb)
+      })
+    },
+    [tick]
+  )
 
-  function deleteText(stop) {
+  const deleteText = useCallback(stop => {
     return new Promise(resolve => {
       let i = 0
       const tick = setInterval(() => {
@@ -66,9 +69,9 @@ export default function TypeHello() {
         }
       }, 150)
     })
-  }
+  }, [])
 
-  function cursorAnimation() {
+  const cursorAnimation = useCallback(() => {
     dispatch({
       type: 'updateClasses',
       payload: theme =>
@@ -77,19 +80,19 @@ export default function TypeHello() {
     setTimeout(() => {
       dispatch({ type: 'updateClasses', payload: theme => [baseStyle(theme)] })
     }, 2500)
-  }
+  }, [])
 
-  async function type() {
+  const type = useCallback(async () => {
     await writeText('<HelloWorld'.split(''))
     await deleteText(5)
     await writeText('Code />'.split(''))
     cursorAnimation()
-  }
+  }, [writeText, deleteText, cursorAnimation])
 
   useEffect(() => {
     type()
     return () => (mounted.current = false)
-  }, [])
+  }, [type])
 
   return <h1 css={theme => state.style(theme)}>{state.text}</h1>
 }

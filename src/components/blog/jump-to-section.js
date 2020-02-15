@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { navigate } from 'gatsby'
 import { IoIosArrowDown } from 'react-icons/io'
 import { wrapper, selectedStyle, overlay, bySide } from './jump-to-styles'
+import { a11yButton } from 'utils'
 
 const propTypes = {
   headings: PropTypes.array,
@@ -58,7 +59,7 @@ function JumpToHeading({ headings, slug }) {
     <>
       <div
         ref={getPosition}
-        onClick={() => setShowDropdown(!showDropdown)}
+        {...a11yButton(() => setShowDropdown(!showDropdown))}
         css={theme => [wrapper(theme), showDropdown ? selectedStyle : '']}
       >
         Jump to Section
@@ -69,7 +70,7 @@ function JumpToHeading({ headings, slug }) {
               {headings.map(heading => {
                 const { value } = heading
                 return (
-                  <li key={value} onClick={() => onSelectChange(value)}>
+                  <li key={value} {...a11yButton(() => onSelectChange(value))}>
                     {value}
                   </li>
                 )
@@ -79,7 +80,10 @@ function JumpToHeading({ headings, slug }) {
         )}
       </div>
       {showDropdown && (
-        <div css={overlay} onClick={() => setShowDropdown(false)} />
+        <div
+          css={overlay}
+          {...a11yButton(() => setShowDropdown(false), false)}
+        />
       )}
     </>
   )

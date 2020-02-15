@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { css } from '@emotion/core'
 import { themeToggle } from './style'
 import { ThemeToggler } from 'gatsby-plugin-dark-mode'
+import { a11yButton } from 'utils'
 
 const switchStyle = checked => css`
     position: relative;
@@ -36,9 +37,9 @@ function Toggle({ theme, toggleTheme }) {
   }
   useEffect(() => {
     toggleTheme(checked ? 'dark' : 'light')
-  }, [checked])
+  }, [checked, toggleTheme])
 
-  return <div onClick={clickHandler} css={switchStyle(checked)}></div>
+  return <div {...a11yButton(clickHandler)} css={switchStyle(checked)}></div>
 }
 export default function ThemeToggle() {
   return (
