@@ -3640,13 +3640,6 @@ charenc@~0.0.1:
   resolved "https://registry.yarnpkg.com/charenc/-/charenc-0.0.2.tgz#c0a1d2f3a7092e03774bfa83f14c0fc5790a8667"
   integrity sha1-wKHS86cJLgN3S/qD8UwPxXkKhmc=
 
-check-git-branch@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/check-git-branch/-/check-git-branch-1.0.6.tgz#a49728c5ca4b6a6ef927e8326a17da6a34062482"
-  integrity sha512-TzkzDVnpL0l0OMS2viAyrPmZrYJMuOQz8NCBAPrLnQUigSLQOqXc96GWEocQkwFU3JghZEPXwCT6FP5g+4Yj5g==
-  dependencies:
-    chalk "^2.4.2"
-
 cheerio@^0.22.0:
   version "0.22.0"
   resolved "https://registry.yarnpkg.com/cheerio/-/cheerio-0.22.0.tgz#a9baa860a3f9b595a6b81b1a86873121ed3a269e"
