@@ -27,3 +27,9 @@ export const tagNumber = theme => css`
   font-size: 14px;
   color: var(--tagColor);
 `
+export const clearButton = hide => css`
+  cursor: pointer;
+  font-style: italic;
+
+  ${hide && 'display: none;'}
+`
