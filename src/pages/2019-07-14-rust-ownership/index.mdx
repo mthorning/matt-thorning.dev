@@ -37,10 +37,9 @@ fn other(greeting: &str) {
 ```
 
 <CliOutput
-  output={`
- hello from the main function
- hello from the other function
- hello again from the main function
+  output={`hello from the main function
+hello from the other function
+hello again from the main function
  `}
 />
 
@@ -61,18 +60,17 @@ fn other(greeting: String) {
 
 <CliOutput
   error
-  output={`
-    error[E0382]: borrow of moved value: \`hello\`
-    --> src/main.rs:5:49
-    |
-    2 | let hello = String::from("hello");
-    | ----- move occurs because \`hello\` has type \`std::string::String\`, which does not implement the \`Copy\` trait
-    3 | println!("{} from the main function", hello);
-    4 | other(hello);
-    | ----- value moved here
-    5 | println!("{} again from the main function", hello);
-    | ^^^^^ value borrowed here after move
-  `}
+  output={`error[E0382]: borrow of moved value: \`hello\`
+--> src/main.rs:5:49
+|
+2 | let hello = String::from("hello");
+| ----- move occurs because \`hello\` has type \`std::string::String\`, which does not implement the \`Copy\` trait
+3 | println!("{} from the main function", hello);
+4 | other(hello);
+| ----- value moved here
+5 | println!("{} again from the main function", hello);
+| ^^^^^ value borrowed here after move
+`}
 />
 
 The compiler has told us that we've moved ownership of the value from the `hello` variable in the `main` function to the `greeting` variable in the `other` function and therefore it cannot be used again by the `main` function at _line 5_. The message also says "_move occurs because \`hello\` has type \`std::string::String\`, which does not implement the \`Copy\` trait_". I'll probably do a post about traits at some point so I won't go into them here but what the compiler is saying is that this is not a type that can be copied, hence why it has been moved. All types that can be stored on the stack can be copied, this is why the ownership rules do not apply to them; because their size is known, the performance cost of copying the values is not worth worrying about so that is what happens.
@@ -95,11 +93,10 @@ fn other(greeting: String) {
 ```
 
 <CliOutput
-  output={`
-    hello from the main function
-    hello from the other function
-    hello again from the main function
-  `}
+  output={`hello from the main function
+hello from the other function
+hello again from the main function
+`}
 />
 
 Can you spot the difference? Now, on _line 4_, we call the `other` function with a clone of the value held by the `hello` variable. Obviously this is not the most efficient way to write your program, and it can be risky if you don't know the size of the values which are going to be getting cloned. Also, if your functions mutate the value in some way then this is not a good solution:
@@ -125,9 +122,7 @@ fn two(mut hello_from: Vec<&str>) {
 ```
 
 <CliOutput
-  output={`
-    hello from ["main"]
-  `}
+  output={`hello from ["main"]`}
 />
 
 Here, we're creating a Vector in which we want to collect the names of the functions which it has been passed to. Because we are using clone, each function is getting its own copy of the value which it is mutating, meaning that when we print the vector it only contains "main".
@@ -157,9 +152,7 @@ fn two(mut hello_from: Vec<&str>) -> Vec<&str> {
 ```
 
 <CliOutput
-  output={`
-    hello from ["main", "one", "two"]
-  `}
+  output={`hello from ["main", "one", "two"]`}
 />
 
 In this example we are moving the ownership of the value to a new variable in each function scope. This is perfectly valid but in my opinion it has its downsides. First, it requires more code to be written, the `one` and `two` functions both now need to declare a return type and we need to overload the `hello_from` variable in the `main` function each time the value is returned _(lines 4 & 5)_. Secondly, I think it's easier to understand code when the owner of values stays in one scope; this is made possible with borrowing.
@@ -188,9 +181,7 @@ fn two(hello_from: &mut Vec<&str>) {
 ```
 
 <CliOutput
-  output={`
-    hello from ["main", "one", "two"]
-  `}
+  output={`hello from ["main", "one", "two"]`}
 />
 
 Here we create a mutable reference to our variable and pass that to the functions instead. Because it is a mutable reference we can push the values and they will be added to vector as if we had passed the vector itself, however the ownership of the value never leaves the `hello_from` variable in the `main` function.
@@ -222,17 +213,16 @@ fn two(hello_from: &mut Vec<&str>) {
 ```
 
 <CliOutput
-  output={`
-    error[E0499]: cannot borrow \`hello_from\` as mutable more than once at a time
-    --> src/main.rs:6:26
-    |
-    5 | let hello_ref1 = &mut hello_from;
-    | --------------- first mutable borrow occurs here
-    6 | let hello_ref2 = &mut hello_from;
-    | ^^^^^^^^^^^^^^^ second mutable borrow occurs here
-    7 | one(hello_ref1);
-    | -------------- first borrow later used here
-  `}
+  output={`error[E0499]: cannot borrow \`hello_from\` as mutable more than once at a time
+--> src/main.rs:6:26
+|
+5 | let hello_ref1 = &mut hello_from;
+| --------------- first mutable borrow occurs here
+6 | let hello_ref2 = &mut hello_from;
+| ^^^^^^^^^^^^^^^ second mutable borrow occurs here
+7 | one(hello_ref1);
+| -------------- first borrow later used here
+`}
 />
 
 You are also not allowed to create a mutable reference whilst there are already one or more immutable references:
@@ -264,18 +254,17 @@ fn display(hello_from: &Vec<&str>) {
 ```
 
 <CliOutput
-  output={`
-    error[E0502]: cannot borrow \`hello_from\` as mutable because it is also borrowed as immutable
-    --> src/main.rs:6:25
-    |
-    5 | let display_ref = &hello_from;
-    | ----------- immutable borrow occurs here
-    6 | let hello_ref = &mut hello_from;
-    | ^^^^^^^^^^^^^^^ mutable borrow occurs here
-    ...
-    10 | display(display_ref)
-    | --------------- immutable borrow later used here
-  `}
+  output={`error[E0502]: cannot borrow \`hello_from\` as mutable because it is also borrowed as immutable
+--> src/main.rs:6:25
+|
+5 | let display_ref = &hello_from;
+| ----------- immutable borrow occurs here
+6 | let hello_ref = &mut hello_from;
+| ^^^^^^^^^^^^^^^ mutable borrow occurs here
+...
+10 | display(display_ref)
+| --------------- immutable borrow later used here
+`}
 />
 
 But the compiler can tell when no further changes can be made via a mutable reference and allows you to start creating immutable references again!
@@ -307,9 +296,7 @@ fn display(hello_from: &Vec<&str>) {
 ```
 
 <CliOutput
-  output={`
-    hello from ["main", "one", "two"]
-  `}
+  output={`hello from ["main", "one", "two"]`}
 />
 
 ---

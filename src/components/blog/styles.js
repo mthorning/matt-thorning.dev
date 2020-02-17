@@ -5,7 +5,7 @@ export const infoWrapper = css`
   display: inline-block;
 `
 export const blogFunctionsWrapper = css`
-  margin-bottom: 10px;
+  margin-bottom: 30px;
   margin-top: 50px;
 
   h1 {

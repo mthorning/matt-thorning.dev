@@ -17,7 +17,7 @@ function JumpToHeading({ headings, slug }) {
   const [dropdownSide, setDropdownSide] = useState(0)
 
   function sterilise(value) {
-    return value.replace(/[^\w\s]/gi, '')
+    return value.replace(/[^\w\s-]/gi, '')
   }
 
   function lower(value) {

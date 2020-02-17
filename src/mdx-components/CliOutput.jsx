@@ -14,8 +14,7 @@ const style = css`
   }
 `
 const errorStyle = css`
-  outline: 0.5em solid #e8111294;
-  padding: 0;
+  border: 0.5em solid #e8111294;
 `
 export default function CliOutput({ output, error }) {
   const styles = [style]

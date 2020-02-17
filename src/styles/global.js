@@ -144,8 +144,10 @@ export default css`
     margin: 1em 40px;
   }
   hr {
+    background: var(--color); 
     box-sizing: content-box;
     overflow: visible;
+    margin: 40px 0 60px;
   }
   button,
   input,
@@ -246,7 +248,7 @@ export default css`
   h2 {
     margin-left: 0;
     margin-right: 0;
-    margin-top: 0;
+    margin-top: 55px;
     padding-bottom: 0;
     padding-left: 0;
     padding-right: 0;
