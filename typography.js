@@ -1,7 +1,7 @@
 import Typography from 'typography'
-import noriega from 'typography-theme-noriega'
+import Theme from 'typography-theme-kirkham'
 
-noriega.baseFontSize = '20px'
-const typography = new Typography(noriega)
+Theme.baseFontSize = '20px'
+const typography = new Typography(Theme)
 
 export default typography

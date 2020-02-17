@@ -63,7 +63,7 @@
     "react-transition-group": "^4.0.0",
     "react-typography": "^0.16.18",
     "typography": "^0.16.18",
-    "typography-theme-noriega": "^0.16.18"
+    "typography-theme-kirkham": "^0.16.19"
   },
   "scripts": {
     "build": "gatsby build",
