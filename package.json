@@ -3,7 +3,7 @@
   "description": "A blog about programming and code",
   "author": "@MattThorning",
   "license": "MIT",
-  "version": "1.25.0",
+  "version": "1.26.0",
   "repository": {
     "type": "git",
     "url": "git@github.com:mthorning/blog.git"
