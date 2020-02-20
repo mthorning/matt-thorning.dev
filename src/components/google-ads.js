@@ -1,7 +1,7 @@
 import React from 'react'
 
 export function HeaderAd() {
-  return (
+  return process.env.GATSBY_ADSENSE_SHOW ? (
     <ins
       class="adsbygoogle"
       style={{ display: 'block' }}
@@ -9,12 +9,12 @@ export function HeaderAd() {
       data-ad-slot="5551500305"
       data-ad-format="auto"
       data-full-width-responsive="true"
-    ></ins>
-  )
+    />
+  ) : null
 }
 
 export function FooterAd() {
-  return (
+  return process.env.GATSBY_ADSENSE_SHOW ? (
     <ins
       class="adsbygoogle"
       style={{ display: 'block', textAlign: 'center' }}
@@ -22,6 +22,6 @@ export function FooterAd() {
       data-ad-format="fluid"
       data-ad-client="ca-pub-9458112330628025"
       data-ad-slot="1594754056"
-    ></ins>
-  )
+    />
+  ) : null
 }
