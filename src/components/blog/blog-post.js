@@ -9,6 +9,7 @@ import Clap from 'components/clap'
 import { MDXProvider } from '@mdx-js/react'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
 import Prism from './prism'
+import HeaderAdd from './header-add'
 
 function BlogFunctions({ post }) {
   return (
@@ -39,6 +40,7 @@ export default function Template({ data, location, pageContext }) {
         <meta name="keywords" content={post.frontmatter.tags.join(',')} />
         <meta name="author" content={siteMetadata.author} />
       </Helmet>
+      <HeaderAdd />
       <BlogFunctions post={post} />
       <MDXProvider {...{ components }}>
         <MDXRenderer>{post.body}</MDXRenderer>
