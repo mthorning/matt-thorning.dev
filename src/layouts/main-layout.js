@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { StaticQuery, graphql } from 'gatsby'
 import Header, { Title, TypeHello } from 'components/header'
+import { HeaderAd, FooterAd } from 'components/google-ads'
 import { css } from '@emotion/core'
 
 const Layout = ({ children, animateHeader }) => {
@@ -25,6 +26,7 @@ const Layout = ({ children, animateHeader }) => {
               <Title title={`<${data.site.siteMetadata.title} />`} />
             )}
           </Header>
+          <HeaderAd />
           <div
             css={theme => css`
               margin: 0 auto;
@@ -35,6 +37,7 @@ const Layout = ({ children, animateHeader }) => {
           >
             {children}
           </div>
+          <FooterAd />
         </>
       )}
     />

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export function HeaderAdd() {
+export function HeaderAd() {
   return (
     <ins
       class="adsbygoogle"
@@ -13,7 +13,7 @@ export function HeaderAdd() {
   )
 }
 
-export function FooterAdd() {
+export function FooterAd() {
   return (
     <ins
       class="adsbygoogle"
