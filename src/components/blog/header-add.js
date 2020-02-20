@@ -4,6 +4,7 @@ export default function HeaderAdd() {
   useEffect(() => {
     ;(window.adsbygoogle = window.adsbygoogle || []).push({})
   }, [])
+  // test
   return (
     <ins
       class="adsbygoogle"
