@@ -14,12 +14,6 @@ module.exports = {
     `gatsby-plugin-offline`,
     `gatsby-plugin-emotion`,
     {
-      resolve: `gatsby-plugin-google-adsense`,
-      options: {
-        publisherId: `ca-pub-9458112330628025`,
-      },
-    },
-    {
       resolve: `gatsby-plugin-alias-imports`,
       options: {
         alias: {

@@ -9,7 +9,7 @@ import Clap from 'components/clap'
 import { MDXProvider } from '@mdx-js/react'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
 import Prism from './prism'
-import HeaderAdd from './header-add'
+import { HeaderAdd, FooterAdd } from './google-ads'
 
 function BlogFunctions({ post }) {
   return (
@@ -47,6 +47,7 @@ export default function Template({ data, location, pageContext }) {
       </MDXProvider>
       <Clap slug={post.frontmatter.slug} />
       <ShareButtons shareUrl={location.href} title={post.frontmatter.title} />
+      <FooterAdd />
       <PreviousNext previous={previous} next={next} />
     </Layout>
   )
