@@ -1,7 +1,7 @@
 import React from 'react'
 
 export function HeaderAd() {
-  return process.env.GATSBY_ADSENSE_SHOW ? (
+  return !!Number(process.env.GATSBY_ADSENSE_SHOW) ? (
     <ins
       class="adsbygoogle"
       style={{ display: 'block' }}
@@ -14,7 +14,7 @@ export function HeaderAd() {
 }
 
 export function FooterAd() {
-  return process.env.GATSBY_ADSENSE_SHOW ? (
+  return !!Number(process.env.GATSBY_ADSENSE_SHOW) ? (
     <ins
       class="adsbygoogle"
       style={{ display: 'block', textAlign: 'center' }}
