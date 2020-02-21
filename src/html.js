@@ -25,7 +25,11 @@ export default function HTML(props) {
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
         ></script>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: '(window.adsbygoogle = window.adsbygoogle || []).push({});',
+          }}
+        ></script>
       </body>
     </html>
   )
