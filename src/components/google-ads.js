@@ -5,8 +5,8 @@ export function HeaderAd() {
     <ins
       class="adsbygoogle"
       style={{ display: 'block' }}
-      data-ad-client="ca-pub-9458112330628025"
-      data-ad-slot="5551500305"
+      data-ad-client={process.env.GATSBY_ADSENSE_ID}
+      data-ad-slot="5551500307"
       data-ad-format="auto"
       data-full-width-responsive="true"
     />
@@ -20,7 +20,7 @@ export function FooterAd() {
       style={{ display: 'block', textAlign: 'center' }}
       data-ad-layout="in-article"
       data-ad-format="fluid"
-      data-ad-client="ca-pub-9458112330628025"
+      data-ad-client={process.env.GATSBY_ADSENSE_ID}
       data-ad-slot="1594754056"
     />
   ) : null
