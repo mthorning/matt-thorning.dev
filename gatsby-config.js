@@ -45,10 +45,10 @@ module.exports = {
         name: `HelloCode`,
         short_name: `HC`,
         start_url: `/`,
-        background_color: `#fc4445`,
-        theme_color: `#fc4445`,
+        background_color: `#f82122`,
+        theme_color: `#f82122`,
         display: `standalone`,
-        icon: `src/images/hc_fav.png`, // This path is relative to the root of the site.
+        icon: `src/images/android-chrome-192x192.png`,
       },
     },
     {
