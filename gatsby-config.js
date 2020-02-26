@@ -27,12 +27,6 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-favicon`,
-      options: {
-        logo: './src/images/favicon-32x32.png',
-      },
-    },
-    {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
@@ -48,7 +42,7 @@ module.exports = {
         background_color: `#f82122`,
         theme_color: `#f82122`,
         display: `standalone`,
-        icon: `src/images/android-chrome-192x192.png`,
+        icon: `src/images/logo.png`,
       },
     },
     {
