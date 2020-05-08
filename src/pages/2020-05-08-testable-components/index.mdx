@@ -1,0 +1,46 @@
+---
+slug: '/dependency-injection'
+date: '2020-05-08T10:00:00'
+title: 'Using Dependency Injection for Testing Components'
+tags: ['javascript', 'react', 'frontend', 'testing']
+---
+
+import Table from 'mdx/examples/DependencyInjection'
+
+When I firsted started writing tests for React components I was mostly frustrated, spending large amounts of time trying to work out how to mock third party dependencies, API calls and ES6 imports. These days I use a technique called dependency injection which helps me to build my components in a way which makes them extremely easy totest. 
+
+## What is dependency injection?
+
+On [Wikipedia](https://en.wikipedia.org/wiki/Dependency_injection), dependency injection is defined as "a technique in which an object receives other objects that it depends on". React makes this very easy for us as the whole framework is based around a system of passing props down to child components. Normally we think of passing variables down as a way of controlling flow but it is also just as valid to pass in whole chunks of logic for the components to use.
+
+As is traditional, let's start with an example. Here's the component we will be working with:
+
+```jsx
+import React, { useEffect } from "react";
+import Table from "./Table";
+
+export default function Page() {
+
+  const columns = ["make", "model", "registration"];
+
+  useEffect(() => {
+      fetch('/cars')
+          .then(response => response.json())
+          .then(json => (
+               json.map(car => ({
+                 ...car,
+                 registration: (
+                   car.registration.slice(0, car.registration.length - 3) +
+                   " " +
+                   car.registration.slice(car.registration.length - 3)
+                 ).toUpperCase()
+               }));
+          ));
+  }, []);
+
+  return <Table columns={columns} data={data} />;
+}
+```
+
+<Table />
+
