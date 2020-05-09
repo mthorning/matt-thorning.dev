@@ -40,7 +40,6 @@ function LineNumber({ lineNumber }) {
 
 function Line(props) {
   const { line, options, lineNumber, getTokenProps, showDiff, ...rest } = props
-  console.log(line)
 
   // lineContent is only used to work out if it is
   // a diff line.
