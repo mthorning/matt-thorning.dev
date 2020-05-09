@@ -56,38 +56,38 @@ The `Table` rendered by our component could be from a different file in our own 
 My preference is to inject the table into our component as a default prop like so:
 
 ```jsx
-  import React, { useEffect } from "react";
-- import Table from "./Table";
-+ import DefaultTable from "./Table";
+import React, { useEffect } from "react";
+-import Table from "./Table";
++import DefaultTable from "./Table";
 
-- export default function CarsTable() {
-+ export default function CarsTable({ Table }) {
+-export default function CarsTable() {
++export default function CarsTable({ Table }) {
 
-    const columns = ["make", "model", "registration"];
-    const [loading, setLoading] = useState(true);
+  const columns = ["make", "model", "registration"];
+  const [loading, setLoading] = useState(true);
   
-    useEffect(() => {
-        fetch('/cars')
-            .then(response => response.json())
-            .then(data => (
-                 data.map(car => ({
-                   ...car,
-                   registration: (
-                     car.registration.slice(0, car.registration.length - 3) +
-                     " " +
-                     car.registration.slice(car.registration.length - 3)
-                   ).toUpperCase()
-                 }));
-            ))
-            .then(() => setLoading(false));
-    }, []);
+  useEffect(() => {
+      fetch('/cars')
+          .then(response => response.json())
+          .then(data => (
+               data.map(car => ({
+                 ...car,
+                 registration: (
+                   car.registration.slice(0, car.registration.length - 3) +
+                   " " +
+                   car.registration.slice(car.registration.length - 3)
+                 ).toUpperCase()
+               }));
+          ))
+          .then(() => setLoading(false));
+  }, []);
   
-    return <Table columns={columns} data={data} loading={loading} />;
-  }
+  return <Table columns={columns} data={data} loading={loading} />;
+}
 
-+ CarsTable.defaultProps = {
-+   Table: DefaultTable
-+ };
++CarsTable.defaultProps = {
++  Table: DefaultTable
++};
 
 ```
 We're still importing `Table` at the top of the file but for clarity we're going to call it `DefaultTable`. Our component now gets `Table` as a prop and we will use the `defaultProp` property to set it to use `DefaultTable` if that prop is undefined. Now we can write our first test by passing in a mock function instead of `Table`:
@@ -133,49 +133,48 @@ Notice that at _line 8_ we are using the `afterEach` hook to clear our mock, thi
 Fetching data is something which you are likely to be doing a lot of, creating an abstraction for your data fetching means that you can handle this in one place, you can ensure that errors and loading states are handled correctly and you can write separate unit tests for that functionality. I would move the data fetching into its  own custom hook, I won't go into what that would look like here, maybe that could be the subject of another article, but maybe you can work out what that may look like from how it is being used:
 
 ```jsx
-  import React, { useEffect } from "react";
-  import DefaultTable from "./Table";
-+ import useFetch from './useFetch';
-+ import DefaultError from './Error';
+import React, { useEffect } from "react";
+import DefaultTable from "./Table";
++import useFetch from './useFetch';
++import DefaultError from './Error';
   
-- export default function CarsTable({ Table }) {
-+ export default function CarsTable({ Table, Error }) {
+-export default function CarsTable({ Table }) {
++export default function CarsTable({ Table, Error }) {
   
-    const columns = ["make", "model", "registration"];
--   const [loading, setLoading] = useState(true);
-+   const [status, payload] = useFetch('/cars');
+  const columns = ["make", "model", "registration"];
+-  const [loading, setLoading] = useState(true);
++  const [status, payload] = useFetch('/cars');
   
--   useEffect(() => {
--       fetch('/cars')
--           .then(response => response.json())
--           .then(data => (
--                data.map(car => ({
-+   const data = useMemo(() => {
-+     if (status === "resolved") {
-+       return payload.map(car => ({
-                  ...car,
-                  registration: (
-                    car.registration.slice(0, car.registration.length - 3) +
-                    " " +
-                    car.registration.slice(car.registration.length - 3)
-                  ).toUpperCase()
--                }));
--           ))
--           .then(() => setLoading(false));
--   }, []);
-+       }));
-+     }
-+   }, [status, payload]);
+-  useEffect(() => {
+-      fetch('/cars')
+-          .then(response => response.json())
+-          .then(data => (
+-               data.map(car => ({
++  const data = useMemo(() => {
++    if (status === "resolved") {
++      return payload.map(car => ({
+                ...car,
+                registration: (
+                  car.registration.slice(0, car.registration.length - 3) +
+                  " " +
+                  car.registration.slice(car.registration.length - 3)
+                ).toUpperCase()
+-               }));
+-          ))
+-          .then(() => setLoading(false));
+-  }, []);
++      }));
++    }
++  }, [status, payload]);
 
   
--   return <Table columns={columns} data={data} loading={loading} />;
-+   if(status === 'rejected') return <Error />;
-+   return <Table columns={columns} data={data} loading={status === 'pending'} />;
-  }
+-  return <Table columns={columns} data={data} loading={loading} />;
++  if(status === 'rejected') return <Error />;
++  return <Table columns={columns} data={data} loading={status === 'pending'} />;
+}
   
-  CarsTable.defaultProps = {
-    Table: DefaultTable,
-+   Error: DefaultError
-  };
-
+CarsTable.defaultProps = {
+  Table: DefaultTable,
++  Error: DefaultError
+};
 ```
