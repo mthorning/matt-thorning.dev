@@ -92,34 +92,34 @@ This is our new `usePercentage` hook. It performs the same function as the logic
 
 Now lets change our component to use the hook:
 
-```jsx
-  import React from 'react';
-+ import usePercentage from './usePercentage';
+```jsx{diffToggle:true}
+import React from 'react';
++import usePercentage from './usePercentage';
 
-  export default function GetTwentyPercent() {
--   const [inputNumber, setInputNumber] = useState(null);
-+   const [result, inputNumber, setInputNumber] = usePercentage(20);
-    function handleInputChange(event) {
-      setInputNumber(event.target.value);
-    }
-
--   const [result, setResult] = useState(null);
--   useEffect(() => {
--     setResult((inputNumber * 2) / 100);
--   }, [inputNumber]);
-
-
-    return (
-      <>
-        <input type="number" onChange={handleInputChange} />
-        {inputNumber && (
-          <span>
-            20% of {inputNumber} is {result}
-          </span>
-        )}
-      </>
-    );
+export default function GetTwentyPercent() {
+-  const [inputNumber, setInputNumber] = useState(null);
++  const [result, inputNumber, setInputNumber] = usePercentage(20);
+  function handleInputChange(event) {
+    setInputNumber(event.target.value);
   }
+
+-  const [result, setResult] = useState(null);
+-  useEffect(() => {
+-    setResult((inputNumber * 2) / 100);
+-  }, [inputNumber]);
+
+
+return (
+    <>
+      <input type="number" onChange={handleInputChange} />
+      {inputNumber && (
+        <span>
+          20% of {inputNumber} is {result}
+        </span>
+      )}
+    </>
+  );
+}
 ```
 
 The change handler is still called by the `input` but this time it calls the `setInputNumber` function from the `usePercentage` hook. The `result` and `inputNumber` values are used in the message displayed by the `span`.
