@@ -127,30 +127,30 @@ The change handler is still called by the `input` but this time it calls the `se
 We can now clone the component and make a few small changes for the `GetThirtyPercent` component:
 
 ```jsx
-  import React from 'react';
-  import usePercentage from './usePercentage';
+import React from 'react';
+import usePercentage from './usePercentage';
 
-- export default function GetTwentyPercent() {
--   const [result, inputNumber, setInputNumber] = usePercentage(20);
-+ export default function GetThirtyPercent() {
-+   const [result, inputNumber, setInputNumber] = usePercentage(30);
+-export default function GetTwentyPercent() {
+-  const [result, inputNumber, setInputNumber] = usePercentage(20);
++export default function GetThirtyPercent() {
++  const [result, inputNumber, setInputNumber] = usePercentage(30);
 
-    function handleInputChange(event) {
-      setInputNumber(event.target.value);
-    }
-
-    return (
-      <>
-        <input type="number" onChange={handleInputChange} />
-        {inputNumber && (
-          <span>
--           20% of {inputNumber} is {result}
-+           30% of {inputNumber} is {result}
-          </span>
-        )}
-      </>
-    );
+  function handleInputChange(event) {
+    setInputNumber(event.target.value);
   }
+
+  return (
+    <>
+      <input type="number" onChange={handleInputChange} />
+      {inputNumber && (
+        <span>
+-          20% of {inputNumber} is {result}
++          30% of {inputNumber} is {result}
+        </span>
+      )}
+    </>
+  );
+}
 ```
 
 And use it like this:
@@ -178,30 +178,30 @@ Job done! But hang on, there's still a lot of redundant repetition there, the tw
 Let's get rid of the `GetTwentyPercent` and `GetThirtyPercent` components and replace them with `GetPercentage`:
 
 ```jsx
-  import React from 'react';
-  import usePercentage from './usePercentage';
+import React from 'react';
+import usePercentage from './usePercentage';
 
-- export default function GetTwentyPercent() {
--   const [result, inputNumber, setInputNumber] = usePercentage(20);
-+ export default function GetPercentage({ percentage }) {
-+   const [result, inputNumber, setInputNumber] = usePercentage(percentage);
+-export default function GetTwentyPercent() {
+-  const [result, inputNumber, setInputNumber] = usePercentage(20);
++export default function GetPercentage({ percentage }) {
++  const [result, inputNumber, setInputNumber] = usePercentage(percentage);
 
-    function handleInputChange(event) {
-      setInputNumber(event.target.value);
-    }
-
-    return (
-      <>
-        <input type="number" onChange={handleInputChange} />
-        {inputNumber && (
-          <span>
--           20% of {inputNumber} is {result}
-+           {percentage}% of {inputNumber} is {result}
-          </span>
-        )}
-      </>
-    );
+  function handleInputChange(event) {
+    setInputNumber(event.target.value);
   }
+
+  return (
+    <>
+      <input type="number" onChange={handleInputChange} />
+      {inputNumber && (
+        <span>
+-          20% of {inputNumber} is {result}
++          {percentage}% of {inputNumber} is {result}
+        </span>
+      )}
+    </>
+  );
+}
 ```
 
 This is only a small change but it means that we can use this component for any percentage we want, think of the possibilities!
@@ -226,41 +226,41 @@ function App() {
 But maybe we are still thinking too small. Is our application only concerned with percentages or are there other calculations to be made as well? If we look at what our component does we can see that it just takes a number from an input, passes it to a function (our hook) and displays the result. We can abstract the problem away further by removing any mention of percentages, passing a hook in instead of importing it and changing the display message so that it can be configured for each use case:
 
 ```jsx
-  import React from 'react';
-- import usePercentage from './usePercentage';
-+ import PropTypes from 'prop-types';
+import React from 'react';
+-import usePercentage from './usePercentage';
++import PropTypes from 'prop-types';
 
-+ const propTypes = {
-+   operand: PropTypes.number.isRequired,
-+   useCalculation: PropTypes.func.isRequired,
-+   resultMessage: PropTypes.func.isRequired
-+ };
++const propTypes = {
++  operand: PropTypes.number.isRequired,
++  useCalculation: PropTypes.func.isRequired,
++  resultMessage: PropTypes.func.isRequired
++};
 
-- export default function GetPercentage({ percentage }) {
--   const [result, inputNumber, setInputNumber] = usePercentage(percentage);
-+ function GetCalculation(props) {
-+   const { operand, useCalculation, resultMessage } = props;
-+   const [result, inputNumber, setInputNumber] = useCalculation(operand);
+-export default function GetPercentage({ percentage }) {
+-  const [result, inputNumber, setInputNumber] = usePercentage(percentage);
++function GetCalculation(props) {
++  const { operand, useCalculation, resultMessage } = props;
++  const [result, inputNumber, setInputNumber] = useCalculation(operand);
 
-    function handleInputChange(event) {
-      setInputNumber(event.target.value);
-    }
-
-    return (
-      <>
-        <input type="number" onChange={handleInputChange} />
-        {inputNumber && (
-          <span>
--           {percentage}% of {inputNumber} is {result}
-+           {resultMessage(inputNumber, operand, result)}
-          </span>
-        )}
-      </>
-    );
+  function handleInputChange(event) {
+    setInputNumber(event.target.value);
   }
 
-+ GetCalculation.propTypes = propTypes;
-+ export default GetCalculation;
+  return (
+    <>
+      <input type="number" onChange={handleInputChange} />
+      {inputNumber && (
+        <span>
+-          {percentage}% of {inputNumber} is {result}
++          {resultMessage(inputNumber, operand, result)}
+        </span>
+      )}
+    </>
+  );
+}
+
++GetCalculation.propTypes = propTypes;
++export default GetCalculation;
 ```
 
 We now accept `useCalculation` from the parent instead of importing the usePercentage hook. We have also renamed the percentage variable to `operand` because we don't know what the `useCalculation` hook is going to use that number for. `resultMessage` is a function which is called with the two numbers used by the calculation and the result, this means that a different message can be constructed for each use case.
@@ -330,47 +330,47 @@ Notice that I have created a new variable call `GetTwentyPercent` which just ref
 We can use `defaultProps` in the same way as `propTypes`. We will again import the `usePercentage` hook into the component and use it if no `useCalculation` prop is supplied:
 
 ```jsx
-  import React from 'react';
-  import PropTypes from 'prop-types';
-+ import usePercentage from './usePercentage';
+import React from 'react';
+import PropTypes from 'prop-types';
++import usePercentage from './usePercentage';
 
-  const propTypes = {
-    operand: PropTypes.number,
-    useCalculation: PropTypes.func,
-    resultMessage: PropTypes.func
-  };
+const propTypes = {
+  operand: PropTypes.number,
+  useCalculation: PropTypes.func,
+  resultMessage: PropTypes.func
+};
 
-+ const defaultProps = {
-+   operand: 20,
-+   useCalculation: usePercentage,
-+   resultMessage: (inputNumber, operand, result) => (
-+     `${operand}% of ${inputNumber} is ${result}`;
-+   )
-+ };
++const defaultProps = {
++  operand: 20,
++  useCalculation: usePercentage,
++  resultMessage: (inputNumber, operand, result) => (
++    `${operand}% of ${inputNumber} is ${result}`;
++  )
++};
 
-  function GetCalculation(props) {
-    const { operand, useCalculation, resultMessage } = props;
-    const [result, inputNumber, setInputNumber] = useCalculation(operand);
+function GetCalculation(props) {
+  const { operand, useCalculation, resultMessage } = props;
+  const [result, inputNumber, setInputNumber] = useCalculation(operand);
 
-    function handleInputChange(event) {
-      setInputNumber(event.target.value);
-    }
-
-    return (
-      <>
-        <input type="number" onChange={handleInputChange} />
-        {inputNumber && (
-          <span>
-            {resultMessage(inputNumber, operand, result)}
-          </span>
-        )}
-      </>
-    );
+  function handleInputChange(event) {
+    setInputNumber(event.target.value);
   }
 
-  GetCalculation.propTypes = propTypes;
-+ GetCalculation.defaultProps = defaultProps;
-  export default GetCalculation;
+  return (
+    <>
+      <input type="number" onChange={handleInputChange} />
+      {inputNumber && (
+        <span>
+          {resultMessage(inputNumber, operand, result)}
+        </span>
+      )}
+    </>
+  );
+}
+
+GetCalculation.propTypes = propTypes;
++GetCalculation.defaultProps = defaultProps;
+export default GetCalculation;
 ```
 
 Now the component will default to calculating 20% of the input value but each prop can be overridden so that the purpose of the component can be completely changed.

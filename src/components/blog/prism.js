@@ -31,7 +31,7 @@ function DiffToggle({ toggleDiff }) {
 function LineNumber({ lineNumber }) {
   const style = css`
     display: inline-block;
-    width: 30px;
+    width: 25px;
     font-size: 15px;
     color: rgb(120, 120, 120);
   `
@@ -40,6 +40,7 @@ function LineNumber({ lineNumber }) {
 
 function Line(props) {
   const { line, options, lineNumber, getTokenProps, showDiff, ...rest } = props
+  console.log(line)
 
   // lineContent is only used to work out if it is
   // a diff line.
@@ -144,7 +145,7 @@ function splitClass(classname, metastring) {
 export default function Prism({ children: { props } }) {
   const { children } = props
   const hasDiffLines = children.match(/^[+-]\s/gm)
-  const [showDiff, setShowDiff] = useState(true)
+  const [showDiff, setShowDiff] = useState(hasDiffLines)
   const [className, options] = splitClass(props.className, props.metastring)
 
   const matches = className.match(/language-(?<lang>.*)/)
@@ -162,7 +163,11 @@ export default function Prism({ children: { props } }) {
         tokens = tokens.slice(0, tokens.length - 1)
         return (
           <>
-            {hasDiffLines && <DiffToggle toggleDiff={setShowDiff} />}
+            {hasDiffLines && (
+              <DiffToggle
+                toggleDiff={checked => setShowDiff(hasDiffLines && checked)}
+              />
+            )}
             <pre
               className={className}
               css={[
