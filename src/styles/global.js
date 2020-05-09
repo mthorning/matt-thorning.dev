@@ -2,7 +2,6 @@ import { css } from '@emotion/core'
 
 export default css`
   html {
-    font-family: font-family: 'Quicksand', sans-serif;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
     @media (max-width: 480px) {
@@ -13,7 +12,7 @@ export default css`
     --bg: #fff;
     --color: rgba(0, 0, 0, 0.55);
     --primaryColor: #f82122;
-    --tagBg: rgba(0,0,0,0.1);
+    --tagBg: rgba(0, 0, 0, 0.1);
     --tagColor: #f82122;
     --secondaryColor: #fff;
     --linkHover: #f82122;
@@ -28,7 +27,7 @@ export default css`
     --bg: #1a1919;
     --color: #aeaeae;
     --primaryColor: #31313182;
-    --tagBg: rgba(255,255,255,0.1);
+    --tagBg: rgba(255, 255, 255, 0.1);
     --tagColor: #f82122;
     --secondaryColor: #e01819;
     --linkHover: #f82122;
@@ -72,7 +71,7 @@ export default css`
   template {
     display: none;
   }
-  li a, 
+  li a,
   p a {
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
@@ -144,7 +143,7 @@ export default css`
     margin: 1em 40px;
   }
   hr {
-    background: var(--color); 
+    background: var(--color);
     box-sizing: content-box;
     overflow: visible;
     margin: 40px 0 60px;

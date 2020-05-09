@@ -43,7 +43,6 @@ function Line(props) {
     ${diff === 'added' &&
       `
         background: #13bf1359;
-        box-shadow: 4px 4px 1px #000;
 
     `}
   `

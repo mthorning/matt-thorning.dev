@@ -19,15 +19,16 @@ As is traditional, let's start with an example. Here's the component we will be 
 import React, { useEffect } from "react";
 import Table from "./Table";
 
-export default function Page() {
+export default function CarsTable() {
 
   const columns = ["make", "model", "registration"];
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
       fetch('/cars')
           .then(response => response.json())
-          .then(json => (
-               json.map(car => ({
+          .then(data => (
+               data.map(car => ({
                  ...car,
                  registration: (
                    car.registration.slice(0, car.registration.length - 3) +
@@ -35,12 +36,146 @@ export default function Page() {
                    car.registration.slice(car.registration.length - 3)
                  ).toUpperCase()
                }));
-          ));
+          ))
+          .then(() => setLoading(false));
   }, []);
 
-  return <Table columns={columns} data={data} />;
+  return <Table columns={columns} data={data} loading={loading} />;
 }
 ```
 
+This component makes an API call to get some data, does some processing on the data and then passes it to a `Table` component. This is how the table looks when it is rendered:
+
 <Table />
 
+Exciting! So, I'm going to show you how I would go about testing this component, I will be making some changes to the component itself which will not only make it easier to test but will also make it more flexible to use in its main application use.
+
+## Injecting the Table
+The `Table` rendered by our component could be from a different file in our own codebase or it could be a third-party component from NPM. Either way, this component should have its own unit tests so we can avoid testing it from here. The only thing we are concerned with is the props which we are passing to it. A common method in testing this way is to stub the `Table` component, testing libraries such as Sinon and Jest offer ways to achieve this but I often find I struggle to get them to work correctly.
+
+My preference is to inject the table into our component as a default prop like so:
+
+```jsx
+  import React, { useEffect } from "react";
+- import Table from "./Table";
++ import DefaultTable from "./Table";
+
+- export default function CarsTable() {
++ export default function CarsTable({ Table }) {
+
+    const columns = ["make", "model", "registration"];
+    const [loading, setLoading] = useState(true);
+  
+    useEffect(() => {
+        fetch('/cars')
+            .then(response => response.json())
+            .then(data => (
+                 data.map(car => ({
+                   ...car,
+                   registration: (
+                     car.registration.slice(0, car.registration.length - 3) +
+                     " " +
+                     car.registration.slice(car.registration.length - 3)
+                   ).toUpperCase()
+                 }));
+            ))
+            .then(() => setLoading(false));
+    }, []);
+  
+    return <Table columns={columns} data={data} loading={loading} />;
+  }
+
++ CarsTable.defaultProps = {
++   Table: DefaultTable
++ };
+
+```
+We're still importing `Table` at the top of the file but for clarity we're going to call it `DefaultTable`. Our component now gets `Table` as a prop and we will use the `defaultProp` property to set it to use `DefaultTable` if that prop is undefined. Now we can write our first test by passing in a mock function instead of `Table`:
+
+```jsx{numberLines:true}
+import React from "react";
+import { create } from "react-test-renderer";
+import CarsTable from "./CarsTable";
+
+describe("CarsTable component", () => {
+  const TestTable = jest.fn(() => null);
+
+  afterEach(() => TestTable.mockClear());
+
+  test("passes the correct columns to the Table component", () => {
+    create(<CarsTable Table={TestTable} />);
+    expect(TestTable.mock.calls.pop()[0].columns).toEqual([
+      "make",
+      "model",
+      "registration"
+    ]);
+  });
+});
+```
+I'm using [Jest](https://jestjs.io/) as the test runner and [React's Test Renderer](https://reactjs.org/docs/test-renderer.html) for rendering the components. Normally I would use [React Testing Library](https://testing-library.com/docs/react-testing-library/intro) instead of Test Renderer if I was writing a full suite of tests but we're only going to need to be able to render our components for this article so we'll keep things simple.
+
+The first thing we do in our test suite is to define a `TestTable` "component" which is just a Jest mock function. This needs to return something for the code to run, as we don't care what it returns we will use `null`. The first test just checks that the `columns` array is being passed into the `Table` component, not something I would normally test but it will get us up and running and help to check that everything is hooked up correctly.
+
+Jest has a whole load of assertions which can be made on mock functions, but I prefer to look directly at the calls that have been made on it by accessing the `mock.calls` proptery. `calls` is an array of calls made to the mock function (here we can think of them as each render of the `Table` component), each element is another arry of the arguments made in that call, it looks like this:
+```js
+calls: [
+    [arg1, arg2, arg3], // call 1
+    [arg1, arg2, arg3], // call 2
+    [arg1, arg2, arg3], // call 3
+]
+```
+Because the call to the API is asynchronous, we know that we only want to assert on the component in its final state after the data has resolve, calling `pop` on `mock.calls` will give us that render with the first element of that array being the props passed to it.
+
+Notice that at _line 8_ we are using the `afterEach` hook to clear our mock, this will reset `mock.calls` for each test which is important in order for tests to be run independently of one another.
+
+## Injecting the data
+
+Fetching data is something which you are likely to be doing a lot of, creating an abstraction for your data fetching means that you can handle this in one place, you can ensure that errors and loading states are handled correctly and you can write separate unit tests for that functionality. I would move the data fetching into its  own custom hook, I won't go into what that would look like here, maybe that could be the subject of another article, but maybe you can work out what that may look like from how it is being used:
+
+```jsx
+  import React, { useEffect } from "react";
+  import DefaultTable from "./Table";
++ import useFetch from './useFetch';
++ import DefaultError from './Error';
+  
+- export default function CarsTable({ Table }) {
++ export default function CarsTable({ Table, Error }) {
+  
+    const columns = ["make", "model", "registration"];
+-   const [loading, setLoading] = useState(true);
++   const [status, payload] = useFetch('/cars');
+  
+-   useEffect(() => {
+-       fetch('/cars')
+-           .then(response => response.json())
+-           .then(data => (
+-                data.map(car => ({
++   const data = useMemo(() => {
++     if (status === "resolved") {
++       return payload.map(car => ({
+                  ...car,
+                  registration: (
+                    car.registration.slice(0, car.registration.length - 3) +
+                    " " +
+                    car.registration.slice(car.registration.length - 3)
+                  ).toUpperCase()
+-                }));
+-           ))
+-           .then(() => setLoading(false));
+-   }, []);
++       }));
++     }
++   }, [status, payload]);
+
+  
+-   return <Table columns={columns} data={data} loading={loading} />;
++   if(status === 'rejected') return <Error />;
++   return <Table columns={columns} data={data} loading={status === 'pending'} />;
+  }
+  
+  CarsTable.defaultProps = {
+    Table: DefaultTable,
++   Error: DefaultError
+  };
+
+```
