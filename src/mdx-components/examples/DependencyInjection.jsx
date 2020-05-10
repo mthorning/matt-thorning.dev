@@ -1,6 +1,28 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import { css } from '@emotion/core'
 
 function Table({ columns, data }) {
+  const [loading, setLoading] = useState(true)
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false)
+    }, 1500)
+  }, [])
+  if (loading)
+    return (
+      <div
+        css={css`
+          margin-bottom: 1.08rem;
+          border: 1px solid;
+          width: 100%;
+          text-align: center;
+          height: 191.82px;
+          line-height: 191.82px;
+        `}
+      >
+        Loading...
+      </div>
+    )
   return (
     <table style={{ borderCollapse: 'collapse' }}>
       <thead>
@@ -33,6 +55,7 @@ const response = [
 ]
 
 export default function DependencyInjection() {
+  const [showTable, setShowTable] = useState(false)
   const columns = ['make', 'model', 'registration']
   const data = response.map(car => ({
     ...car,
@@ -42,5 +65,20 @@ export default function DependencyInjection() {
       car.registration.slice(car.registration.length - 3)
     ).toUpperCase(),
   }))
-  return <Table columns={columns} data={data} />
+  return (
+    <div
+      css={css`
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      `}
+    >
+      {showTable ? (
+        <Table columns={columns} data={data} />
+      ) : (
+        <button onClick={() => setShowTable(true)}>Show Component</button>
+      )}
+    </div>
+  )
 }
