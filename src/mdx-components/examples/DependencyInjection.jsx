@@ -68,6 +68,7 @@ export default function DependencyInjection() {
   return (
     <div
       css={css`
+        margin: 20px;
         height: 200px;
         display: flex;
         align-items: center;
