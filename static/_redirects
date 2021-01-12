@@ -1,0 +1,3 @@
+http://hellocode.dev/* https://blog.matt-thorning.dev/:splat 301!
+https://hellocode.dev/* https://blog.matt-thorning.dev/:splat 301!
+https://brave-stonebaker.netlify.com/* https://blog.matt-thorning.dev/:splat 301!

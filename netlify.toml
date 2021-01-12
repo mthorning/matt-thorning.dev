@@ -3,21 +3,3 @@
 
 [[plugins]]
 package = "netlify-plugin-gatsby-cache"
-
-[[redirects]]
-  from = "https://hellocode.dev/*"
-  to =  "https://blog.matt-thorning.dev/:splat"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "http://hellocode.dev/*"
-  to =  "https://blog.matt-thorning.dev/:splat"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "https://brave-stonebaker.netlify.com/*"
-  to = "https://blog.matt-thorning.dev/:splat"
-  status = 301
-  force = true
