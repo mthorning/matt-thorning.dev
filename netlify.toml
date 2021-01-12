@@ -11,6 +11,12 @@ package = "netlify-plugin-gatsby-cache"
   force = true
 
 [[redirects]]
+  from = "http://hellocode.dev"
+  to =  "https://blog.matt-thorning.dev"
+  status = 301
+  force = true
+
+[[redirects]]
   from = "https://brave-stonebaker.netlify.com/*"
   to = "https://blog.matt-thorning.dev/:splat"
   status = 301
