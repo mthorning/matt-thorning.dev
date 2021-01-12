@@ -3,7 +3,7 @@ module.exports = {
     title: `HelloCode`,
     description: `A blog about web development, coding, computing and other things that haven't been decided yet.`,
     author: `Matt Thorning`,
-    siteUrl: `https://hellocode.dev`,
+    siteUrl: `https://blog.matt-thorning.dev`,
   },
   plugins: [
     'gatsby-plugin-dark-mode',
@@ -95,7 +95,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-react-helmet-canonical-urls`,
       options: {
-        siteUrl: `https://hellocode.dev`,
+        siteUrl: `https://blog.matt-thorning.dev`,
         stripQueryString: true,
       },
     },
