@@ -22,7 +22,12 @@ export default function ThemeToggle() {
       `}
     >
       <FaMoon css={light(time === 'night', '#d1d14e')} />
-      <div css={{ margin: '0 4px' }}>
+      <div
+        css={css`
+          margin: 0 4px;
+          display: inherit;
+        `}
+      >
         <ThemeToggler>
           {({ toggleTheme }) => {
             return (

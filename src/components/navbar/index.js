@@ -1,6 +1,6 @@
 import React from 'react'
 import { StaticQuery, graphql } from 'gatsby'
-import { wrapper, innerWrapper, themeToggle, titleWrapper } from './style'
+import * as styles from './styles'
 import ThemeToggle from '../theme-toggle'
 
 const Menu = ({ data }) => {
@@ -10,7 +10,7 @@ const Menu = ({ data }) => {
   ]
 
   return (
-    <ul>
+    <ul css={styles.menu}>
       {items.map(({ title, slug }) => (
         <li>
           <a href={slug}>{title}</a>
@@ -45,15 +45,12 @@ export default function Navbar() {
         }
       `}
       render={(data) => (
-        <div css={wrapper}>
-          <div css={innerWrapper}>
-            <Menu data={data} />
-            <div css={themeToggle}>
-              <ThemeToggle />
-            </div>
-            <div css={titleWrapper}></div>
+        <nav css={styles.nav}>
+          <Menu data={data} />
+          <div css={styles.themeToggle}>
+            <ThemeToggle />
           </div>
-        </div>
+        </nav>
       )}
     />
   )
