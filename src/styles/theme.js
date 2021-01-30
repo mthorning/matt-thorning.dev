@@ -1,4 +1,4 @@
-import { css } from '@emotion/core'
+import { css } from '@emotion/react'
 
 const primaryColor = 'var(--primaryColor)'
 const textColor = 'var(--color)'
@@ -16,7 +16,6 @@ export default {
   footerIconFontSize,
   blogInfoIconFontSize,
   contentMaxWidth: maxWidth,
-  headerMaxWidth: maxWidth,
   smallScreen: `@media (max-width: 480px)`,
   orangeLink: css`
     color: ${textColor};

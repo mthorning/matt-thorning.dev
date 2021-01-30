@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { css } from '@emotion/core'
+import { css } from '@emotion/react'
 
 function Table({ columns, data }) {
   const [loading, setLoading] = useState(true)

@@ -1,16 +1,16 @@
 import React from 'react'
-import { FaHome, FaBackward, FaForward } from 'react-icons/fa'
+import { FaBars, FaBackward, FaForward } from 'react-icons/fa'
 import { Link } from 'gatsby'
 import { icon, iconWrapper, title } from './style'
-import { css } from '@emotion/core'
+import { css } from '@emotion/react'
 
-export default function({ previous, next }) {
+export default function ({ previous, next }) {
   return (
     <>
       <div css={iconWrapper}>
         <Link
           to={previous.slug}
-          css={theme => css`
+          css={(theme) => css`
             ${icon(theme)}
             grid-area: prev;
           `}
@@ -19,7 +19,7 @@ export default function({ previous, next }) {
         </Link>
 
         <div
-          css={theme => css`
+          css={(theme) => css`
             ${title(theme)}
             grid-area: prev-title;
           `}
@@ -28,17 +28,17 @@ export default function({ previous, next }) {
         </div>
 
         <Link
-          to="/"
-          css={theme => css`
+          to="/blog"
+          css={(theme) => css`
             ${icon(theme)}
             grid-area: home;
           `}
         >
-          <FaHome />
+          <FaBars />
         </Link>
 
         <div
-          css={theme => css`
+          css={(theme) => css`
             ${title(theme)}
             grid-area: next-title;
             justify-self: end;
@@ -49,7 +49,7 @@ export default function({ previous, next }) {
 
         <Link to={next.slug} css={icon}>
           <FaForward
-            css={theme => css`
+            css={(theme) => css`
               ${icon(theme)}
               grid-area: next;
             `}

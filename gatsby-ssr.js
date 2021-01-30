@@ -1,6 +1,5 @@
 import React from 'react'
-import { ThemeProvider } from 'emotion-theming'
-import { Global } from '@emotion/core'
+import { Global, ThemeProvider } from '@emotion/react'
 import { theme, global } from './src/styles'
 
 export const wrapRootElement = ({ element }) => {

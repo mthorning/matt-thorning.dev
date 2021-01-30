@@ -1,6 +1,6 @@
-import { css } from '@emotion/core'
+import { css } from '@emotion/react'
 
-export const wrapper = theme => css`
+export const wrapper = (theme) => css`
   display: flex;
   justify-content: flex-end;
 

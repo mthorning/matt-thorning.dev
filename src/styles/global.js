@@ -1,4 +1,4 @@
-import { css } from '@emotion/core'
+import { css } from '@emotion/react'
 
 export default css`
   html {
@@ -32,6 +32,10 @@ export default css`
     --secondaryColor: #e01819;
     --linkHover: #f82122;
     --white: #aeaeae;
+  }
+
+  a.anchor {
+    fill: var(--color);
   }
 
   article,

@@ -1,4 +1,4 @@
-import { css } from '@emotion/core'
+import { css } from '@emotion/react'
 
 export const infoWrapper = css`
   margin: 10px 0 10px;
@@ -12,7 +12,7 @@ export const blogFunctionsWrapper = css`
     margin: 0;
   }
 `
-export const infoItemStyle = theme => css`
+export const infoItemStyle = (theme) => css`
   display: flex;
   align-items: center;
   color: ${theme.textColor};
@@ -22,7 +22,7 @@ export const infoItemStyle = theme => css`
     margin-left: 5px;
   }
 `
-export const infoWrapperTopRow = theme => css`
+export const infoWrapperTopRow = (theme) => css`
   display: flex;
   ${theme.smallScreen} {
     flex-direction: column;

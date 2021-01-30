@@ -23,7 +23,7 @@ function BlogFunctions({ post }) {
 }
 
 const components = {
-  pre: props => <Prism {...props} />,
+  pre: (props) => <Prism {...props} />,
 }
 
 export default function Template({ data, location, pageContext }) {

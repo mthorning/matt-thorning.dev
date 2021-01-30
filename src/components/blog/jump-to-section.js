@@ -23,7 +23,7 @@ function JumpToHeading({ headings, slug }) {
   function lower(value) {
     return value
       .split('')
-      .map(letter => letter.toLowerCase())
+      .map((letter) => letter.toLowerCase())
       .join('')
   }
 
@@ -60,14 +60,14 @@ function JumpToHeading({ headings, slug }) {
       <div
         ref={getPosition}
         {...a11yButton(() => setShowDropdown(!showDropdown))}
-        css={theme => [wrapper(theme), showDropdown ? selectedStyle : '']}
+        css={(theme) => [wrapper(theme), showDropdown ? selectedStyle : '']}
       >
         Jump to Section
         <IoIosArrowDown />
         {showDropdown && (
           <div css={bySide(dropdownSide)}>
             <ul>
-              {headings.map(heading => {
+              {headings.map((heading) => {
                 const { value } = heading
                 return (
                   <li key={value} {...a11yButton(() => onSelectChange(value))}>

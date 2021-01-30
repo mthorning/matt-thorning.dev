@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { ThemeProvider } from 'emotion-theming'
+import { ThemeProvider } from '@emotion/react'
 import ClapWrap from './components/ClapWrap'
 import ClapIcon from '../ClapIcon'
 import ClapButton from './components/ClapButton'
@@ -133,8 +133,8 @@ const Clap = class extends React.Component {
           <ClapButton
             id="clap"
             onClick={this.handleClick}
-            onMouseEnter={e => this.setState({ isHover: true })}
-            onMouseLeave={e => this.setState({ isHover: false })}
+            onMouseEnter={(e) => this.setState({ isHover: true })}
+            onMouseLeave={(e) => this.setState({ isHover: false })}
             isHover={isHover && count === 0}
           >
             <ClapIcon

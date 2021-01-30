@@ -1,7 +1,7 @@
 export function a11yButton(handlerFn, role) {
   const props = {
     onClick: handlerFn,
-    onKeyDown: event => {
+    onKeyDown: (event) => {
       if (event.keycode === 13) handlerFn(event)
     },
   }

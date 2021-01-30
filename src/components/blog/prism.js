@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Highlight, { defaultProps } from 'prism-react-renderer'
 import theme from 'prism-react-renderer/themes/vsDark'
-import { css } from '@emotion/core'
+import { css } from '@emotion/react'
 import Toggle from '../Toggle'
 
 function DiffToggle({ toggleDiff }) {
@@ -23,7 +23,7 @@ function DiffToggle({ toggleDiff }) {
       >
         Diff
       </em>
-      <Toggle initialChecked onToggle={checked => toggleDiff(checked)} />
+      <Toggle initialChecked onToggle={(checked) => toggleDiff(checked)} />
     </div>
   )
 }
@@ -44,7 +44,7 @@ function Line(props) {
   // lineContent is only used to work out if it is
   // a diff line.
   const lineContent = line
-    .map(l => l.content)
+    .map((l) => l.content)
     .join('')
     .trim()
 
@@ -59,15 +59,15 @@ function Line(props) {
     width: fit-content;
     padding: 0 12px 0 12px;
     ${lineDiffType === 'removed' &&
-      `
+    `
         .token {
             color: #c24848 !important;
         }
         background: #250606;
     `}
     ${lineDiffType === 'added' &&
-      showDiff &&
-      `
+    showDiff &&
+    `
         background: #13bf1359;
     `}
   `
@@ -125,7 +125,7 @@ function getMeta(classParts, metastring) {
       .replace('{', '')
       .replace('}', '')
       .split(':')
-      .map(s => s.trim())
+      .map((s) => s.trim())
     return { [metaParts[0]]: metaParts[1] }
   }
   return []
@@ -164,7 +164,7 @@ export default function Prism({ children: { props } }) {
           <>
             {hasDiffLines && (
               <DiffToggle
-                toggleDiff={checked => setShowDiff(hasDiffLines && checked)}
+                toggleDiff={(checked) => setShowDiff(hasDiffLines && checked)}
               />
             )}
             <pre

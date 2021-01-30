@@ -16,7 +16,7 @@ export default function useClaps(reference) {
 
   useEffect(() => {
     if (database) {
-      clapRef.on('value', function(snapshot) {
+      clapRef.on('value', function (snapshot) {
         const claps = snapshot.val()
         if (claps) {
           clapSetter(claps)

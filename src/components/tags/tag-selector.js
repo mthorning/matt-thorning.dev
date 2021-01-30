@@ -1,10 +1,10 @@
 import React from 'react'
 import { clearButton, baseStyle, wrapper, tagNumber } from './style'
 import { a11yButton } from 'utils'
-import { css } from '@emotion/core'
+import { css } from '@emotion/react'
 import useSearchParams from './useSearchParams'
 
-export default function({ search, posts, children }) {
+export default function ({ search, posts, children }) {
   const {
     postHasSelectedTag,
     selectedTags,
@@ -20,7 +20,7 @@ export default function({ search, posts, children }) {
   }, [])
 
   const filteredPosts = posts.filter(
-    post => postHasSelectedTag(post) && post.node.frontmatter.title.length > 0
+    (post) => postHasSelectedTag(post) && post.node.frontmatter.title.length > 0
   )
 
   const tagList = Array.from(new Set(tags))
@@ -28,7 +28,7 @@ export default function({ search, posts, children }) {
     (acc, currentTag) =>
       (acc = {
         ...acc,
-        [currentTag]: tags.filter(tag => tag === currentTag).length,
+        [currentTag]: tags.filter((tag) => tag === currentTag).length,
       }),
     {}
   )
@@ -43,7 +43,7 @@ export default function({ search, posts, children }) {
 
   function TagBlock(tag) {
     const isSelected = selectedTags.includes(tag)
-    const tagCol = theme =>
+    const tagCol = (theme) =>
       isSelected &&
       css`
         color: var(--tagColor);
@@ -52,7 +52,7 @@ export default function({ search, posts, children }) {
       <span
         key={tag}
         {...a11yButton(() => onTagClick(tag))}
-        css={theme => [baseStyle, tagCol].map(a => a(theme))}
+        css={(theme) => [baseStyle, tagCol].map((a) => a(theme))}
       >
         {tag}
         {!isSelected && <span css={tagNumber}>{tagCount[tag]}</span>}
@@ -64,7 +64,7 @@ export default function({ search, posts, children }) {
       <div css={wrapper}>
         {selectedTags.map(TagBlock)}
         {tagList
-          .filter(tag => !selectedTags.includes(tag))
+          .filter((tag) => !selectedTags.includes(tag))
           .sort()
           .map(TagBlock)}
       </div>

@@ -1,11 +1,11 @@
-import { css } from '@emotion/core'
+import { css } from '@emotion/react'
 
 const sharedStyles = css`
   border: 1px solid var(--color);
   border-radius: 2px;
   font-size: 15px;
 `
-export const wrapper = theme => css`
+export const wrapper = (theme) => css`
   display: flex;
   align-items: center;
   align-self: center;
@@ -48,7 +48,7 @@ export const overlay = css`
   right: 0;
   left: 0;
 `
-export const bySide = side => css`
+export const bySide = (side) => css`
   top: 32px;
   ${side}: -1px;
   border-top-${side}-radius: 0 !important;

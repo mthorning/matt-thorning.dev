@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { css } from '@emotion/core'
+import { css } from '@emotion/react'
 
 const percentCalc = (input, operand) => (input * operand) / 100
 const radiusCalc = input => Math.PI * input * input

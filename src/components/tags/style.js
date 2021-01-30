@@ -1,13 +1,13 @@
-import { css } from '@emotion/core'
+import { css } from '@emotion/react'
 
-export const tagDisplay = theme => css`
+export const tagDisplay = (theme) => css`
   color: ${theme.textColor};
   font-size: ${theme.blogInfoIconFontSize};
   span {
     margin-left: 5px;
   }
 `
-export const baseStyle = theme => css`
+export const baseStyle = (theme) => css`
   border-radius: 4px;
   background: var(--tagBg);
   color: ${theme.textColor};
@@ -22,12 +22,12 @@ export const wrapper = css`
   flex-wrap: wrap;
   margin-top: 20px;
 `
-export const tagNumber = theme => css`
+export const tagNumber = (theme) => css`
   margin-left: 5px;
   font-size: 14px;
   color: var(--tagColor);
 `
-export const clearButton = hide => css`
+export const clearButton = (hide) => css`
   cursor: pointer;
   font-style: italic;
 

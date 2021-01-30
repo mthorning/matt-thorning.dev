@@ -1,6 +1,6 @@
-import { css } from '@emotion/core'
+import { css } from '@emotion/react'
 
-export const iconWrapper = theme => css`
+export const iconWrapper = (theme) => css`
   font-size: ${theme.footerIconFontSize};
   width: 100%;
   margin-top: 30px;
@@ -12,11 +12,11 @@ export const iconWrapper = theme => css`
   grid-column-gap: 8px;
   align-items: center;
 `
-export const icon = theme => css`
+export const icon = (theme) => css`
   ${theme.orangeLink}
   display: flex;
 `
-export const title = theme => css`
+export const title = (theme) => css`
   ${'' /*  This is an important hack for text-overflow */}
   min-width: 0;
   div {

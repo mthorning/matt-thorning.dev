@@ -1,7 +1,6 @@
 import React, { useRef, useReducer, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { css } from '@emotion/core'
-import { withTheme } from 'emotion-theming'
+import { withTheme, css } from '@emotion/react'
 import useClaps from 'utils/useClaps'
 import loadable from '@loadable/component'
 

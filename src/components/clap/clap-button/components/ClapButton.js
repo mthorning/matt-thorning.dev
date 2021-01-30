@@ -1,4 +1,4 @@
-import { css, keyframes } from '@emotion/core'
+import { css, keyframes } from '@emotion/react'
 import styled from '@emotion/styled'
 
 const shockwave = () => keyframes`
@@ -32,7 +32,7 @@ const ClapButton = styled.button`
     cursor: pointer;
   }
 
-  ${props =>
+  ${(props) =>
     props.isHover &&
     css`
       &::after {

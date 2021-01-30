@@ -1,9 +1,13 @@
 module.exports = {
   siteMetadata: {
-    title: `HelloCode`,
-    description: `A blog about web development, coding, computing and other things that haven't been decided yet.`,
+    title: `Matt Thorning`,
+    description: `Software developer.`,
     author: `Matt Thorning`,
     siteUrl: `https://blog.matt-thorning.dev`,
+    menuItems: [
+      { title: 'home', slug: '/' },
+      { title: 'blog', slug: '/blog' },
+    ],
   },
   plugins: [
     'gatsby-plugin-dark-mode',
@@ -36,8 +40,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `HelloCode`,
-        short_name: `HC`,
+        name: `Matt Thorning`,
+        short_name: `MT`,
         start_url: `/`,
         background_color: `#f82122`,
         theme_color: `#f82122`,
@@ -56,7 +60,13 @@ module.exports = {
       resolve: `gatsby-plugin-mdx`,
       options: {
         gatsbyRemarkPlugins: [
-          `gatsby-remark-autolink-headers`,
+          {
+            resolve: `gatsby-remark-autolink-headers`,
+            options: {
+              isIconAfterHeader: true,
+              elements: [`h2`],
+            },
+          },
           `gatsby-remark-emoji-unicode`,
           `gatsby-remark-copy-linked-files`,
           {
@@ -125,7 +135,7 @@ module.exports = {
         feeds: [
           {
             serialize: ({ query: { site, allMdx } }) => {
-              return allMdx.edges.map(edge => {
+              return allMdx.edges.map((edge) => {
                 return Object.assign({}, edge.node.frontmatter, {
                   description: edge.node.excerpt,
                   date: edge.node.frontmatter.date,
@@ -155,7 +165,7 @@ module.exports = {
             }
           `,
             output: '/rss.xml',
-            title: 'HelloCode.dev RSS Feed',
+            title: 'matt-thorning.dev RSS Feed',
           },
         ],
       },

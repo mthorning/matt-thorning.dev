@@ -16,10 +16,10 @@ function getFirebase(firebase) {
     return firebaseInstance
   }
 
-  firebase.initializeApp(config)
-  firebaseInstance = firebase
+  firebase.default.initializeApp(config)
+  firebaseInstance = firebase.default
 
-  return firebase
+  return firebase.default
 }
 
 export function useDatabase() {
