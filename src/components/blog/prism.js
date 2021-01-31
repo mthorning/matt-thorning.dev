@@ -174,7 +174,6 @@ export default function Prism({ children: { props } }) {
                 css`
                   border-radius: 10px;
                   padding: 12px 0 12px;
-                  overflow-y: auto;
                 `,
               ]}
             >

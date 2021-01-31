@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { navigate } from 'gatsby'
 import { IoIosArrowDown } from 'react-icons/io'
+import { AnchorLink } from 'gatsby-plugin-anchor-links'
 import { wrapper, selectedStyle, overlay, bySide } from './jump-to-styles'
 import { a11yButton } from 'utils'
 
@@ -31,10 +31,8 @@ function JumpToHeading({ headings, slug }) {
     return value.replace(/\s/gi, '-')
   }
 
-  function onSelectChange(value) {
-    const id = lower(hyphenate(sterilise(value)))
-    navigate(`${slug}#${id}`)
-  }
+  const makeHashLink = (value) =>
+    `${slug}#${lower(hyphenate(sterilise(value)))}`
 
   const [windowWidth, setWindowWidth] = useState(0)
   function updateWindowWidth() {
@@ -70,8 +68,8 @@ function JumpToHeading({ headings, slug }) {
               {headings.map((heading) => {
                 const { value } = heading
                 return (
-                  <li key={value} {...a11yButton(() => onSelectChange(value))}>
-                    {value}
+                  <li key={value}>
+                    <AnchorLink to={makeHashLink(value)} title={value} />
                   </li>
                 )
               })}

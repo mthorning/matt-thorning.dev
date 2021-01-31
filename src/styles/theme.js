@@ -1,5 +1,4 @@
 import { css } from '@emotion/react'
-
 const primaryColor = 'var(--primaryColor)'
 const textColor = 'var(--color)'
 const secondaryColor = 'var(--secondaryColor)'

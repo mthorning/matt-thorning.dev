@@ -7,9 +7,6 @@ export default css`
     font-size: 20px;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
-    @media (max-width: 480px) {
-      font-size: 16px;
-    }
   }
   body {
     --bg: #fff;
@@ -20,6 +17,7 @@ export default css`
     --secondaryColor: #fff;
     --linkHover: #f82122;
     --white: #fff;
+    --boxShadow: inset 2px 2px 6px var(--color);
 
     margin: 0;
     color: var(--color);
@@ -36,6 +34,7 @@ export default css`
     --secondaryColor: #e01819;
     --linkHover: #f82122;
     --white: #aeaeae;
+    --boxShadow: inset 2px 2px 6px var(--color);
   }
 
   a.anchor {
@@ -53,15 +52,7 @@ export default css`
   menu,
   nav,
   section,
-  summary {
-    @media (max-width: 480px) {
-      font-size: 15px;
-    }
-    @media (max-width: 480px) {
-      font-size: 15px;
-    }
-    display: block;
-  }
+  summary,
   audio,
   canvas,
   progress,
@@ -137,6 +128,8 @@ export default css`
     font-family: 'Fira Code', monospace;
     font-size: 0.9rem;
     line-height: 1.3rem;
+    word-break: break-all;
+    white-space: pre-wrap;
   }
   code {
     background: var(--tagBg);

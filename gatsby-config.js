@@ -171,5 +171,12 @@ module.exports = {
         ],
       },
     },
+    {
+      resolve: 'gatsby-plugin-anchor-links',
+      options: {
+        stripHash: true,
+        offset: -44,
+      },
+    },
   ],
 }

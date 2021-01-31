@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useEffect, useReducer } from 'react'
 import { title as baseStyle, blinkBorder, whiteBorder } from './style'
 
-export default function TypeHello() {
+export default function TypeHello({ children }) {
   const mounted = useRef(true)
 
   const initialState = {
@@ -30,7 +30,7 @@ export default function TypeHello() {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const tick = useCallback((cb) => {
-    let rand = Math.random() * 100 + 200
+    let rand = Math.random() * 100 + 20
     setTimeout(() => {
       cb()
     }, rand)
@@ -86,9 +86,9 @@ export default function TypeHello() {
   }, [])
 
   const type = useCallback(async () => {
-    await writeText('<HelloWorld'.split(''))
-    await deleteText(5)
-    await writeText('Code />'.split(''))
+    await writeText(children.split(''))
+    // await deleteText(5)
+    // await writeText('Code />'.split(''))
     cursorAnimation()
   }, [writeText, deleteText, cursorAnimation])
 
@@ -97,5 +97,5 @@ export default function TypeHello() {
     return () => (mounted.current = false)
   }, [type])
 
-  return <h1 css={(theme) => state.style(theme)}>{state.text}</h1>
+  return <h3 css={(theme) => state.style(theme)}>{state.text}</h3>
 }

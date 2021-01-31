@@ -1,43 +1,38 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Navbar from 'components/navbar'
-import ThemeToggle from 'components/theme-toggle'
+import { useLocation } from '@reach/router'
 import { css } from '@emotion/react'
+import Navbar from 'components/navbar'
 
-const main = css`
-  display: flex;
+const viewport = css`
   min-height: 100vh;
-`
-
-const content = css`
-  flex-grow: 1;
-`
-
-const themeToggle = css`
-  padding: 12px;
   display: flex;
-  justify-content: flex-end;
 `
-const Layout = ({ children }) => (
-  <div css={main}>
-    <Navbar />
-    <div css={content}>
-      <div css={themeToggle}>
-        <ThemeToggle />
-      </div>
-      <div
-        css={(theme) => css`
-          margin: 0 auto;
-          max-width: ${theme.contentMaxWidth};
-          padding: 0px 1.0875rem 1.45rem;
-          padding-top: 0;
-        `}
-      >
-        {children}
+const nav = css`
+  z-index: 999;
+`
+const contentWrapper = css`
+  display: flex;
+  justify-content: center;
+`
+const content = (theme) => css`
+  max-width: ${theme.contentMaxWidth};
+  padding: 1.45rem 1.0875rem 2rem;
+  margin-bottom: 20px;
+`
+const Layout = ({ children }) => {
+  const {
+    state: { menuOpen },
+  } = useLocation()
+  return (
+    <div css={viewport}>
+      <Navbar css={nav} menuOpen={menuOpen} />
+      <div css={contentWrapper}>
+        <div css={content}>{children}</div>
       </div>
     </div>
-  </div>
-)
+  )
+}
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,

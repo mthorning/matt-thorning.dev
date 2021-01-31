@@ -10,7 +10,7 @@ const toggle = (checked) => css`
   box-shadow: inset 1px 1px 4px #6e6e6e;
   background-color: #a5a3a3;
   border-radius: 20px;
-  transition: all 0.3s;
+  transition: all 0.5s;
   cursor: pointer;
   &::after {
     content: '';
@@ -23,7 +23,7 @@ const toggle = (checked) => css`
     box-shadow: 1px 1px 4px #000;
     top: 2px;
     left: ${checked ? '20px' : '1px'};
-    transition: all 0.3s;
+    transition: all 0.5s;
   }
 `
 

@@ -31,7 +31,10 @@ export const wrapper = (theme) => css`
       margin: 4px 0;
       padding: 0 4px;
     }
-    li:hover {
+    li a {
+      color: var(--color);
+    }
+    li a:hover {
       color: var(--linkHover);
       background: var(--tagBg);
     }
