@@ -6,7 +6,6 @@ export const infoWrapper = css`
 `
 export const blogFunctionsWrapper = css`
   margin-bottom: 30px;
-  margin-top: 50px;
 
   h1 {
     margin: 0;

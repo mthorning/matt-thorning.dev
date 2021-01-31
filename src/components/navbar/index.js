@@ -3,20 +3,21 @@ import { Link } from 'gatsby'
 import { useLocation } from '@reach/router'
 import { StaticQuery, graphql } from 'gatsby'
 import * as styles from './styles'
-import ThemeToggle from '../theme-toggle'
 
 const Menu = ({ data }) => {
   const { pathname } = useLocation()
+  const re = new RegExp(`^\\/${pathname.split('/')[1]}(\/.*)?$`)
+
   const items = [
     ...data.site.siteMetadata.menuItems,
     ...data.allMdx.edges.map(({ node: { frontmatter } }) => frontmatter),
   ]
-
   return (
     <ul css={styles.menu}>
       {items.map(({ title, slug }) => (
         <li key={slug}>
-          <Link className={pathname === slug ? 'active' : ''} to={slug}>
+          {(() => console.log(pathname, slug, re, re.test(slug)))()}
+          <Link className={re.test(slug) ? 'active' : ''} to={slug}>
             {title}
           </Link>
         </li>
@@ -52,9 +53,6 @@ export default function Navbar() {
       render={(data) => (
         <nav css={styles.nav}>
           <Menu data={data} />
-          <div css={styles.themeToggle}>
-            <ThemeToggle />
-          </div>
         </nav>
       )}
     />

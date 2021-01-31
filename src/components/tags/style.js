@@ -20,7 +20,6 @@ export const baseStyle = (theme) => css`
 export const wrapper = css`
   display: flex;
   flex-wrap: wrap;
-  margin-top: 20px;
 `
 export const tagNumber = (theme) => css`
   margin-left: 5px;

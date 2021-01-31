@@ -8,9 +8,7 @@ export default function Template({ data }) {
 
   return (
     <Layout>
-      <div css={{ marginTop: '50px' }}>
-        <MDXRenderer>{post.body}</MDXRenderer>
-      </div>
+      <MDXRenderer>{post.body}</MDXRenderer>
     </Layout>
   )
 }

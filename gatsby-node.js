@@ -3,14 +3,28 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
   const result = await graphql(`
     query {
-      allMdx(sort: { order: DESC, fields: [frontmatter___date] }, limit: 1000) {
+      blogPosts: allMdx(
+        filter: { frontmatter: { type: { eq: "blog" } } }
+        sort: { order: DESC, fields: [frontmatter___date] }
+        limit: 1000
+      ) {
         edges {
           node {
             id
             frontmatter {
               title
               slug
-              type
+            }
+          }
+        }
+      }
+      pages: allMdx(filter: { frontmatter: { type: { eq: "page" } } }) {
+        edges {
+          node {
+            id
+            frontmatter {
+              title
+              slug
             }
           }
         }
@@ -20,31 +34,32 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   if (result.errors) {
     reporter.panicOnBuild('  ERROR: Loading "createPages" query')
   }
-  const posts = result.data.allMdx.edges
+  const pages = result.data.pages.edges
+  const posts = result.data.blogPosts.edges
+
+  pages.forEach(({ node }) => {
+    createPage({
+      path: node.frontmatter.slug,
+      component: path.resolve(`src/components/page.js`),
+      context: { id: node.id },
+    })
+  })
   posts.forEach(({ node }, index) => {
-    if (node.frontmatter.type === 'page') {
-      createPage({
-        path: node.frontmatter.slug,
-        component: path.resolve(`src/components/page.js`),
-        context: { id: node.id },
-      })
-    } else {
-      //sorted by desc so these need to be reversed
-      const previous =
-        index < posts.length - 1
-          ? posts[index + 1].node.frontmatter
-          : posts[0].node.frontmatter
+    //sorted by desc so these need to be reversed
+    const previous =
+      index < posts.length - 1
+        ? posts[index + 1].node.frontmatter
+        : posts[0].node.frontmatter
 
-      const next =
-        index > 0
-          ? posts[index - 1].node.frontmatter
-          : posts[posts.length - 1].node.frontmatter
+    const next =
+      index > 0
+        ? posts[index - 1].node.frontmatter
+        : posts[posts.length - 1].node.frontmatter
 
-      createPage({
-        path: node.frontmatter.slug,
-        component: path.resolve(`src/components/blog/blog-post.js`),
-        context: { id: node.id, previous, next },
-      })
-    }
+    createPage({
+      path: node.frontmatter.slug,
+      component: path.resolve(`src/components/blog/blog-post.js`),
+      context: { id: node.id, previous, next },
+    })
   })
 }

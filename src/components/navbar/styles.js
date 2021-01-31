@@ -1,42 +1,29 @@
 import { css } from '@emotion/react'
 
 export const nav = (theme) => css`
-  position: sticky;
-  z-index: 999;
-  top: 0;
-  right: 0;
-  left: 0;
-  padding: 12px;
-  padding-bottom: 0;
   background: ${theme.bg};
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
   box-shadow: 0 0 2px gray;
 `
-export const themeToggle = css`
-  padding: 12px;
-  height: 100%;
-`
 export const menu = css`
+  position: sticky;
+  top: 0;
   margin: 0;
-  padding: 0;
-  display: flex;
-  height: 48px;
-  overflow-x: auto;
+  padding: 32px;
   li {
     list-style-type: none;
     margin: 2px 10px;
   }
   .active,
   li a:hover {
-    border-bottom: 2px solid var(--linkHover);
+    color: var(--linkHover);
   }
   a {
     display: flex;
     align-items: center;
     font-family: 'Catamaran';
-    font-size: 20px;
+    font-size: 25px;
     user-select: none;
     width: 100%;
     height: 100%;
