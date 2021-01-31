@@ -1,7 +1,10 @@
+import 'fontsource-catamaran/100.css'
+import 'fontsource-nanum-gothic/400.css'
 import { css } from '@emotion/react'
 
 export default css`
   html {
+    font-size: 20px;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
     @media (max-width: 480px) {
@@ -10,7 +13,7 @@ export default css`
   }
   body {
     --bg: #fff;
-    --color: rgba(0, 0, 0, 0.55);
+    --color: #3d3d3d;
     --primaryColor: #f82122;
     --tagBg: rgba(0, 0, 0, 0.1);
     --tagColor: #f82122;
@@ -21,6 +24,7 @@ export default css`
     margin: 0;
     color: var(--color);
     background: var(--bg);
+    font-family: 'Nanum Gothic';
   }
 
   body.dark {
@@ -99,10 +103,6 @@ export default css`
   }
   dfn {
     font-style: italic;
-  }
-  h1 {
-    font-size: 2em;
-    margin: 0.67em 0;
   }
   mark {
     background-color: #ff0;
@@ -231,7 +231,17 @@ export default css`
     -webkit-appearance: button;
     font: inherit;
   }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Catamaran';
+    font-weight: 100;
+  }
   h1 {
+    font-size: 2em;
     margin-left: 0;
     margin-right: 0;
     margin-top: 0;
@@ -241,9 +251,6 @@ export default css`
     padding-top: 0;
     margin-bottom: 1.45rem;
     color: inherit;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-      Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    font-weight: 400;
     text-rendering: optimizeLegibility;
     font-size: 2.25rem;
     line-height: 1.1;
@@ -258,8 +265,6 @@ export default css`
     padding-top: 0;
     margin-bottom: 1.45rem;
     color: inherit;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-      Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     font-weight: 400;
     text-rendering: optimizeLegibility;
     font-size: 1.62671rem;
@@ -275,8 +280,6 @@ export default css`
     padding-top: 0;
     margin-bottom: 1.45rem;
     color: inherit;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-      Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     font-weight: 400;
     text-rendering: optimizeLegibility;
     font-size: 1.38316rem;
@@ -292,8 +295,6 @@ export default css`
     padding-top: 0;
     margin-bottom: 1.45rem;
     color: inherit;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-      Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     font-weight: 400;
     text-rendering: optimizeLegibility;
     font-size: 1rem;
@@ -309,8 +310,6 @@ export default css`
     padding-top: 0;
     margin-bottom: 1.45rem;
     color: inherit;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-      Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     font-weight: 400;
     text-rendering: optimizeLegibility;
     font-size: 0.85028rem;
@@ -326,8 +325,6 @@ export default css`
     padding-top: 0;
     margin-bottom: 1.45rem;
     color: inherit;
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-      Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     font-weight: 400;
     text-rendering: optimizeLegibility;
     font-size: 0.78405rem;

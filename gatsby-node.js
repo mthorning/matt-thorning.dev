@@ -23,14 +23,12 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const posts = result.data.allMdx.edges
   posts.forEach(({ node }, index) => {
     if (node.frontmatter.type === 'page') {
-      console.log('create page ', node.frontmatter.title)
       createPage({
         path: node.frontmatter.slug,
         component: path.resolve(`src/components/page.js`),
         context: { id: node.id },
       })
     } else {
-      console.log('create blog ', node.frontmatter.title)
       //sorted by desc so these need to be reversed
       const previous =
         index < posts.length - 1

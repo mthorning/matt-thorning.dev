@@ -1,48 +1,46 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { css } from '@emotion/react'
 import { ThemeToggler } from 'gatsby-plugin-dark-mode'
 import { FaSun, FaMoon } from 'react-icons/fa'
 import Toggle from '../Toggle'
 
 const light = (isLight, color) => css`
-  fill: ${isLight ? color : 'var(--color)'};
+  fill: ${isLight ? color : '#939393'};
 `
 
 export default function ThemeToggle() {
   const initialChecked =
     typeof window === 'undefined' ? false : window.__theme === 'light'
 
-  const [time, setTime] = useState(initialChecked ? 'day' : 'night')
   return (
-    <div
-      css={css`
-        height: 100%;
-        display: flex;
-        align-items: center;
-      `}
-    >
-      <FaMoon css={light(time === 'night', '#d1d14e')} />
-      <div
-        css={css`
-          margin: 0 4px;
-          display: inherit;
-        `}
-      >
-        <ThemeToggler>
-          {({ toggleTheme }) => {
-            return (
+    <ThemeToggler>
+      {({ theme, toggleTheme }) => {
+        return (
+          <div
+            css={css`
+              height: 100%;
+              display: flex;
+              align-items: center;
+            `}
+          >
+            <FaMoon css={light(theme === 'dark', '#d1d14e')} />
+            <div
+              css={css`
+                margin: 0 4px;
+                display: inherit;
+              `}
+            >
               <Toggle
                 onToggle={(checked) => {
                   toggleTheme(checked ? 'light' : 'dark')
-                  setTime(checked ? 'day' : 'night')
                 }}
                 initialChecked={initialChecked}
               />
-            )
-          }}
-        </ThemeToggler>
-      </div>
-      <FaSun css={light(time === 'day', '#ffb500')} />
-    </div>
+            </div>
+            <FaSun css={light(theme === 'light', '#ffb500')} />
+          </div>
+        )
+      }}
+    </ThemeToggler>
   )
 }

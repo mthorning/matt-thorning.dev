@@ -12,6 +12,7 @@ export const nav = (theme) => css`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-shadow: 0 0 2px gray;
 `
 export const themeToggle = css`
   padding: 12px;
@@ -19,21 +20,26 @@ export const themeToggle = css`
 `
 export const menu = css`
   margin: 0;
+  padding: 0;
+  display: flex;
+  height: 48px;
+  overflow-x: auto;
   li {
     list-style-type: none;
-    display: inline;
     margin: 2px 10px;
-    float: left;
   }
+  .active,
   li a:hover {
-    padding-bottom: 10px;
     border-bottom: 2px solid var(--linkHover);
   }
   a {
+    display: flex;
+    align-items: center;
+    font-family: 'Catamaran';
+    font-size: 20px;
     user-select: none;
     width: 100%;
     height: 100%;
-    padding: 12px 0;
     color: var(--color);
   }
 `
