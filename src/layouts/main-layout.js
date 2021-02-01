@@ -21,12 +21,9 @@ const content = (theme) => css`
   margin-bottom: 20px;
 `
 const Layout = ({ children }) => {
-  const {
-    state: { menuOpen },
-  } = useLocation()
   return (
     <div css={viewport}>
-      <Navbar css={nav} menuOpen={menuOpen} />
+      <Navbar css={nav} />
       <div css={contentWrapper}>
         <div css={content}>{children}</div>
       </div>

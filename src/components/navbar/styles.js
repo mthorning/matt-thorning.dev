@@ -8,7 +8,7 @@ export const nav = (theme) => css`
     top: 0;
     height: 100vh;
     width: 100vw;
-    left: calc(100vw + 10px);
+    left: calc(0px - 100vw);
     transition: all 1s;
   }
   &.open {
@@ -43,6 +43,15 @@ export const themeToggle = css`
   position: fixed;
   bottom: 0;
   padding: 32px;
+`
+export const close = css`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 32px;
+  svg {
+    fill: var(--color);
+  }
 `
 export const hamburger = css`
   position: fixed;

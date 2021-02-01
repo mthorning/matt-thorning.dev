@@ -3,10 +3,11 @@ import { Link } from 'gatsby'
 import { useLocation } from '@reach/router'
 import { StaticQuery, graphql } from 'gatsby'
 import { FaBars } from 'react-icons/fa'
+import { IoMdClose } from 'react-icons/io'
 import ThemeToggle from 'components/theme-toggle'
 import * as styles from './styles'
 
-const Menu = ({ data }) => {
+const Menu = ({ data, onClose }) => {
   const { pathname } = useLocation()
   const re = new RegExp(`^/${pathname.split('/')[1]}(/.*)?$`)
 
@@ -32,13 +33,15 @@ const Menu = ({ data }) => {
       <div css={styles.themeToggle}>
         <ThemeToggle />
       </div>
+      <div css={styles.close}>
+        <IoMdClose onClick={() => onClose()} />
+      </div>
     </>
   )
 }
 export default function Navbar({ className, menuOpen }) {
   const [open, setOpen] = useState(menuOpen)
   useEffect(() => {
-    console.log(menuOpen)
     if (menuOpen) setOpen(false)
   }, [menuOpen])
   return (
@@ -67,10 +70,12 @@ export default function Navbar({ className, menuOpen }) {
       `}
       render={(data) => (
         <nav css={styles.nav} className={`${className} ${open ? 'open' : ''}`}>
-          <div css={styles.hamburger}>
-            <FaBars onClick={() => setOpen((isOpen) => !isOpen)} />
-          </div>
-          <Menu data={data} />
+          {!open ? (
+            <div css={styles.hamburger}>
+              <FaBars onClick={() => setOpen(true)} />
+            </div>
+          ) : null}
+          <Menu data={data} onClose={() => setOpen(false)} />
         </nav>
       )}
     />
