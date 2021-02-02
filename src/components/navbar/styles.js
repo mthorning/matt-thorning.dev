@@ -21,7 +21,8 @@ export const menu = css`
   a {
     display: flex;
     align-items: center;
-    font-family: 'Catamaran';
+    font-family: 'Century Gothic', sans-serif;
+    margin-bottom: 24px;
     font-size: 25px;
     user-select: none;
     width: 100%;

@@ -20,21 +20,6 @@ export const close = css`
   padding: 32px;
   svg {
     font-size: 40px;
-    fill: var(--color);
+    fill: gray;
   }
-`
-export const hamburger = css`
-  position: fixed;
-  bottom: 32px;
-  right: 32px;
-  z-index: 1000;
-  display: flex;
-  background: var(--bg);
-  align-items: center;
-  border-radius: 10px;
-  padding: 12px;
-  box-shadow: var(--boxShadow);
-  border: 1px solid gray;
-  transition: all 1s;
-  opacity: 0.75;
 `

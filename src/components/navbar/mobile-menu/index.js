@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { useMemo, useCallBack, useRef, useState, useEffect } from 'react'
 import { Link, navigate } from 'gatsby'
-import { FaBars } from 'react-icons/fa'
 import { IoMdClose } from 'react-icons/io'
 import {
   createMachine,
@@ -13,6 +12,7 @@ import {
 } from 'robot3'
 import { useMachine } from 'react-robot'
 import ThemeToggle from 'components/theme-toggle'
+import MenuButton from './menu-button'
 import * as allStyles from '../styles'
 import * as mobileStyles from './styles'
 
@@ -88,9 +88,7 @@ export default function DesktopMenu({ menuItems, className, pathRegex }) {
       className={`${className} ${state.includes('open') ? 'open' : ''}`}
     >
       {state === 'closed' ? (
-        <div css={styles.hamburger}>
-          <FaBars onClick={() => send('open')} />
-        </div>
+        <MenuButton onMenuClick={() => send('open')} />
       ) : null}
       <Menu {...{ menuItems, pathRegex, state, send }} />
     </nav>

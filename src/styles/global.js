@@ -1,5 +1,3 @@
-import 'fontsource-catamaran/100.css'
-import 'fontsource-nanum-gothic/400.css'
 import { css } from '@emotion/react'
 
 export default css`
@@ -22,7 +20,7 @@ export default css`
     margin: 0;
     color: var(--color);
     background: var(--bg);
-    font-family: 'Nanum Gothic';
+    font-family: Georgia, serif;
   }
 
   body.dark {
@@ -230,7 +228,7 @@ export default css`
   h4,
   h5,
   h6 {
-    font-family: 'Catamaran';
+    font-family: 'Century Gothic', sans-serif;
     font-weight: 100;
   }
   h1 {
