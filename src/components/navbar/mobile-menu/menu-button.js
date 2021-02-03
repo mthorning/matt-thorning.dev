@@ -1,27 +1,18 @@
-import React, { useMemo, useCallBack, useRef, useState, useEffect } from 'react'
+import React, { useRef, useEffect } from 'react'
+import { createMachine, useMachine } from 'utils/robot'
 import { css } from '@emotion/react'
 import { FaBars } from 'react-icons/fa'
-import {
-  createMachine,
-  state,
-  transition,
-  invoke,
-  guard,
-  action,
-  reduce,
-} from 'robot3'
-import { useMachine } from 'react-robot'
 
 const FADE = 5000
 const VISIBLE = 3000
 
-const visibleDelay = () => new Promise((res) => setTimeout(res, 3000))
+const visibleDelay = () => new Promise((res) => setTimeout(res, VISIBLE))
 
-const machine = createMachine({
+const machine = createMachine((state, transition, invoke) => ({
   visible: invoke(visibleDelay, transition('done', 'fading')),
   fading: state(transition('show', 'visible'), transition('hide', 'invisible')),
   invisible: state(transition('show', 'visible')),
-})
+}))
 
 export const hamburger = (fade) => css`
   position: fixed;
@@ -43,13 +34,7 @@ const fadeStyle = css`
 `
 
 export default function MenuButton({ onMenuClick }) {
-  const [current] = useMachine(machine, { slug: '' })
-  const {
-    service: {
-      machine: { current: state },
-      send,
-    },
-  } = current
+  const [state, send] = useMachine(machine, { slug: '' })
 
   const onTouch = () => {
     send('show')

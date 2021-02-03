@@ -4,6 +4,8 @@ import { ThemeToggler } from 'gatsby-plugin-dark-mode'
 import { FaSun, FaMoon } from 'react-icons/fa'
 import Toggle from '../Toggle'
 
+const SPEED = 500
+
 const light = (isLight, color) => css`
   fill: ${isLight ? color : '#939393'};
 `
@@ -31,6 +33,7 @@ export default function ThemeToggle() {
               `}
             >
               <Toggle
+                transitionSpeed={SPEED}
                 onToggle={(checked) => {
                   toggleTheme(checked ? 'light' : 'dark')
                 }}

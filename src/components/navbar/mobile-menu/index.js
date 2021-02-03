@@ -1,16 +1,7 @@
-import React, { useMemo, useCallBack, useRef, useState, useEffect } from 'react'
+import React from 'react'
 import { Link, navigate } from 'gatsby'
 import { IoMdClose } from 'react-icons/io'
-import {
-  createMachine,
-  state,
-  transition,
-  invoke,
-  guard,
-  action,
-  reduce,
-} from 'robot3'
-import { useMachine } from 'react-robot'
+import { createMachine, useMachine } from 'utils/robot'
 import ThemeToggle from 'components/theme-toggle'
 import MenuButton from './menu-button'
 import * as allStyles from '../styles'
@@ -18,29 +9,63 @@ import * as mobileStyles from './styles'
 
 const styles = { ...allStyles, ...mobileStyles }
 
+const el = document.querySelector('body')
+
 const delay = () => new Promise((res) => setTimeout(res, 1000))
 
-const machine = createMachine({
-  closed: state(transition('open', 'opening')),
-  opening: invoke(delay, transition('done', 'opened')),
-  opened: state(
-    transition(
-      'close',
-      'closing',
-      reduce((ctx, { slug }) => ({ ...ctx, slug }))
-    )
-  ),
-  closing: invoke(
-    delay,
-    transition(
-      'done',
-      'closed',
-      guard((ctx) => ctx.slug),
-      action((ctx) => navigate(ctx.slug))
+function stopAppScroll() {
+  const { scrollY } = window
+  el.style.position = 'fixed'
+  el.style.top = -1 * scrollY + 'px'
+  el.style.right = '0'
+  el.style.left = '0'
+  return scrollY
+}
+
+function restoreAppScroll(currentScroll) {
+  el.style.position = 'static'
+  el.style.top = ''
+  el.style.right = ''
+  el.style.left = ''
+  window.scrollTo(0, currentScroll)
+}
+
+const machine = createMachine(
+  ({ state, transition, invoke, guard, action, reduce }) => ({
+    closed: state(
+      transition(
+        'open',
+        'opening',
+        reduce((ctx) => ({
+          ...ctx,
+          currentScroll: stopAppScroll(),
+        }))
+      )
     ),
-    transition('done', 'closed')
-  ),
-})
+    opening: invoke(delay, transition('done', 'opened')),
+    opened: state(
+      transition(
+        'close',
+        'closing',
+        reduce((ctx, { slug }) => ({ ...ctx, slug }))
+      )
+    ),
+    closing: invoke(
+      delay,
+      transition(
+        'done',
+        'closed',
+        guard((ctx) => ctx.slug),
+        action((ctx) => navigate(ctx.slug))
+      ),
+      transition(
+        'done',
+        'closed',
+        action((ctx) => restoreAppScroll(ctx.currentScroll))
+      )
+    ),
+  })
+)
 
 const Menu = ({ menuItems, state, send, pathRegex }) => {
   return (
@@ -74,13 +99,7 @@ const Menu = ({ menuItems, state, send, pathRegex }) => {
 }
 
 export default function DesktopMenu({ menuItems, className, pathRegex }) {
-  const [current] = useMachine(machine, { slug: '' })
-  const {
-    service: {
-      machine: { current: state },
-      send,
-    },
-  } = current
+  const [state, send] = useMachine(machine, { slug: '' })
 
   return (
     <nav
