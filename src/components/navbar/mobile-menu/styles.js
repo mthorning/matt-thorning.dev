@@ -18,6 +18,7 @@ export const close = css`
   bottom: 0;
   right: 0;
   padding: 32px;
+  cursor: pointer;
   svg {
     font-size: 40px;
     fill: gray;

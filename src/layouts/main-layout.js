@@ -14,6 +14,7 @@ const nav = css`
 const contentWrapper = css`
   display: flex;
   justify-content: center;
+  width: 100%;
 `
 const content = (theme) => css`
   max-width: ${theme.contentMaxWidth};

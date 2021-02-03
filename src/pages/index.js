@@ -14,17 +14,24 @@ export default function Page({ data }) {
         description={siteMetadata.description}
         author={siteMetadata.author}
       />
-      <h1
+      <div
         css={css`
-          color: var(--color);
-          font-size: 8vw;
-          margin-top: 10vh;
-          margin-bottom: 0;
-        `}
+                * {
+                    user-select: none;
+                    `}
       >
-        Matt Thorning
-      </h1>
-      <TypeHello>Software Developer</TypeHello>
+        <h1
+          css={css`
+            color: var(--color);
+            font-size: 8vw;
+            margin-top: 10vh;
+            margin-bottom: 0;
+          `}
+        >
+          Matt Thorning
+        </h1>
+        <TypeHello>Software Developer</TypeHello>
+      </div>
     </Layout>
   )
 }

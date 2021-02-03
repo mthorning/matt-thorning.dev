@@ -35,6 +35,7 @@ export const hamburger = (fade) => css`
   padding: 12px;
   box-shadow: var(--boxShadow);
   border: 1px solid gray;
+  cursor: pointer;
   opacity: ${fade ? '0' : '0.8'};
 `
 const fadeStyle = css`
@@ -55,8 +56,12 @@ export default function MenuButton({ onMenuClick }) {
   }
 
   useEffect(() => {
-    window.addEventListener('touchstart', onTouch)
-    return () => window.removeEventListener('touchstart', onTouch)
+    const addListeners = (method) =>
+      ['touchstart', 'click'].forEach((event) =>
+        document[method](event, onTouch)
+      )
+    addListeners('addEventListener')
+    return () => addListeners('removeEventListener')
   }, [onTouch])
 
   const timeout = useRef()
@@ -71,12 +76,14 @@ export default function MenuButton({ onMenuClick }) {
     <>
       {state !== 'invisible' ? (
         <div
+          onClick={() => onMenuClick()}
+          onMouseEnter={() => send('show')}
           css={[
             hamburger(state === 'fading'),
             state === 'fading' ? fadeStyle : '',
           ]}
         >
-          <FaBars onClick={() => onMenuClick()} />
+          <FaBars />
         </div>
       ) : null}
     </>
