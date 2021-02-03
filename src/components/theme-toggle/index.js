@@ -2,9 +2,15 @@ import React from 'react'
 import { css } from '@emotion/react'
 import { ThemeToggler } from 'gatsby-plugin-dark-mode'
 import { FaSun, FaMoon } from 'react-icons/fa'
+import { createMachine, useMachine } from 'utils/robot'
 import Toggle from '../Toggle'
 
-const SPEED = 500
+const SPEED = 5000
+
+const machine = createMachine(({ state, transition, delay, invoke }) => ({
+  idle: state(transition('move', 'moving')),
+  moving: invoke(delay(SPEED), transition('done', 'idle')),
+}))
 
 const light = (isLight, color) => css`
   fill: ${isLight ? color : '#939393'};
@@ -13,6 +19,7 @@ const light = (isLight, color) => css`
 export default function ThemeToggle() {
   const initialChecked =
     typeof window === 'undefined' ? false : window.__theme === 'light'
+  const [state, send] = useMachine(machine)
 
   return (
     <ThemeToggler>

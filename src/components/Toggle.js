@@ -10,7 +10,7 @@ const toggle = (checked, transitionSpeed) => css`
   box-shadow: inset 1px 1px 4px #6e6e6e;
   background-color: #a5a3a3;
   border-radius: 20px;
-  transition: all 0.5s;
+  // transition: all ${transitionSpeed}ms;
   cursor: pointer;
   &::after {
     content: '';
@@ -32,9 +32,11 @@ export default function Toggle({ onToggle, initialChecked, transitionSpeed }) {
 
   const clickHandler = () => setChecked((c) => !c)
 
-  useEffect(() => onToggle(checked, transitionSpeed), [checked])
+  useEffect(() => onToggle(checked), [checked])
 
-  return <div {...a11yButton(clickHandler)} css={toggle(checked)} />
+  return (
+    <div {...a11yButton(clickHandler)} css={toggle(checked, transitionSpeed)} />
+  )
 }
 
 Toggle.defaultProps = {

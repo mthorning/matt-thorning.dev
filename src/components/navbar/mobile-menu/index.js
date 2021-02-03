@@ -11,8 +11,6 @@ const styles = { ...allStyles, ...mobileStyles }
 
 const el = document.querySelector('body')
 
-const delay = () => new Promise((res) => setTimeout(res, 1000))
-
 function stopAppScroll() {
   const { scrollY } = window
   el.style.position = 'fixed'
@@ -31,7 +29,7 @@ function restoreAppScroll(currentScroll) {
 }
 
 const machine = createMachine(
-  ({ state, transition, invoke, guard, action, reduce }) => ({
+  ({ state, transition, invoke, guard, action, reduce, delay }) => ({
     closed: state(
       transition(
         'open',
@@ -42,7 +40,7 @@ const machine = createMachine(
         }))
       )
     ),
-    opening: invoke(delay, transition('done', 'opened')),
+    opening: invoke(delay(1000), transition('done', 'opened')),
     opened: state(
       transition(
         'close',
@@ -51,7 +49,7 @@ const machine = createMachine(
       )
     ),
     closing: invoke(
-      delay,
+      delay(1000),
       transition(
         'done',
         'closed',

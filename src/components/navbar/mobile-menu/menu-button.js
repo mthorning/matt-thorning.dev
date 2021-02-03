@@ -6,10 +6,8 @@ import { FaBars } from 'react-icons/fa'
 const FADE = 5000
 const VISIBLE = 3000
 
-const visibleDelay = () => new Promise((res) => setTimeout(res, VISIBLE))
-
-const machine = createMachine((state, transition, invoke) => ({
-  visible: invoke(visibleDelay, transition('done', 'fading')),
+const machine = createMachine(({ state, transition, invoke, delay }) => ({
+  visible: invoke(delay(VISIBLE), transition('done', 'fading')),
   fading: state(transition('show', 'visible'), transition('hide', 'invisible')),
   invisible: state(transition('show', 'visible')),
 }))
