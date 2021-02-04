@@ -30,22 +30,24 @@ function restoreAppScroll(currentScroll) {
 
 const machine = createMachine(
   ({ state, transition, invoke, guard, action, reduce, delay }) => ({
-    closed: state(
+    closed: state(transition('open', 'opening')),
+    opening: invoke(
+      delay(1000),
       transition(
-        'open',
-        'opening',
+        'done',
+        'opened',
         reduce((ctx) => ({
           ...ctx,
           currentScroll: stopAppScroll(),
         }))
       )
     ),
-    opening: invoke(delay(1000), transition('done', 'opened')),
     opened: state(
       transition(
         'close',
         'closing',
-        reduce((ctx, { slug }) => ({ ...ctx, slug }))
+        reduce((ctx, { slug }) => ({ ...ctx, slug })),
+        action((ctx) => restoreAppScroll(ctx.currentScroll))
       )
     ),
     closing: invoke(
@@ -53,13 +55,9 @@ const machine = createMachine(
       transition(
         'done',
         'closed',
-        guard((ctx) => ctx.slug),
-        action((ctx) => navigate(ctx.slug))
-      ),
-      transition(
-        'done',
-        'closed',
-        action((ctx) => restoreAppScroll(ctx.currentScroll))
+        action((ctx) => {
+          if (ctx.slug) navigate(ctx.slug)
+        })
       )
     ),
   })
