@@ -9,9 +9,8 @@ import * as mobileStyles from './styles'
 
 const styles = { ...allStyles, ...mobileStyles }
 
-const el = document.querySelector('body')
-
 function stopAppScroll() {
+  const el = document.querySelector('body')
   const { scrollY } = window
   el.style.position = 'fixed'
   el.style.top = -1 * scrollY + 'px'
@@ -21,6 +20,7 @@ function stopAppScroll() {
 }
 
 function restoreAppScroll(currentScroll) {
+  const el = document.querySelector('body')
   el.style.position = 'static'
   el.style.top = ''
   el.style.right = ''
