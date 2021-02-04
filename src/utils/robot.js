@@ -14,10 +14,11 @@ export function createMachine(factory, initialState) {
 export function useMachine(...args) {
   const [current] = useRobot(...args)
   const {
+    context,
     service: {
       machine: { current: state },
       send,
     },
   } = current
-  return [state, send, current.service]
+  return [state, send, context, current.service]
 }
