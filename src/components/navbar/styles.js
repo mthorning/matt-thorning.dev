@@ -31,7 +31,7 @@ export const menu = css`
   }
 `
 export const bottomRow = css`
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
