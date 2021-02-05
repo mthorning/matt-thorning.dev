@@ -4,6 +4,7 @@ export const nav = css`
   background: var(--bg);
   box-shadow: 0 0 2px gray;
   overflow: hidden;
+  height: 100vh;
 `
 export const menu = css`
   position: sticky;
@@ -31,7 +32,7 @@ export const menu = css`
   }
 `
 export const bottomRow = css`
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
