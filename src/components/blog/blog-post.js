@@ -45,7 +45,11 @@ export default function Template({ data, location, pageContext }) {
       </MDXProvider>
       <Clap slug={post.frontmatter.slug} />
       <ShareButtons shareUrl={location.href} title={post.frontmatter.title} />
-      <PreviousNext previous={previous} next={next} />
+      <PreviousNext
+        slug={post.frontmatter.slug}
+        previous={previous}
+        next={next}
+      />
     </Layout>
   )
 }

@@ -82,14 +82,14 @@ const Menu = ({ menuItems, state, send, pathRegex }) => {
           </li>
         ))}
       </ul>
-      <div css={styles.themeToggle}>
+      <div css={styles.bottomRow}>
         <ThemeToggle />
+        {state === 'opened' ? (
+          <div css={styles.close}>
+            <IoMdClose onClick={() => send('close')} />
+          </div>
+        ) : null}
       </div>
-      {state === 'opened' ? (
-        <div css={styles.close}>
-          <IoMdClose onClick={() => send('close')} />
-        </div>
-      ) : null}
     </>
   )
 }

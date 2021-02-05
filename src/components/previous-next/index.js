@@ -1,10 +1,10 @@
 import React from 'react'
-import { FaBars, FaBackward, FaForward } from 'react-icons/fa'
+import { FaBackward, FaForward } from 'react-icons/fa'
 import { Link } from 'gatsby'
 import { icon, iconWrapper, title } from './style'
 import { css } from '@emotion/react'
 
-export default function ({ previous, next }) {
+export default function ({ slug, previous, next }) {
   return (
     <>
       <div css={iconWrapper}>
@@ -26,16 +26,6 @@ export default function ({ previous, next }) {
         >
           <div>{previous.title}</div>
         </div>
-
-        <Link
-          to="/blog"
-          css={(theme) => css`
-            ${icon(theme)}
-            grid-area: home;
-          `}
-        >
-          <FaBars />
-        </Link>
 
         <div
           css={(theme) => css`

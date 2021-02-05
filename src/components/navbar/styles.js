@@ -13,7 +13,6 @@ export const menu = css`
   padding: 32px;
   li {
     list-style-type: none;
-    margin: 2px 10px;
   }
   .active,
   li a:hover {
@@ -31,8 +30,15 @@ export const menu = css`
     color: var(--color);
   }
 `
-export const themeToggle = css`
-  position: fixed;
+export const bottomRow = css`
+  position: absolute;
   bottom: 0;
+  left: 0;
+  right: 0;
   padding: 32px;
+  height: 108px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `

@@ -15,6 +15,7 @@ const contentWrapper = css`
   display: flex;
   justify-content: center;
   width: 100%;
+  padding-bottom: 50px;
 `
 const content = (theme) => css`
   max-width: ${theme.contentMaxWidth};

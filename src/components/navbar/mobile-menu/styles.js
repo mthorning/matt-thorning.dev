@@ -14,10 +14,6 @@ export const nav = css`
   }
 `
 export const close = css`
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  padding: 32px;
   cursor: pointer;
   svg {
     font-size: 40px;
