@@ -6,7 +6,7 @@ export default function TypeHello({ children }) {
 
   const initialState = {
     text: '',
-    style: (theme) => [baseStyle, whiteBorder].map((a) => a(theme)),
+    style: [baseStyle, whiteBorder],
   }
   const reducer = (state, action) => {
     switch (action.type) {
@@ -20,7 +20,7 @@ export default function TypeHello({ children }) {
       case 'updateClasses':
         return {
           ...state,
-          style: (theme) => action.payload(theme),
+          style: action.payload,
         }
       default:
         return state
@@ -74,13 +74,12 @@ export default function TypeHello({ children }) {
   const cursorAnimation = useCallback(() => {
     dispatch({
       type: 'updateClasses',
-      payload: (theme) =>
-        [baseStyle, whiteBorder, blinkBorder].map((a) => a(theme)),
+      payload: [baseStyle, whiteBorder, blinkBorder],
     })
     setTimeout(() => {
       dispatch({
         type: 'updateClasses',
-        payload: (theme) => [baseStyle(theme)],
+        payload: baseStyle,
       })
     }, 2500)
   }, [])
@@ -97,5 +96,5 @@ export default function TypeHello({ children }) {
     return () => (mounted.current = false)
   }, [type])
 
-  return <h3 css={(theme) => state.style(theme)}>{state.text}</h3>
+  return <h3 css={state.style}>{state.text}</h3>
 }

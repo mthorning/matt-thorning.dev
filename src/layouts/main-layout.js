@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useLocation } from '@reach/router'
 import { css } from '@emotion/react'
 import Navbar from 'components/navbar'
 
@@ -18,6 +17,7 @@ const contentWrapper = css`
   padding-bottom: 50px;
 `
 const content = (theme) => css`
+  width: 100%;
   max-width: ${theme.contentMaxWidth};
   padding: 1.45rem 1.0875rem 2rem;
   margin-bottom: 20px;

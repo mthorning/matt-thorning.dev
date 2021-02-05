@@ -16,9 +16,10 @@ export default function Page({ data }) {
       />
       <div
         css={css`
-                * {
-                    user-select: none;
-                    `}
+            padding-left: 32px;
+            * {
+                user-select: none;
+            `}
       >
         <h1
           css={css`

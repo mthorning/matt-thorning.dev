@@ -31,14 +31,7 @@ export const menu = css`
     color: var(--color);
   }
 `
-export const bottomRow = css`
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 32px;
-  height: 108px;
-  box-sizing: border-box;
+export const themeToggle = css`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 `

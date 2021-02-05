@@ -1,5 +1,4 @@
 import React from 'react'
-import { css } from 'emotion/react'
 import { Link, navigate } from 'gatsby'
 import { IoMdClose } from 'react-icons/io'
 import { createMachine, useMachine } from 'utils/robot'
@@ -83,16 +82,10 @@ const Menu = ({ menuItems, state, send, pathRegex }) => {
           </li>
         ))}
       </ul>
-      <div css={css`
-         ${styles.bottomRow}
-         position: fixed;
-      ` }>
+      <div css={styles.themeToggle}>
         <ThemeToggle />
       </div>
-      <div css={css`
-         ${styles.bottomRow}
-         position: absolute;
-      ` }>
+      <div css={styles.closeButton}>
         {state === 'opened' ? (
           <div css={styles.close}>
             <IoMdClose onClick={() => send('close')} />

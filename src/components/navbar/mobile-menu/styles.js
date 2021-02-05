@@ -20,3 +20,22 @@ export const close = css`
     fill: gray;
   }
 `
+const bottomRow = css`
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 32px;
+  height: 108px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+`
+export const themeToggle = css`
+  ${bottomRow}
+  position: absolute;
+`
+export const closeButton = css`
+  ${bottomRow}
+  position: fixed;
+  justify-content: flex-end;
+`

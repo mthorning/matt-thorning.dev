@@ -1,14 +1,14 @@
 import { css } from '@emotion/react'
 
-export const title = (theme) => css`
+export const title = css`
   margin: 0;
   display: inline-block;
   color: var(--linkHover);
 `
-export const whiteBorder = (theme) => css`
+export const whiteBorder = css`
   border-right: 3px solid var(--linkHover);
 `
-export const blinkBorder = (theme) => css`
+export const blinkBorder = css`
   @keyframes blink {
     50% {
       border-right: 3px solid var(--bg);
