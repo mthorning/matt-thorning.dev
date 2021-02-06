@@ -1,6 +1,7 @@
 import { css } from '@emotion/react'
 
 export const nav = css`
+  position: relative;
   background: var(--bg);
   box-shadow: 0 0 2px gray;
   overflow: hidden;
@@ -32,6 +33,10 @@ export const menu = css`
   }
 `
 export const themeToggle = css`
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 32px 0;
   display: flex;
   justify-content: center;
 `

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, navigate } from 'gatsby'
 import { IoMdClose } from 'react-icons/io'
+import { css, Global } from '@emotion/react'
 import { createMachine, useMachine } from 'utils/robot'
 import ThemeToggle from 'components/theme-toggle'
 import MenuButton from './menu-button'
@@ -8,16 +9,6 @@ import * as allStyles from '../styles'
 import * as mobileStyles from './styles'
 
 const styles = { ...allStyles, ...mobileStyles }
-
-function stopAppScroll() {
-  const el = document.querySelector('body')
-  const { scrollY } = window
-  el.style.position = 'fixed'
-  el.style.top = -1 * scrollY + 'px'
-  el.style.right = '0'
-  el.style.left = '0'
-  return scrollY
-}
 
 function restoreAppScroll(currentScroll) {
   const el = document.querySelector('body')
@@ -38,7 +29,7 @@ const machine = createMachine(
         'opened',
         reduce((ctx) => ({
           ...ctx,
-          currentScroll: stopAppScroll(),
+          currentScroll: window.scrollY,
         }))
       )
     ),
@@ -82,10 +73,8 @@ const Menu = ({ menuItems, state, send, pathRegex }) => {
           </li>
         ))}
       </ul>
-      <div css={styles.themeToggle}>
+      <div css={styles.bottomRow}>
         <ThemeToggle />
-      </div>
-      <div css={styles.closeButton}>
         {state === 'opened' ? (
           <div css={styles.close}>
             <IoMdClose onClick={() => send('close')} />
@@ -106,7 +95,15 @@ export default function DesktopMenu({ menuItems, className, pathRegex }) {
     >
       {state === 'closed' ? (
         <MenuButton onMenuClick={() => send('open')} />
-      ) : null}
+      ) : (
+        <Global
+          styles={css`
+            *::-webkit-scrollbar {
+              display: none;
+            }
+          `}
+        />
+      )}
       <Menu {...{ menuItems, pathRegex, state, send }} />
     </nav>
   )

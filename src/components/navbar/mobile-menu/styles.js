@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import { nav as allNav } from '../styles'
+import { themeToggle, nav as allNav } from '../styles'
 
 export const nav = css`
   ${allNav}
@@ -20,22 +20,11 @@ export const close = css`
     fill: gray;
   }
 `
-const bottomRow = css`
-  bottom: 0;
-  left: 0;
-  right: 0;
+export const bottomRow = css`
+  ${themeToggle}
   padding: 32px;
   height: 108px;
   box-sizing: border-box;
-  display: flex;
   align-items: center;
-`
-export const themeToggle = css`
-  ${bottomRow}
-  position: absolute;
-`
-export const closeButton = css`
-  ${bottomRow}
-  position: fixed;
-  justify-content: flex-end;
+  justify-content: space-between;
 `
