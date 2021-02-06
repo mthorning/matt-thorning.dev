@@ -5,6 +5,13 @@ import Layout from 'layouts/main-layout'
 import { SEO } from 'components'
 import TypeHello from 'components/type-hello'
 
+const respFont = ({ minFont, maxFont, minScreen, maxScreen }) => css`
+  font-size: calc(
+    ${minFont}px + (${maxFont} - ${minFont}) * (100vw - ${minScreen}px) /
+      (${maxScreen}-${minScreen})
+  );
+`
+
 export default function Page({ data }) {
   const { siteMetadata } = data.site
   return (
@@ -23,15 +30,31 @@ export default function Page({ data }) {
       >
         <h1
           css={css`
+            ${respFont({
+              minFont: 30,
+              maxFont: 100,
+              minScreen: 300,
+              maxScreen: 1500,
+            })}
             color: var(--color);
-            font-size: 8vw;
             margin-top: 10vh;
             margin-bottom: 0;
           `}
         >
           Matt Thorning
         </h1>
-        <TypeHello>Software Developer</TypeHello>
+        <TypeHello
+          css={css`
+            ${respFont({
+              minFont: 25,
+              maxFont: 60,
+              minScreen: 300,
+              maxScreen: 1500,
+            })}
+          `}
+        >
+          Software Developer
+        </TypeHello>
       </div>
     </Layout>
   )

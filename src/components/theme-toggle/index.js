@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { css } from '@emotion/react'
-import { ThemeToggler } from 'gatsby-plugin-dark-mode'
 import { FaSun, FaMoon } from 'react-icons/fa'
 import { createMachine, useMachine } from 'utils/robot'
 import Toggle from '../Toggle'
@@ -28,9 +27,25 @@ const light = (isLight, color) => css`
   fill: ${isLight ? color : '#939393'};
 `
 
+const useAstronomy = (state, initial) => {
+  const [astronomy, setAstronomy] = useState(
+    initial === 'light' ? 'sun' : 'moon'
+  )
+  const flick = (astro) => {
+    setTimeout(() => setAstronomy(astro), SPEED / 2)
+  }
+  useEffect(() => {
+    if (state == 'toLight') flick('sun')
+    if (state == 'toDark') flick('moon')
+  }, [state])
+
+  return [astronomy === 'sun', astronomy == 'moon']
+}
+
 export default function ThemeToggle() {
   const initialTheme = typeof window !== 'undefined' ? window.__theme : 'light'
-  const [state, send, context] = useMachine(machine, initialTheme)
+  const [state, send] = useMachine(machine, initialTheme)
+  const [sun, moon] = useAstronomy(state, initialTheme)
 
   const [theme, setTheme] = useState(initialTheme)
   useEffect(() => (window.__onThemeChange = () => setTheme(window.__theme)), [])
@@ -43,7 +58,7 @@ export default function ThemeToggle() {
         align-items: center;
       `}
     >
-      <FaMoon css={light(theme === 'dark', '#d1d14e')} />
+      <FaMoon css={light(moon, '#d1d14e')} />
       <div
         css={css`
           margin: 0 4px;
@@ -58,7 +73,7 @@ export default function ThemeToggle() {
           initialChecked={theme === 'light'}
         />
       </div>
-      <FaSun css={light(theme === 'light', '#ffb500')} />
+      <FaSun css={light(sun, '#ffb500')} />
     </div>
   )
 }

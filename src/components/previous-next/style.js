@@ -7,8 +7,10 @@ export const iconWrapper = (theme) => css`
   padding-top: 20px;
   border-top: 1px solid ${theme.textColor};
   display: grid;
-  grid-template-columns: 25px 1fr 25px 1fr 25px;
-  grid-template-areas: 'prev prev-title home next-title next';
+  // grid-template-columns: 25px 1fr 25px 1fr 25px;
+  // grid-template-areas: 'prev prev-title home next-title next';
+  grid-template-columns: 25px 1fr 25px;
+  grid-template-areas: 'prev prev-title next-title next';
   grid-column-gap: 8px;
   align-items: center;
 `

@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useEffect, useReducer } from 'react'
 import { title as baseStyle, blinkBorder, whiteBorder } from './style'
 
-export default function TypeHello({ children }) {
+export default function TypeHello({ className, children }) {
   const mounted = useRef(true)
 
   const initialState = {
@@ -96,5 +96,9 @@ export default function TypeHello({ children }) {
     return () => (mounted.current = false)
   }, [type])
 
-  return <h3 css={state.style}>{state.text}</h3>
+  return (
+    <h2 className={className} css={state.style}>
+      {state.text}
+    </h2>
+  )
 }

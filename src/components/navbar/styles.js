@@ -1,11 +1,19 @@
 import { css } from '@emotion/react'
 
+const height = css`
+  min-height: 100vh;
+  height: 100%;
+`
 export const nav = css`
-  position: fixed;
+  ${height}
   background: var(--bg);
   box-shadow: 0 0 2px gray;
   overflow: hidden;
-  height: 100vh;
+`
+export const inner = css`
+  ${height}
+  position: relative;
+  width: 100%;
 `
 export const menu = css`
   position: sticky;
