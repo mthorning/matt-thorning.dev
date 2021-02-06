@@ -1,7 +1,7 @@
 import { css } from '@emotion/react'
 
 export const nav = css`
-  position: relative;
+  position: fixed;
   background: var(--bg);
   box-shadow: 0 0 2px gray;
   overflow: hidden;
