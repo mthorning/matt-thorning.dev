@@ -19,13 +19,13 @@ module.exports = {
     `gatsby-plugin-emotion`,
     {
       resolve: `gatsby-plugin-alias-imports`,
-      options: {
-        alias: {
-          components: 'src/components',
-          utils: 'src/utils',
-          layouts: 'src/layouts',
-          pages: 'src/pages',
-          mdx: 'src/mdx-components',
+    options: {
+      alias: {
+        components: 'src/components',
+        utils: 'src/utils',
+        layouts: 'src/layouts',
+        pages: 'src/pages',
+        mdx: 'src/mdx-components',
         },
         extensions: ['js'],
       },

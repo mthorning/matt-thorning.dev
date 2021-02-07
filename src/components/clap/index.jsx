@@ -1,7 +1,7 @@
 import React, { useRef, useReducer, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { withTheme, css } from '@emotion/react'
-import useClaps from 'utils/useClaps'
+import { useClaps } from 'utils'
 import loadable from '@loadable/component'
 
 const ClapButton = loadable(() => import('./clap-button'))
@@ -57,7 +57,7 @@ function Clap({ slug, theme }) {
 
   return (
     <div
-      css={theme => css`
+      css={(theme) => css`
         padding: 8px;
         display: flex;
         align-items: center;

@@ -1,10 +1,5 @@
-export function a11yButton(handlerFn, role) {
-  const props = {
-    onClick: handlerFn,
-    onKeyDown: (event) => {
-      if (event.keycode === 13) handlerFn(event)
-    },
-  }
-  if (role) props.role = 'button'
-  return props
-}
+export * from './a11y'
+export * from './firebase'
+export * from './robot'
+export * from './theme'
+export * from './useClaps'

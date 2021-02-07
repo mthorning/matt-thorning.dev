@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
-import { useDatabase } from 'utils/firebase'
+import { useDatabase } from 'utils'
 
-export default function useClaps(reference) {
+export function useClaps(reference) {
   const [clapQueue, setClapQueue] = useState(0)
   const [claps, clapSetter] = useState(0)
   const database = useDatabase()

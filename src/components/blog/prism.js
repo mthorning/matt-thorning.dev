@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import Highlight, { defaultProps } from 'prism-react-renderer'
-import theme from 'prism-react-renderer/themes/vsDark'
+import darkTheme from 'prism-react-renderer/themes/vsDark'
+import lightTheme from 'prism-react-renderer/themes/github'
 import { css } from '@emotion/react'
+import { useTheme } from 'utils'
 import Toggle from '../Toggle'
 
 function DiffToggle({ toggleDiff }) {
@@ -150,10 +152,12 @@ export default function Prism({ children: { props } }) {
   const matches = className.match(/language-(?<lang>.*)/)
   const lang = matches && matches.groups && matches.groups.lang
 
+  const { theme } = useTheme()
+
   return (
     <Highlight
       {...defaultProps}
-      theme={theme}
+      theme={theme === 'light' ? lightTheme : darkTheme}
       code={children}
       language={lang ? lang : undefined}
     >

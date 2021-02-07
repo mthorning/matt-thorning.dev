@@ -101,17 +101,17 @@ This is something which you may find yourself doing several times whilst develop
 
 ```reason
 let mapElements = (list, callback): React.element =>
-  list->Belt.List.map(callback)->Array.of_list->React.array;
-```
+list->Belt.List.map(callback)->Array.of_list->React.array;
+`
 
-I found that it was best to put this function and some other common patterns in a file called Utils.re. That way I could just write
-`open Utils` at the top of any file to get access to all of my helpful utilities:
+found that it was best to put this function and some other common patterns in a file called Utils.re. That way I could just write
+pen Utils` at the top of any file to get access to all of my helpful utilities:
 
-```reason
-open Utils;
+`reason
+en Utils;
 
-module UnorderedList = {
-  [@react.component]
+dule UnorderedList = {
+[@react.component]
   let make = (~items) => {
     <ul>
       {items->mapElements(item => {

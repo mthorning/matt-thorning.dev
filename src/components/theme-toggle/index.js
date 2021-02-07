@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { css } from '@emotion/react'
 import { FaSun, FaMoon } from 'react-icons/fa'
-import { createMachine, useMachine } from 'utils/robot'
+import { createMachine, useMachine, useTheme } from 'utils'
 import Toggle from '../Toggle'
 
 const SPEED = 500
@@ -44,11 +44,10 @@ const useAstronomy = (state, initial) => {
 
 export default function ThemeToggle() {
   const initialTheme = typeof window !== 'undefined' ? window.__theme : 'light'
+  const { theme } = useTheme()
+
   const [state, send] = useMachine(machine, initialTheme)
   const [sun, moon] = useAstronomy(state, initialTheme)
-
-  const [theme, setTheme] = useState(initialTheme)
-  useEffect(() => (window.__onThemeChange = () => setTheme(window.__theme)), [])
 
   const onToggle = useCallback(
     (checked) => {

@@ -36,7 +36,6 @@ export const wrapper = (theme) => css`
     }
     li a:hover {
       color: var(--linkHover);
-      background: var(--tagBg);
     }
   }
 `
