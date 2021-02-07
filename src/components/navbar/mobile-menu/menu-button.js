@@ -26,6 +26,9 @@ export const hamburger = (fade) => css`
   border: 1px solid gray;
   cursor: pointer;
   opacity: ${fade ? '0' : '0.8'};
+  svg {
+    fill: var(--color);
+  }
 `
 const fadeStyle = css`
   transition: opacity ${FADE}ms;
