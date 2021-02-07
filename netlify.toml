@@ -5,6 +5,11 @@
 package = "netlify-plugin-gatsby-cache"
 
 [[redirects]]
-  from = "blog.*/*"
-  to = "*/blog/:splat"
+  from = "https://blog.stupefied-beaver.netlify.app/*"
+  to = "https://stupefied-beaver.netlify.app/blog/:splat"
+  status = 200
+
+[[redirects]]
+  from = "https://matt-thorning.dev/*"
+  to = "https:/matt-thorning.dev/blog/:splat"
   status = 200
