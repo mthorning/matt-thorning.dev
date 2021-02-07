@@ -6,15 +6,13 @@ import { css } from '@emotion/react'
 import { useTheme } from 'utils'
 import Toggle from '../Toggle'
 
-function DiffToggle({ toggleDiff }) {
+function ToggleThing({ onToggle, initialChecked, text }) {
   return (
     <div
       css={css`
-        width: 100%;
-        text-align: right;
         display: flex;
         align-items: center;
-        justify-content: flex-end;
+        margin: 0 8px;
       `}
     >
       <em
@@ -23,9 +21,9 @@ function DiffToggle({ toggleDiff }) {
           margin-right: 5px;
         `}
       >
-        Diff
+        {text}
       </em>
-      <Toggle initialChecked onToggle={(checked) => toggleDiff(checked)} />
+      <Toggle {...{ onToggle, initialChecked }} />
     </div>
   )
 }
@@ -62,10 +60,7 @@ function Line(props) {
     padding: 0 12px 0 12px;
     ${lineDiffType === 'removed' &&
     `
-        .token {
-            color: #c24848 !important;
-        }
-        background: #250606;
+        background: #cc353561;
     `}
     ${lineDiffType === 'added' &&
     showDiff &&
@@ -75,6 +70,10 @@ function Line(props) {
   `
   // Only show removed lines in diffs
   if (lineDiffType === 'removed' && !showDiff) return null
+
+  const idx = line.findIndex(
+    ({ content }) => content === '-' || content === '+'
+  )
 
   // Add 2 spaces to start of lines without symbols
   const lineToRender =
@@ -88,9 +87,9 @@ function Line(props) {
         ]
       : showDiff && !!lineDiffType
       ? [
-          ...line.slice(0, 2),
+          ...line.slice(0, idx + 1),
           { types: ['plain'], content: ' ' },
-          ...line.slice(2),
+          ...line.slice(idx + 1),
         ]
       : !showDiff && !!lineDiffType
       ? [...line.slice(2)]
@@ -103,9 +102,14 @@ function Line(props) {
         const lineProps = getTokenProps({ token, key })
 
         // This makes the plus/minus symbol red/green
-        if (key === 1 && lineDiffType === 'removed')
+        if (key < 2 && lineProps.children === '-' && lineDiffType === 'removed')
           lineProps.style = { fontWeight: 'bold', color: 'red' }
-        if (key === 1 && lineDiffType === 'added' && showDiff)
+        if (
+          key < 2 &&
+          lineProps.children === '+' &&
+          lineDiffType === 'added' &&
+          showDiff
+        )
           lineProps.style = { fontWeight: 'bold', color: 'green' }
 
         return <span {...lineProps} />
@@ -145,6 +149,18 @@ function splitClass(classname, metastring) {
 
 export default function Prism({ children: { props } }) {
   const { children } = props
+
+  const [wrapText, setWrapText] = useState(true)
+  const textOverflow = css`
+    ${wrapText
+      ? `
+    word-break: break-all;
+    white-space: pre-wrap;
+    `
+      : `
+    overflow-x: scroll;
+    `}
+  `
   const hasDiffLines = children.match(/^[+-]\s/gm)
   const [showDiff, setShowDiff] = useState(hasDiffLines)
   const [className, options] = splitClass(props.className, props.metastring)
@@ -166,20 +182,35 @@ export default function Prism({ children: { props } }) {
         tokens = tokens.slice(0, tokens.length - 1)
         return (
           <>
-            {hasDiffLines && (
-              <DiffToggle
-                toggleDiff={(checked) => setShowDiff(hasDiffLines && checked)}
+            <div
+              css={css`
+                display: flex;
+                justify-content: flex-end;
+                align-items: baseline;
+                margin-bottom: -10px;
+              `}
+            >
+              {hasDiffLines && (
+                <ToggleThing
+                  initialChecked
+                  onToggle={(checked) => setShowDiff(hasDiffLines && checked)}
+                  text="Show Diff"
+                />
+              )}
+              <ToggleThing
+                initialChecked
+                onToggle={setWrapText}
+                text="Wrap Text"
               />
-            )}
+            </div>
             <pre
               className={className}
-              css={[
-                style,
-                css`
-                  border-radius: 10px;
-                  padding: 12px 0 12px;
-                `,
-              ]}
+              css={css`
+                ${style}
+                border-radius: 10px;
+                padding: 12px 0 12px;
+                ${textOverflow}
+              `}
             >
               {tokens.map((line, key) => {
                 let lineNumber

@@ -126,8 +126,6 @@ export default css`
     font-family: 'Fira Code', monospace;
     font-size: 0.9rem;
     line-height: 1.3rem;
-    word-break: break-all;
-    white-space: pre-wrap;
   }
   code {
     background: var(--tagBg);
