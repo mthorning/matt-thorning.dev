@@ -20,7 +20,7 @@ export default css`
     margin: 0;
     color: var(--color);
     background: var(--bg);
-    font-family: Georgia, serif;
+    font-family: Helvetica, Arial, sans-serif;
   }
 
   body.dark {

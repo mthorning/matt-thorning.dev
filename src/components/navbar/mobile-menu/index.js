@@ -98,8 +98,12 @@ export default function DesktopMenu({ menuItems, className, pathRegex }) {
       ) : (
         <Global
           styles={css`
+            scrollbar-width: 0px !important;
+            scrollbar-color: var(--bg) !important;
             *::-webkit-scrollbar {
-              display: none;
+              width: 0px !important;
+              height: 0px !important;
+              display: none !important;
             }
           `}
         />

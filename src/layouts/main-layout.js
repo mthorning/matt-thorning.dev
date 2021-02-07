@@ -6,6 +6,7 @@ import Navbar from 'components/navbar'
 const viewport = css`
   min-height: 100vh;
   display: flex;
+  align-items: stretch;
 `
 const nav = css`
   z-index: 999;
@@ -18,9 +19,14 @@ const contentWrapper = css`
 `
 const content = (theme) => css`
   width: 100%;
+  overflow: hidden;
   max-width: ${theme.contentMaxWidth};
   padding: 1.45rem 1.0875rem 2rem;
   margin-bottom: 20px;
+
+  img {
+    max-width: 100%;
+  }
 `
 const Layout = ({ children }) => {
   return (

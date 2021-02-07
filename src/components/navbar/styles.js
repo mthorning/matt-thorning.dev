@@ -1,25 +1,19 @@
 import { css } from '@emotion/react'
 
-const height = css`
-  min-height: 100vh;
-  height: 100%;
-`
 export const nav = css`
-  ${height}
   background: var(--bg);
   box-shadow: 0 0 2px gray;
-  overflow: hidden;
 `
 export const inner = css`
-  ${height}
-  position: relative;
-  width: 100%;
-`
-export const menu = css`
   position: sticky;
   top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+`
+export const menu = css`
   margin: 0;
-  padding: 32px;
   padding: 32px;
   li {
     list-style-type: none;
@@ -41,10 +35,7 @@ export const menu = css`
   }
 `
 export const themeToggle = css`
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  padding: 32px 0;
+  padding: 32px;
   display: flex;
   justify-content: center;
 `

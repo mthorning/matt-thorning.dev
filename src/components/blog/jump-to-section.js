@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useLayoutEffect } from 'react'
 import PropTypes from 'prop-types'
 import { IoIosArrowDown } from 'react-icons/io'
 import { AnchorLink } from 'gatsby-plugin-anchor-links'
@@ -36,9 +36,10 @@ function JumpToHeading({ headings, slug }) {
 
   const [windowWidth, setWindowWidth] = useState(0)
   function updateWindowWidth() {
-    setWindowWidth(window.innerWidth)
+    // Need to wait for a bit else we get the wrong width
+    setTimeout(() => setWindowWidth(window.innerWidth), 0)
   }
-  useEffect(() => {
+  useLayoutEffect(() => {
     updateWindowWidth()
     window.addEventListener('resize', updateWindowWidth)
     return () => window.removeEventListener('resize', updateWindowWidth)

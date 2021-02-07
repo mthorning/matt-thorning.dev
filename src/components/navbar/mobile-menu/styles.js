@@ -1,5 +1,5 @@
 import { css } from '@emotion/react'
-import { themeToggle, nav as allNav } from '../styles'
+import { menu as allMenu, nav as allNav } from '../styles'
 
 export const nav = css`
   ${allNav}
@@ -13,6 +13,10 @@ export const nav = css`
     left: 0;
   }
 `
+export const menu = css`
+  ${allMenu}
+  position: relative;
+`
 export const close = css`
   cursor: pointer;
   svg {
@@ -21,10 +25,13 @@ export const close = css`
   }
 `
 export const bottomRow = css`
-  ${themeToggle}
+  position: absolute;
+  bottom: 0;
+  width: 100%;
   padding: 32px;
   height: 108px;
   box-sizing: border-box;
+  display: flex;
   align-items: center;
   justify-content: space-between;
 `
