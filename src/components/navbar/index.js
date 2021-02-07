@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import { css } from '@emotion/react'
 import { useLocation } from '@reach/router'
 import { StaticQuery, graphql } from 'gatsby'
 import DesktopMenu from './desktop-menu'
 import MobileMenu from './mobile-menu'
+
+const queryString = '(max-width: 800px)'
 
 function useRightMenu() {
   const [showMobile, setShowMobile] = useState(false)
@@ -11,7 +14,7 @@ function useRightMenu() {
   const win = typeof window === 'undefined' ? undefined : window
 
   useEffect(() => {
-    const mq = win && win.matchMedia('(max-width: 800px)')
+    const mq = win && win.matchMedia(queryString)
     if (mq) {
       onMediaQueryChange(mq)
       mq.addEventListener('change', onMediaQueryChange)
@@ -20,7 +23,16 @@ function useRightMenu() {
   }, [win])
 
   if (showMobile) return (props) => <MobileMenu {...props} />
-  return (props) => <DesktopMenu {...props} />
+  return (props) => (
+    <DesktopMenu
+      css={css`
+        @media ${queryString} {
+          display: none;
+        }
+      `}
+      {...props}
+    />
+  )
 }
 
 export default function Navbar({ className }) {
