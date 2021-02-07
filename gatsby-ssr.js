@@ -1,12 +1,15 @@
 import React from 'react'
-import { Global, ThemeProvider } from '@emotion/react'
+import { ThemeProvider as EmotionThemeProvider, Global } from '@emotion/react'
+import { ThemeProvider } from 'utils'
 import { theme, global } from './src/styles'
 
 export const wrapRootElement = ({ element }) => {
   return (
-    <ThemeProvider theme={theme}>
-      <Global styles={global} />
-      {element}
-    </ThemeProvider>
+    <EmotionThemeProvider theme={theme}>
+      <ThemeProvider>
+        <Global styles={global} />
+        {element}
+      </ThemeProvider>
+    </EmotionThemeProvider>
   )
 }
