@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useLocation } from '@reach/router'
 import { StaticQuery, graphql } from 'gatsby'
 import DesktopMenu from './desktop-menu'
@@ -10,13 +10,13 @@ function useRightMenu() {
   const onMediaQueryChange = ({ matches }) => setShowMobile(matches)
   const win = typeof window === 'undefined' ? undefined : window
 
-  const mediaQuery = useMemo(() => {
+  useEffect(() => {
     const mq = win && win.matchMedia('(max-width: 800px)')
     if (mq) {
       onMediaQueryChange(mq)
-      mq.addListener(onMediaQueryChange)
+      mq.addEventListener('change', onMediaQueryChange)
     }
-    return mq
+    return () => mq.removeEventListener('change', onMediaQueryChange)
   }, [win])
 
   if (showMobile) return (props) => <MobileMenu {...props} />

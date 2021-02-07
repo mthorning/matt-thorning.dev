@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { css } from '@emotion/react'
 import { FaSun, FaMoon } from 'react-icons/fa'
 import { createMachine, useMachine } from 'utils/robot'
@@ -35,11 +35,11 @@ const useAstronomy = (state, initial) => {
     setTimeout(() => setAstronomy(astro), SPEED / 2)
   }
   useEffect(() => {
-    if (state == 'toLight') flick('sun')
-    if (state == 'toDark') flick('moon')
+    if (state === 'toLight') flick('sun')
+    if (state === 'toDark') flick('moon')
   }, [state])
 
-  return [astronomy === 'sun', astronomy == 'moon']
+  return [astronomy === 'sun', astronomy === 'moon']
 }
 
 export default function ThemeToggle() {
@@ -49,6 +49,13 @@ export default function ThemeToggle() {
 
   const [theme, setTheme] = useState(initialTheme)
   useEffect(() => (window.__onThemeChange = () => setTheme(window.__theme)), [])
+
+  const onToggle = useCallback(
+    (checked) => {
+      send(checked ? 'light' : 'dark')
+    },
+    [send]
+  )
 
   return (
     <div
@@ -67,9 +74,7 @@ export default function ThemeToggle() {
       >
         <Toggle
           transitionSpeed={SPEED}
-          onToggle={(checked) => {
-            send(checked ? 'light' : 'dark')
-          }}
+          onToggle={onToggle}
           initialChecked={theme === 'light'}
         />
       </div>

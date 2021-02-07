@@ -34,18 +34,18 @@ const fadeStyle = css`
 export default function MenuButton({ onMenuClick }) {
   const [state, send] = useMachine(machine, { slug: '' })
 
-  const onTouch = () => {
-    send('show')
-  }
-
   useEffect(() => {
+    const onTouch = () => {
+      send('show')
+    }
+
     const addListeners = (method) =>
       ['touchstart', 'click'].forEach((event) =>
         document[method](event, onTouch)
       )
     addListeners('addEventListener')
     return () => addListeners('removeEventListener')
-  }, [onTouch])
+  }, [send])
 
   const timeout = useRef()
   useEffect(() => {
@@ -53,12 +53,12 @@ export default function MenuButton({ onMenuClick }) {
     if (state === 'fading') {
       timeout.current = setTimeout(() => send('hide'), 5000)
     }
-  }, [state])
+  }, [state, send])
 
   return (
     <>
       {state !== 'invisible' ? (
-        <div
+        <button
           onClick={() => onMenuClick()}
           onMouseEnter={() => send('show')}
           css={[
@@ -67,7 +67,7 @@ export default function MenuButton({ onMenuClick }) {
           ]}
         >
           <FaBars />
-        </div>
+        </button>
       ) : null}
     </>
   )

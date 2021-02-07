@@ -57,20 +57,6 @@ export default function TypeHello({ className, children }) {
     [tick]
   )
 
-  const deleteText = useCallback((stop) => {
-    return new Promise((resolve) => {
-      let i = 0
-      const tick = setInterval(() => {
-        mounted.current && dispatch({ type: 'del' })
-        i++
-        if (mounted.current && i === stop) {
-          clearInterval(tick)
-          resolve()
-        }
-      }, 150)
-    })
-  }, [])
-
   const cursorAnimation = useCallback(() => {
     dispatch({
       type: 'updateClasses',
@@ -86,10 +72,8 @@ export default function TypeHello({ className, children }) {
 
   const type = useCallback(async () => {
     await writeText(children.split(''))
-    // await deleteText(5)
-    // await writeText('Code />'.split(''))
     cursorAnimation()
-  }, [writeText, deleteText, cursorAnimation])
+  }, [writeText, cursorAnimation, children])
 
   useEffect(() => {
     type()

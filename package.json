@@ -63,7 +63,7 @@
   },
   "scripts": {
     "build": "GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=true gatsby build --log-pages",
-    "develop": "gatsby develop",
+    "develop": "gatsby develop -- -H 0.0.0.0",
     "start": "npm run develop",
     "format": "prettier --write \"src/**/*.js\"",
     "preversion": "[[ $(git rev-parse --abbrev-ref HEAD) == \"develop\" ]] && git checkout master && git merge develop",

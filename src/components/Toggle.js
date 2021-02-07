@@ -32,7 +32,7 @@ export default function Toggle({ onToggle, initialChecked, transitionSpeed }) {
 
   const clickHandler = () => setChecked((c) => !c)
 
-  useEffect(() => onToggle(checked), [checked])
+  useEffect(() => onToggle(checked), [onToggle, checked])
 
   return (
     <div {...a11yButton(clickHandler)} css={toggle(checked, transitionSpeed)} />
