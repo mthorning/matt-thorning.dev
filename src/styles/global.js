@@ -1,4 +1,6 @@
 import { css } from '@emotion/react'
+import table from './table.js'
+import scrollbars from './scrollbars.js'
 
 export default css`
   html {
@@ -319,27 +321,6 @@ export default css`
     font-size: 0.78405rem;
     line-height: 1.1;
   }
-  *::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: gray, gray;
-  }
-  *:hover {
-    scrollbar-color: gray, gray;
-  }
-  *::-webkit-scrollbar-track {
-    background: var(--white);
-    border: none;
-  }
-  *::-webkit-scrollbar-corner {
-    background: gray;
-  }
-  *::-webkit-scrollbar-thumb {
-    background-color: gray;
-    border-radius: 3px;
-    border: none;
-  }
+  ${scrollbars}
+  ${table}
 `

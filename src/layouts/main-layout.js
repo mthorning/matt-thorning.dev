@@ -12,17 +12,14 @@ const nav = css`
   z-index: 999;
 `
 const contentWrapper = css`
-  display: flex;
-  justify-content: center;
+  display: block;
+  min-width: 0;
   width: 100%;
-  padding-bottom: 50px;
 `
 const content = (theme) => css`
-  width: 100%;
-  overflow: hidden;
   max-width: ${theme.contentMaxWidth};
   padding: 1.45rem 1.0875rem 2rem;
-  margin-bottom: 20px;
+  margin: 0 auto 20px;
 
   img {
     max-width: 100%;

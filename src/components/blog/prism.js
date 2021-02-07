@@ -197,11 +197,7 @@ export default function Prism({ children: { props } }) {
                   text="Show Diff"
                 />
               )}
-              <ToggleThing
-                initialChecked
-                onToggle={setWrapText}
-                text="Wrap Text"
-              />
+              <ToggleThing onToggle={setWrapText} text="Wrap Text" />
             </div>
             <pre
               className={className}

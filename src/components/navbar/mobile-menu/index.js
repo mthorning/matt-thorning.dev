@@ -11,16 +11,11 @@ import * as mobileStyles from './styles'
 const styles = { ...allStyles, ...mobileStyles }
 
 function restoreAppScroll(currentScroll) {
-  const el = document.querySelector('body')
-  el.style.position = 'static'
-  el.style.top = ''
-  el.style.right = ''
-  el.style.left = ''
   window.scrollTo(0, currentScroll)
 }
 
 const machine = createMachine(
-  ({ state, transition, invoke, guard, action, reduce, delay }) => ({
+  ({ state, transition, invoke, action, reduce, delay }) => ({
     closed: state(transition('open', 'opening')),
     opening: invoke(
       delay(1000),
