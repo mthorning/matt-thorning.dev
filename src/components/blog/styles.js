@@ -1,11 +1,11 @@
 import { css } from '@emotion/react'
 
 export const infoWrapper = css`
-  margin: 10px 0 10px;
+  margin: 0.5rem 0 0.5rem;
   display: inline-block;
 `
 export const blogFunctionsWrapper = css`
-  margin-bottom: 30px;
+  margin-bottom: 1.5rem;
 
   h1 {
     margin: 0;
@@ -16,9 +16,9 @@ export const infoItemStyle = (theme) => css`
   align-items: center;
   color: ${theme.textColor};
   font-size: ${theme.blogInfoIconFontSize};
-  margin-right: 10px;
+  margin-right: 0.5rem;
   span {
-    margin-left: 5px;
+    margin-left: 0.25rem;
   }
 `
 export const infoWrapperTopRow = (theme) => css`

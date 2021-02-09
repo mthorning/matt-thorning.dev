@@ -32,7 +32,7 @@ export default function Page({ data }) {
           css={css`
             ${respFont({
               minFont: 30,
-              maxFont: 100,
+              maxFont: 75,
               minScreen: 300,
               maxScreen: 1500,
             })}
@@ -47,7 +47,7 @@ export default function Page({ data }) {
           css={css`
             ${respFont({
               minFont: 25,
-              maxFont: 60,
+              maxFont: 50,
               minScreen: 300,
               maxScreen: 1500,
             })}

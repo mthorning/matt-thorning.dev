@@ -3,8 +3,8 @@ import { css } from '@emotion/react'
 export const iconWrapper = (theme) => css`
   font-size: ${theme.footerIconFontSize};
   width: 100%;
-  margin-top: 30px;
-  padding-top: 20px;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
   border-top: 1px solid ${theme.textColor};
   display: grid;
   // grid-template-columns: 25px 1fr 25px 1fr 25px;

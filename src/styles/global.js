@@ -4,9 +4,12 @@ import scrollbars from './scrollbars.js'
 
 export default css`
   html {
-    font-size: 20px;
+    font-size: 18px;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
+    @media (min-width: 425px) {
+      font-size: 22px;
+    }
   }
   body {
     --bg: #fff;
@@ -70,6 +73,10 @@ export default css`
   template {
     display: none;
   }
+  p {
+    line-height: 1.5rem;
+    text-align: justify;
+  }
   li a,
   p a {
     background-color: transparent;
@@ -131,17 +138,17 @@ export default css`
   }
   code {
     background: var(--tagBg);
-    padding: 0px 4px;
+    padding: 0 0.2rem;
     border-radius: 5px;
   }
   figure {
-    margin: 1em 40px;
+    margin: 1rem 2rem;
   }
   hr {
     background: var(--color);
     box-sizing: content-box;
     overflow: visible;
-    margin: 40px 0 60px;
+    margin: 2rem 0 3rem;
   }
   button,
   input,
@@ -183,7 +190,7 @@ export default css`
   }
   fieldset {
     border: 1px solid silver;
-    margin: 0 2px;
+    margin: 0 0.1rem;
     padding: 0.35em 0.625em 0.75em;
   }
   legend {
@@ -249,7 +256,7 @@ export default css`
   h2 {
     margin-left: 0;
     margin-right: 0;
-    margin-top: 55px;
+    margin-top: 2.75rem;
     padding-bottom: 0;
     padding-left: 0;
     padding-right: 0;

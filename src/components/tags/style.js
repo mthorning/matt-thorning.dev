@@ -21,7 +21,7 @@ export const wrapper = css`
   display: flex;
   flex-wrap: wrap;
 `
-export const tagNumber = (theme) => css`
+export const tagNumber = css`
   margin-left: 5px;
   font-size: 14px;
   color: var(--tagColor);
