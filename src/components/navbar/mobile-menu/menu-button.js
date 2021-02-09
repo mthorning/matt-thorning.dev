@@ -36,25 +36,27 @@ const fadeStyle = css`
 
 export default function MenuButton({ onMenuClick }) {
   const [state, send] = useMachine(machine, { slug: '' })
+  console.log(state)
 
   useEffect(() => {
-    const onTouch = () => {
+    const onInteract = (e) => {
+      e.stopPropagation()
       send('show')
     }
 
     const addListeners = (method) =>
       ['touchstart', 'click'].forEach((event) =>
-        document[method](event, onTouch)
+        document[method](event, onInteract)
       )
     addListeners('addEventListener')
     return () => addListeners('removeEventListener')
-  }, [send])
+  }, [send, state])
 
   const timeout = useRef()
   useEffect(() => {
     if (timeout.current) clearTimeout(timeout.current)
     if (state === 'fading') {
-      timeout.current = setTimeout(() => send('hide'), 5000)
+      timeout.current = setTimeout(() => send('hide'), FADE)
     }
   }, [state, send])
 
@@ -62,7 +64,10 @@ export default function MenuButton({ onMenuClick }) {
     <>
       {state !== 'invisible' ? (
         <button
-          onClick={() => onMenuClick()}
+          onClick={(e) => {
+            console.log('click', state)
+            onMenuClick()
+          }}
           onMouseEnter={() => send('show')}
           css={[
             hamburger(state === 'fading'),

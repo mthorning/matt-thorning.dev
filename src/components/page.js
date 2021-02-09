@@ -9,8 +9,8 @@ const components = {
   table: (props) => (
     <div
       css={css`
-        overflow-x: scroll;
-        margin-bottom: 1em;
+        overflow-x: auto;
+        margin-bottom: 32px;
       `}
     >
       <table {...props} />

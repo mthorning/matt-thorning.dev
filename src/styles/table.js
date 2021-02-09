@@ -20,7 +20,7 @@ export default css`
   table thead th {
     font-weight: bold;
     color: var(--bg);
-    border-left: 1px solid var(--bg);
+    border-left: 2px solid var(--bg);
   }
   table thead th:first-child {
     border-left: none;

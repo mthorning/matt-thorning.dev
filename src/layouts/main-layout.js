@@ -18,7 +18,7 @@ const contentWrapper = css`
 `
 const content = (theme) => css`
   max-width: ${theme.contentMaxWidth};
-  padding: 1.45rem 1.0875rem 2rem;
+  padding: 1.45rem 1.0875rem 4rem;
   margin: 0 auto 20px;
 
   img {

@@ -3,10 +3,12 @@ type: 'page'
 slug: '/resume'
 title: 'resume'
 ---
+import JobDescription from 'mdx/job-description'
+import Skill from 'mdx/skill'
 
 # Resume
 
-I have been a JavaScript developer at Headforwards since October 2017 working on products for a large multinational telecommunications company. Previous to this I was employed as a Work Area Manager at Royal Mail where I was involved in their programme of Continuous Improvement (World Class Mail) which has its roots in Lean Manufacturing.
+I have been a JavaScript developer at Headforwards since October 2017 working on products for a large multi-national telecommunications company. Previous to this I was employed as a Work Area Manager at Royal Mail where I was involved in their programme of Continuous Improvement (World Class Mail) which has its roots in Lean Manufacturing.
 
 ### Employment History
 
@@ -19,27 +21,48 @@ I have been a JavaScript developer at Headforwards since October 2017 working on
 | City Music, Truro	| Sales Assistant |	February 2002 |	March 2003 |
 | Penrose Outdoors, Truro	| Sales Assistant	| July 1999	| May 2001 |
 
-#### Headforwards
-##### UI Developer - Insight project
-###### Jan 2020 - present
+<JobDescription
+  company="Headforwards"
+  role="UI Developer - Insight project"
+  start="January 2020"
+  end="present"
+>
 Working on the frontend of a system which helps customers visualise their datacenter services through web pages and customisable dashboards. We have a number of micro-frontends written in React and vanilla JavaScript with some existing legacy code still using Backbone with Marionette.
+</JobDescription>
 
-#### Headforwards
-##### UI Developer - Nexcenter project
-###### Oct 2017 - Jan 2020
+<JobDescription
+  company="Headforwards"
+  role="UI Developer - Nexcenter project"
+  start="October 2017"
+  end="January 2020"
+>
 Building an administration portal for customers and providers of datacenter services to enable them to effectively manage their visitors, deliveries and facilities. When I joined the team they were working on a single page application for their customer portal written in Backbone. We started to work on a portal for datacenter providers and decided to use React instead to speed up development. It went so well that we soon decided to port the customer portal over to React too by reusing components.
+</JobDescription>
 
-#### Royal Mail
-##### Work Area Manager
-###### Feb 2014 - Oct 2017
+<JobDescription
+  company="Royal Mail"
+  role="Work Area Manager"
+  start="February 2014"
+  end="October 2017"
+>
 Line managed a team of approximately thirty people, carrying out attendance and conduct meetings. Responsible for Late Shift automation and collections as well as efficiency in several manual work areas.
+</JobDescription>
 
-#### Royal Mail
-##### Quality Control Pillar Lead
-###### Jun 2012 - Nov 2015
+<JobDescription
+  company="Royal Mail"
+  role="Quality Control Pillar Lead"
+  start="November 2015"
+  end="October 2017"
+>
 Responsible for improving and maintaining the Quality of Service KPI's for the Mail Centre through analysis of RFID data and subesequent countermeasures determined through World Class Mail processes. During my time as Pillar Lead our Mail Centre was consistently listed as one of the top for meeting or exceeding our Quality of Service obligations.
+</JobDescription>
 
-#### Royal Mail
-##### Workplace Organisation Pillar Lead
-###### Nov 2015 - Oct 2017
+<JobDescription
+  company="Royal Mail"
+  role="Workplace Organisation Pillar Lead"
+  start="June 2012"
+  end="November 2015"
+>
 Targeting efficiency KPI's such as Items per Work Hour, I was responsible for increasing the efficiency of manual work areas by analysing and improving the ergonomics and processes within.
+</JobDescription>
+
