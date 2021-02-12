@@ -27,7 +27,7 @@ export const menu = css`
     align-items: center;
     font-family: 'Century Gothic', sans-serif;
     margin-bottom: 1rem;
-    font-size: 1.5rem;
+    font-size: 1.2em;
     user-select: none;
     width: 100%;
     height: 100%;
