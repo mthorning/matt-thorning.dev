@@ -36,7 +36,6 @@ const fadeStyle = css`
 
 export default function MenuButton({ onMenuClick }) {
   const [state, send] = useMachine(machine, { slug: '' })
-  console.log(state)
 
   useEffect(() => {
     const onInteract = (e) => {
@@ -64,10 +63,7 @@ export default function MenuButton({ onMenuClick }) {
     <>
       {state !== 'invisible' ? (
         <button
-          onClick={(e) => {
-            console.log('click', state)
-            onMenuClick()
-          }}
+          onClick={() => onMenuClick()}
           onMouseEnter={() => send('show')}
           css={[
             hamburger(state === 'fading'),

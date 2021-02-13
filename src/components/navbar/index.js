@@ -51,6 +51,7 @@ export default function Navbar({ className }) {
                 frontmatter {
                   title
                   slug
+                  order
                 }
               }
             }
@@ -60,6 +61,7 @@ export default function Navbar({ className }) {
               menuItems {
                 title
                 slug
+                order
               }
             }
           }
@@ -69,7 +71,7 @@ export default function Navbar({ className }) {
         const menuItems = [
           ...data.site.siteMetadata.menuItems,
           ...data.allMdx.edges.map(({ node: { frontmatter } }) => frontmatter),
-        ]
+        ].sort((a, b) => a.order - b.order)
 
         return <Menu {...{ menuItems, pathRegex, className }} />
       }}

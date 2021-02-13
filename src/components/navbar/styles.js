@@ -14,7 +14,7 @@ export const inner = css`
 `
 export const menu = css`
   margin: 0;
-  padding: 32px;
+  padding: 1.5rem;
   li {
     list-style-type: none;
   }

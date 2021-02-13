@@ -22,7 +22,7 @@ export default css`
     color: var(--bg);
     border-left: 2px solid var(--bg);
   }
-  table thead th:first-child {
+  table thead th:first-of-type {
     border-left: none;
   }
 `

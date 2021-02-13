@@ -5,8 +5,8 @@ module.exports = {
     author: `Matt Thorning`,
     siteUrl: `https://blog.matt-thorning.dev`,
     menuItems: [
-      { title: 'home', slug: '/' },
-      { title: 'blog', slug: '/blog' },
+      { title: 'home', slug: '/', order: 1 },
+      { title: 'blog', slug: '/blog', order: 20 },
     ],
   },
   plugins: [
@@ -19,13 +19,13 @@ module.exports = {
     `gatsby-plugin-emotion`,
     {
       resolve: `gatsby-plugin-alias-imports`,
-    options: {
-      alias: {
-        components: 'src/components',
-        utils: 'src/utils',
-        layouts: 'src/layouts',
-        pages: 'src/pages',
-        mdx: 'src/mdx-components',
+      options: {
+        alias: {
+          components: 'src/components',
+          utils: 'src/utils',
+          layouts: 'src/layouts',
+          pages: 'src/pages',
+          mdx: 'src/mdx-components',
         },
         extensions: ['js'],
       },

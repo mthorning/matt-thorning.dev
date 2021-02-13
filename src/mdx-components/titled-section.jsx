@@ -1,13 +1,7 @@
 import React from 'react'
 import { css } from '@emotion/react'
 
-export default function JobDescription({
-  company,
-  role,
-  start,
-  end,
-  children,
-}) {
+export default function TitledSection({ subOne, subTwo, subThree, children }) {
   return (
     <div
       css={css`
@@ -21,11 +15,9 @@ export default function JobDescription({
             margin-top: 8px;
       `}
     >
-      <h3>{company}</h3>
-      <h4>{role}</h4>
-      <h6>
-        {start} - {end}
-      </h6>
+      {subOne ? <h3>{subOne}</h3> : null}
+      {subTwo ? <h4>{subTwo}</h4> : null}
+      {subThree ? <h6>{subThree}</h6> : null}
       <p>{children}</p>
     </div>
   )

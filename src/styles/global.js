@@ -2,7 +2,7 @@ import { css } from '@emotion/react'
 import table from './table.js'
 import scrollbars from './scrollbars.js'
 
-export default css`
+export default (theme) => css`
   html {
     font-size: 18px;
     -ms-text-size-adjust: 100%;
@@ -14,11 +14,11 @@ export default css`
   body {
     --bg: #fff;
     --color: #3d3d3d;
-    --primaryColor: #f82122;
+    --primaryColor: ${theme.highlightColor};
     --tagBg: rgba(0, 0, 0, 0.1);
-    --tagColor: #f82122;
+    --tagColor: ${theme.highlightColor};
     --secondaryColor: #fff;
-    --linkHover: #f82122;
+    --linkHover: ${theme.highlightColor};
     --white: #fff;
     --boxShadow: inset 2px 2px 6px var(--color);
 
@@ -33,9 +33,9 @@ export default css`
     --color: #aeaeae;
     --primaryColor: #31313182;
     --tagBg: rgba(255, 255, 255, 0.1);
-    --tagColor: #f82122;
+    --tagColor: ${theme.highlightColor};
     --secondaryColor: #e01819;
-    --linkHover: #f82122;
+    --linkHover: ${theme.highlightColor};
     --white: #aeaeae;
     --boxShadow: inset 2px 2px 6px var(--color);
   }
@@ -239,7 +239,7 @@ export default css`
     font-weight: 100;
   }
   h1 {
-    font-size: 2em;
+    font-size: 3em;
     margin-left: 0;
     margin-right: 0;
     margin-top: 0;

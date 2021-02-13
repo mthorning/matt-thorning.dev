@@ -1,23 +1,16 @@
 import { css } from '@emotion/react'
-const primaryColor = 'var(--primaryColor)'
-const textColor = 'var(--color)'
-const secondaryColor = 'var(--secondaryColor)'
-const bg = 'var(--bg)'
 const footerIconFontSize = '25px'
 const blogInfoIconFontSize = '13px'
 const maxWidth = '900px'
 
 export default {
-  primaryColor,
-  secondaryColor,
-  textColor,
-  bg,
+  highlightColor: '#218bf8',
   footerIconFontSize,
   blogInfoIconFontSize,
   contentMaxWidth: maxWidth,
   smallScreen: `@media (max-width: 480px)`,
   orangeLink: css`
-    color: ${textColor};
+    color: var(--color);
     text-decoration: none;
     cursor: pointer;
     &:hover {
