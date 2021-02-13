@@ -11,7 +11,7 @@ I have found lifetime parameters in Rust (also called lifetime specifiers) to be
 
 ## What are lifetimes?
 
-Lifetimes are used to ensure that references to values (data in memory) do not live longer than the values themselves. Rust manages its memory by deleting any values which are not owned by a variable (see my post on ownership [here](/rust-ownership)). Variables can only own a value whilst they are in scope, once a variable goes out of scope the value is deleted from memory. In order to ensure memory safety, lifetimes exist to make sure that any references to these values are also unable to still exist once the memory has been freed. 
+Lifetimes are used to ensure that references to values (data in memory) do not live longer than the values themselves. Rust manages its memory by deleting any values which are not owned by a variable (see my post on ownership [here](/blog/rust-ownership)). Variables can only own a value whilst they are in scope, once a variable goes out of scope the value is deleted from memory. In order to ensure memory safety, lifetimes exist to make sure that any references to these values are also unable to still exist once the memory has been freed. 
 
 Here's an example of lifetimes in action:
 

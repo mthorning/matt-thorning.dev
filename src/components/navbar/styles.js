@@ -10,7 +10,7 @@ export const inner = css`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100vh;
+  min-height: 100vh;
 `
 export const menu = css`
   margin: 0;

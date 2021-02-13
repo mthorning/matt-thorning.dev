@@ -24,7 +24,7 @@ I connect to the server via [SSH](https://en.wikipedia.org/wiki/Secure_Shell), I
 
 In order to host a website you need to install some web server software. There are only really two contenders in this arena, [NGINX](https://www.nginx.com/) (pronounced "engine-x") and [Apache](https://www.apache.org/). I use NGINX, for no other reason than it's what we use where I work so I'm more familiar with it. NGINX listens for requests on ports 80 ([HTTP](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol)) and 443 ([HTTPS](https://en.wikipedia.org/wiki/HTTPS)) and, in it's most basic form, serves files back to the requesting IP address from a directory on the filesystem. By default, NGINX will serve files from the `/var/www/html/` folder but you can set it to serve files from anywhere; this is important if you want to serve more than one site from your server.
 
-NGINX configuration files are normally found in `/etc/nginx/sites-available/`. You can create and edit files in this folder but they will have no effect until they are moved to `/etc/nginx/sites-enabled`. The easiest way to do this is to symlink (see [here](bash-tips#links)) the files that you want to be picked up from the `sites-available` to the `sites-enabled` folder. Doing it this way means you can delete the symlink in the `sites-enabled` folder to stop serving the site without losing your configuration file. Any time you edit/add/remove a configuration file you will need to restart NGINX to see the changes, in recent versions of Ubuntu this is done by typing `sudo systemctl reload nginx`.
+NGINX configuration files are normally found in `/etc/nginx/sites-available/`. You can create and edit files in this folder but they will have no effect until they are moved to `/etc/nginx/sites-enabled`. The easiest way to do this is to symlink (see [here](/blog/bash-tips#links)) the files that you want to be picked up from the `sites-available` to the `sites-enabled` folder. Doing it this way means you can delete the symlink in the `sites-enabled` folder to stop serving the site without losing your configuration file. Any time you edit/add/remove a configuration file you will need to restart NGINX to see the changes, in recent versions of Ubuntu this is done by typing `sudo systemctl reload nginx`.
 
 In my NGINX configuration file there is a server block which looks like this:
 ```
@@ -53,7 +53,7 @@ It's a good idea to use HTTPS on your site because it encrypts the traffic betwe
 
 ## Shell scripts
 
-So now the server is set up and serving files over HTTPS from a directory of our choosing, we just need to get the files from our computer and into said directory. At first I was using a shell script to perform this task for me. The script was run as a `postversion` script by NPM (you can read more about them [here](/npm-version#pre-and-post-version-scripts)). Here's the script:
+So now the server is set up and serving files over HTTPS from a directory of our choosing, we just need to get the files from our computer and into said directory. At first I was using a shell script to perform this task for me. The script was run as a `postversion` script by NPM (you can read more about them [here](/blog/npm-version#pre-and-post-version-scripts)). Here's the script:
 ```{numberLines: true}
 #! /bin/bash
 
@@ -87,14 +87,14 @@ The next section creates a tarball of the app:
 version=$(git describe --tags)
 tar -cvzf versions/$version.tar.gz public
 ```
-On line 6, I take the output of `git describe --tags` and assign it to the variable `version` (remember that this script was set to run immediately after the app had been versioned). On line 7, I use `tar` (see [here](/bash-tips#tar)) to create a tarball of the `public` directory, the version is used to name the file, which is saved in the `versions` directory.
+On line 6, I take the output of `git describe --tags` and assign it to the variable `version` (remember that this script was set to run immediately after the app had been versioned). On line 7, I use `tar` (see [here](/blog/bash-tips#tar)) to create a tarball of the `public` directory, the version is used to name the file, which is saved in the `versions` directory.
 
-On line 9 I use `scp` (see [here](/bash-tips#scp)) to transfer the tarball to the server:
+On line 9 I use `scp` (see [here](/blog/bash-tips#scp)) to transfer the tarball to the server:
 ```{numberLines: 9}
 scp versions/$version.tar.gz vps:~/sites/release.tar.gz
 ```
 
-The final section uses something called a heredoc (see [here](/bash-tips#here-docs)) to run commands on the server:
+The final section uses something called a heredoc (see [here](/blog/bash-tips#here-docs)) to run commands on the server:
 ```{numberLines: 11}
 ssh vps <<'ENDSSH'
     tar -xf ~/sites/release.tar.gz -C ~/sites/

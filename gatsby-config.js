@@ -15,7 +15,6 @@ module.exports = {
     `gatsby-plugin-catch-links`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-sitemap`,
-    `gatsby-plugin-offline`,
     `gatsby-plugin-emotion`,
     {
       resolve: `gatsby-plugin-alias-imports`,
@@ -57,12 +56,13 @@ module.exports = {
         name: `Matt Thorning`,
         short_name: `MT`,
         start_url: `/`,
-        background_color: `#f82122`,
-        theme_color: `#f82122`,
+        background_color: `#218bf8`,
+        theme_color: `#218bf8`,
         display: `standalone`,
         icon: `src/images/logo.png`,
       },
     },
+    `gatsby-plugin-offline`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
@@ -114,7 +114,7 @@ module.exports = {
       resolve: 'gatsby-plugin-web-font-loader',
       options: {
         google: {
-          families: ['Fira Code'],
+          families: ['JetBrains Mono', 'Montserrat'],
         },
       },
     },

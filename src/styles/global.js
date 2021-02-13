@@ -81,7 +81,7 @@ export default (theme) => css`
   p a {
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
-    color: #1575cabd;
+    color: #218bf8ad;
     text-decoration: none;
   }
   p a:active,
@@ -132,7 +132,7 @@ export default (theme) => css`
   kbd,
   pre,
   samp {
-    font-family: 'Fira Code', monospace;
+    font-family: 'JetBrains Mono', monospace;
     font-size: 0.9rem;
     line-height: 1.3rem;
   }
@@ -235,7 +235,7 @@ export default (theme) => css`
   h4,
   h5,
   h6 {
-    font-family: 'Century Gothic', sans-serif;
+    font-family: 'Montserrat', 'Century Gothic', sans-serif;
     font-weight: 100;
   }
   h1 {
