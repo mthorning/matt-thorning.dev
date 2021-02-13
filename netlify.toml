@@ -6,6 +6,6 @@
 
 [[redirects]]
   from = "https://blog.matt-thorning.dev/*"
-  to = "https://stupefied-beaver.netlify.app/blog/:splat"
+  to = "https://matt-thorning.dev/blog/:splat"
   status = 200
   force = true
