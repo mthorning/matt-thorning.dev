@@ -26,6 +26,13 @@ const toggle = (checked, transitionSpeed) => css`
     transition: all ${transitionSpeed}ms;
   }
 `
+export const ControlledToggle = ({
+  clickHandler,
+  checked,
+  transitionSpeed,
+}) => (
+  <div {...a11yButton(clickHandler)} css={toggle(checked, transitionSpeed)} />
+)
 
 export default function Toggle({ onToggle, initialChecked, transitionSpeed }) {
   const [checked, setChecked] = useState(initialChecked)
@@ -34,12 +41,9 @@ export default function Toggle({ onToggle, initialChecked, transitionSpeed }) {
 
   useEffect(() => onToggle(checked), [onToggle, checked])
 
-  return (
-    <div {...a11yButton(clickHandler)} css={toggle(checked, transitionSpeed)} />
-  )
+  return <ControlledToggle {...{ clickHandler, checked, transitionSpeed }} />
 }
 
-Toggle.defaultProps = {
+ControlledToggle.defaultProps = {
   transitionSpeed: 500,
-  onToggle: () => {},
 }

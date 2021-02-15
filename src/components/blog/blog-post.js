@@ -8,7 +8,7 @@ import { blogFunctionsWrapper, blogFunctions } from './styles'
 import Clap from 'components/clap'
 import { MDXProvider } from '@mdx-js/react'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
-import Prism from './prism'
+import Prism, { PrismOptionsProvider } from 'components/prism'
 
 function BlogFunctions({ post }) {
   return (
@@ -32,25 +32,27 @@ export default function Template({ data, location, pageContext }) {
   const { previous, next } = pageContext
 
   return (
-    <Layout>
-      <Helmet>
-        <title>{post.frontmatter.title}</title>
-        <meta name="description" content={post.frontmatter.description} />
-        <meta name="keywords" content={post.frontmatter.tags.join(',')} />
-        <meta name="author" content={siteMetadata.author} />
-      </Helmet>
-      <BlogFunctions post={post} />
-      <MDXProvider {...{ components }}>
-        <MDXRenderer>{post.body}</MDXRenderer>
-      </MDXProvider>
-      <Clap slug={post.frontmatter.slug} />
-      <ShareButtons shareUrl={location.href} title={post.frontmatter.title} />
-      <PreviousNext
-        slug={post.frontmatter.slug}
-        previous={previous}
-        next={next}
-      />
-    </Layout>
+    <PrismOptionsProvider>
+      <Layout>
+        <Helmet>
+          <title>{post.frontmatter.title}</title>
+          <meta name="description" content={post.frontmatter.description} />
+          <meta name="keywords" content={post.frontmatter.tags.join(',')} />
+          <meta name="author" content={siteMetadata.author} />
+        </Helmet>
+        <BlogFunctions post={post} />
+        <MDXProvider {...{ components }}>
+          <MDXRenderer>{post.body}</MDXRenderer>
+        </MDXProvider>
+        <Clap slug={post.frontmatter.slug} />
+        <ShareButtons shareUrl={location.href} title={post.frontmatter.title} />
+        <PreviousNext
+          slug={post.frontmatter.slug}
+          previous={previous}
+          next={next}
+        />
+      </Layout>
+    </PrismOptionsProvider>
   )
 }
 
