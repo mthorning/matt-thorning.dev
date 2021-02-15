@@ -182,23 +182,6 @@ export default function Prism({ children: { props } }) {
         tokens = tokens.slice(0, tokens.length - 1)
         return (
           <>
-            <div
-              css={css`
-                display: flex;
-                justify-content: flex-end;
-                align-items: baseline;
-                margin-bottom: -10px;
-              `}
-            >
-              {hasDiffLines && (
-                <ToggleThing
-                  initialChecked
-                  onToggle={(checked) => setShowDiff(hasDiffLines && checked)}
-                  text="Show Diff"
-                />
-              )}
-              <ToggleThing onToggle={setWrapText} text="Wrap Text" />
-            </div>
             <pre
               className={className}
               css={css`
@@ -208,11 +191,29 @@ export default function Prism({ children: { props } }) {
                 ${textOverflow}
               `}
             >
+              <div
+                css={css`
+                  display: flex;
+                  justify-content: flex-end;
+                  align-items: baseline;
+                  margin-bottom: 12px;
+                  padding: 0 4px;
+                  color: var(--color);
+                `}
+              >
+                {hasDiffLines && (
+                  <ToggleThing
+                    initialChecked
+                    onToggle={(checked) => setShowDiff(hasDiffLines && checked)}
+                    text="Show Diff"
+                  />
+                )}
+                <ToggleThing onToggle={setWrapText} text="Wrap Text" />
+              </div>
               {tokens.map((line, key) => {
                 let lineNumber
                 if (options && options.hasOwnProperty('numberLines')) {
                   lineNumber =
-                    // Quite proud of this!
                     // eg. value is either 'true' or '4'
                     // Number('4') == 4 || 4 == '4'
                     // Number('true') === 'NaN' || 'NaN' != 'true'
