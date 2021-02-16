@@ -1,7 +1,8 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useDatabase } from 'utils'
 
-export function useClaps(reference) {
+export function useClaps(slug) {
+  const reference = slug.replace(/^\/blog/, '')
   const [clapQueue, setClapQueue] = useState(0)
   const [claps, clapSetter] = useState(0)
   const database = useDatabase()
@@ -9,8 +10,7 @@ export function useClaps(reference) {
 
   const clapRef = useMemo(
     () =>
-      database &&
-      database.ref(`${development ? 'test' : 'claps'}/${reference}`),
+      database && database.ref(`${development ? 'test' : 'claps'}${reference}`),
     [database, development, reference]
   )
 
