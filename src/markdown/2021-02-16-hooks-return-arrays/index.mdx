@@ -2,7 +2,7 @@
 type: "blog"
 slug: "/blog/hook-return-types"
 date: "2021-02-16T12:00:00"
-title: "What's the Best Hook Return Type"
+title: "What's the Best Hook Return Type?"
 tags: ["javascript", "react", "frontend"]
 ---
 
@@ -19,7 +19,7 @@ Returning the values in a array works very well in this situation because it is 
 
 ```js
 const [userStatus, userPayload] = useFetchedData(userUrl)
-const [historyStatus, historyPayload]Payload] = useFetchedData(historyUrl)
+const [historyStatus, historyPayload] = useFetchedData(historyUrl)
 ```
 
 We have a hook very much like this in the codebase where I work. We found that there were times where we needed to trigger a refetch to get fresh data so we added an additional `refetch` function. This function could then be called after some update (such as when something is deleted) was made to the backend so that the data on the page could be refreshed. There were times where the call to change something returned the data we needed though, so instead of fetching the data again unecessarily we set the `refetch` function to only call the API if no arguments were supplied, if there is an argument then it just updates the state with that value instead of making the call:
@@ -27,14 +27,33 @@ We have a hook very much like this in the codebase where I work. We found that t
 ```js
 const [status, payload, refetch] = useFetchedData(url)
 
+function addItem(item) {
+  axios.post(url, item)
+    .then(response => refetch(response))
+}
+
 function deleteItem(id) {
   axios.delete(`${url}/${id}`)
     .then(() => refetch())
 }
 
-function addItem(item) {
-  axios.post(url, item)
-    .then(response => refetch(response))
-}
 ```
+
+There is a problem with this function though - it is very easy to use incorrectly. Instead of writing `.then(() => refetch())` it can be tempted to write `.then(refetch)` because that's the same thing, right? Well, no. Just because we're not declaring any arguments it doesn't mean there aren't any there. In the second example we are passing any arguments to the callback in `then` to the `refetch` function which will replace the state for our page with whatever happens to be there!
+
+> "So much complexity in software comes from trying to make one thing do two things." – Ryan Singer
+
+So it's much safer to split the update and refetch functionality into two separate functions:
+
+```js
+const [status, payload, refetch, updateState] = useFetchedData(url)
+```
+
+Now we have four items in our returned array and it's quite likely that we won't need all of them all of the time. So now it would make sense to return an object instead of an array.
+
+
+
+
+
+
 
