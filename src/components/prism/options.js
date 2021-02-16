@@ -12,10 +12,12 @@ const STORAGE_KEY = 'prism-options'
 const PrismContext = createContext()
 
 export function PrismOptionsProvider({ children }) {
-  const storedOptions = useMemo(() =>
-    typeof window !== 'undefined'
-      ? window.localStorage.getItem(STORAGE_KEY)
-      : '{}'
+  const storedOptions = useMemo(
+    () =>
+      typeof window !== 'undefined'
+        ? window.localStorage.getItem(STORAGE_KEY)
+        : '{}',
+    []
   )
 
   const [options, setOptions] = useState(JSON.parse(storedOptions) || {})

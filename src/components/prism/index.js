@@ -52,7 +52,7 @@ export default function Prism({ children: { props } }) {
     white-space: pre-wrap;
     `
       : `
-    overflow-x: scroll;
+    overflow-x: auto;
     `}
   `
   const [className, options] = splitClass(props.className, props.metastring)
