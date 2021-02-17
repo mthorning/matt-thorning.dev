@@ -4,6 +4,7 @@ slug: '/blog/updating-state'
 date: '2019-05-12T10:00:00'
 title: 'Updating state in React with hooks'
 tags: ['javascript', 'react', 'frontend']
+published: true
 ---
 
 Very often when writing an application in React you will need to update some state from a child component. With components written as ES6 classes, the usual method was to pass a function down to the children as a prop bound to the context of the parent. React's new useState hook has made things simpler; in fact, I haven't written a class since hooks were released so I no longer need to bind functions to the context of the parent component which holds the state. Passing the setState function returned by the useState hook down to the children is still error-prone though, there is a another way which I would like to show you now.

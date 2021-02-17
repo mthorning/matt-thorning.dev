@@ -4,6 +4,7 @@ slug: '/blog/tmux-codemod'
 date: '2019-06-10T10:00:00'
 title: 'Tools for big code changes'
 tags: ['tooling']
+published: true
 ---
 
 In my team at work we currently have five apps which have been written in React. These apps were all sharing components held in a single repository. As the number of apps and components is increasing, we decided it would be a better idea to separate our shared components into their own respositories. This has been a big task as, not only did our apps need to be updated to import the components from their new locations, but a lot of the components depend on other components meaning that every split led to more places where changes needed to be made.
