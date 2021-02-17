@@ -66,76 +66,82 @@ export default function Prism({ children: { props } }) {
     <InView>
       {({ inView, ref }) => (
         <div ref={ref}>
-          {inView ? (
-            <Highlight
-              {...defaultProps}
-              theme={theme === 'light' ? lightTheme : darkTheme}
-              code={children}
-              language={lang ? lang : undefined}
-            >
-              {({ className, style, tokens, getLineProps, getTokenProps }) => {
-                // This removes the empty line at the bottom
-                tokens = tokens.slice(0, tokens.length - 1)
-                return (
-                  <pre
-                    className={className}
+          <Highlight
+            {...defaultProps}
+            theme={theme === 'light' ? lightTheme : darkTheme}
+            code={children}
+            language={lang ? lang : undefined}
+          >
+            {({ className, style, tokens, getLineProps, getTokenProps }) => {
+              // This removes the empty line at the bottom
+              tokens = tokens.slice(0, tokens.length - 1)
+              return (
+                <pre
+                  className={className}
+                  css={css`
+                    ${style}
+                    border-radius: 10px;
+                    padding: 12px 0 12px;
+                    ${textOverflow}
+                  `}
+                >
+                  <div
                     css={css`
-                      ${style}
-                      border-radius: 10px;
-                      padding: 12px 0 12px;
-                      ${textOverflow}
+                      display: flex;
+                      justify-content: flex-end;
+                      align-items: baseline;
+                      margin-bottom: 12px;
+                      padding: 0 4px;
+                      color: var(--color);
                     `}
                   >
-                    <div
-                      css={css`
-                        display: flex;
-                        justify-content: flex-end;
-                        align-items: baseline;
-                        margin-bottom: 12px;
-                        padding: 0 4px;
-                        color: var(--color);
-                      `}
-                    >
-                      {hasDiffLines && (
-                        <OptionsToggle
-                          text="Show Diff"
-                          optionKey="showDiff"
-                          condition={hasDiffLines}
-                        />
-                      )}
-                      <OptionsToggle text="Wrap Text" optionKey="wrapText" />
-                    </div>
-                    {tokens.map((line, key) => {
-                      let lineNumber
-                      if (options && options.hasOwnProperty('numberLines')) {
-                        lineNumber =
-                          // eg. value is either 'true' or '4'
-                          // Number('4') == 4 || 4 == '4'
-                          // Number('true') === 'NaN' || 'NaN' != 'true'
-
-                          // eslint-disable-next-line
-                          Number(options.numberLines) == options.numberLines
-                            ? key + Number(options.numberLines)
-                            : key + 1
-                      }
+                    {hasDiffLines && (
+                      <OptionsToggle
+                        text="Show Diff"
+                        optionKey="showDiff"
+                        condition={hasDiffLines}
+                      />
+                    )}
+                    <OptionsToggle text="Wrap Text" optionKey="wrapText" />
+                  </div>
+                  {tokens.map((line, key) => {
+                    if (!inView)
                       return (
-                        <Line
-                          {...{
-                            ...getLineProps({ line, key }),
-                            lineNumber,
-                            showDiff,
-                            getTokenProps,
-                            line,
-                            options,
-                          }}
+                        <div
+                          css={css`
+                            height: 28px;
+                          `}
                         />
                       )
-                    })}
-                  </pre>
-                )
-              }}
-            </Highlight>
-          ) : null}
+                    let lineNumber
+                    if (options && options.hasOwnProperty('numberLines')) {
+                      lineNumber =
+                        // eg. value is either 'true' or '4'
+                        // Number('4') == 4 || 4 == '4'
+                        // Number('true') === 'NaN' || 'NaN' != 'true'
+
+                        // eslint-disable-next-line
+                        Number(options.numberLines) == options.numberLines
+                          ? key + Number(options.numberLines)
+                          : key + 1
+                    }
+                    return (
+                      <Line
+                        {...{
+                          ...getLineProps({ line, key }),
+                          lineNumber,
+                          showDiff,
+                          getTokenProps,
+                          line,
+                          options,
+                        }}
+                      />
+                    )
+                  })}
+                </pre>
+              )
+            }}
+          </Highlight>
         </div>
       )}
     </InView>

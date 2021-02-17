@@ -4,7 +4,11 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const result = await graphql(`
     query {
       blogPosts: allMdx(
-        filter: { frontmatter: { type: { eq: "blog" } } }
+        filter: { frontmatter: { type: { eq: "blog" }${
+          process.env.NODE_ENV !== 'development'
+            ? ', published: { eq: true }'
+            : ''
+        } } }
         sort: { order: DESC, fields: [frontmatter___date] }
         limit: 1000
       ) {

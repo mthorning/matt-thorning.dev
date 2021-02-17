@@ -42,7 +42,7 @@ export const pageQuery = graphql`
       }
     }
     allMdx(
-      filter: { frontmatter: { type: { eq: "blog" } } }
+      filter: { frontmatter: { type: { eq: "blog" }, published: { eq: true } } }
       sort: { order: DESC, fields: [frontmatter___date] }
     ) {
       edges {
