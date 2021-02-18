@@ -32,8 +32,6 @@
     "gatsby-plugin-dark-mode": "^1.1.2",
     "gatsby-plugin-emotion": "^5.3.0",
     "gatsby-plugin-feed": "^2.12.0",
-    "gatsby-plugin-google-analytics": "^2.10.0",
-    "gatsby-plugin-google-tagmanager": "^2.10.0",
     "gatsby-plugin-manifest": "^2.11.0",
     "gatsby-plugin-mdx": "^1.9.0",
     "gatsby-plugin-offline": "^3.9.0",
