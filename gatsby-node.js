@@ -22,7 +22,12 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           }
         }
       }
-      pages: allMdx(filter: { frontmatter: { type: { eq: "page" } } }) {
+      pages: allMdx(
+      filter: { frontmatter: { type: { eq: "page" }${
+        process.env.NODE_ENV !== 'development'
+          ? ', published: { eq: true }'
+          : ''
+      } }}) {
         edges {
           node {
             id

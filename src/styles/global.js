@@ -41,7 +41,11 @@ export default (theme) => css`
   }
 
   a.anchor {
-    fill: var(--color);
+    fill: var(--bg);
+  }
+
+  a.anchor:hover {
+    fill: var(--linkHover);
   }
 
   article,

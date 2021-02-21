@@ -15,8 +15,8 @@ import {
   FaLinkedin,
   FaReddit,
   FaTwitter,
-  FaWhatsapp,
 } from 'react-icons/fa'
+import { IoLogoWhatsapp } from 'react-icons/io'
 
 const brands = {
   email: '#ffd900',
@@ -67,7 +67,7 @@ export default function ShareButtons({ shareUrl, title }) {
 
       <IconWrapper color={brands.whatsapp}>
         <WhatsappShareButton title={title} url={url}>
-          <FaWhatsapp />
+          <IoLogoWhatsapp />
         </WhatsappShareButton>
       </IconWrapper>
     </div>
