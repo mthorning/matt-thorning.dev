@@ -45,7 +45,11 @@ export default function Navbar({ className }) {
     <StaticQuery
       query={graphql`
         query NavbarQuery {
-          allMdx(filter: { frontmatter: { type: { eq: "page" } } }) {
+          allMdx(
+            filter: {
+              frontmatter: { type: { eq: "page" }, published: { eq: true } }
+            }
+          ) {
             edges {
               node {
                 frontmatter {

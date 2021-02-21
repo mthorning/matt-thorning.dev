@@ -1,7 +1,30 @@
 import React from 'react'
+import { FaPenSquare, FaGithubSquare } from 'react-icons/fa'
 import { css } from '@emotion/react'
 
-export default function TitledSection({ subOne, subTwo, subThree, children }) {
+const Links = ({ github, blogs }) => (
+  <div>
+    {blogs ? (
+      <a href="#">
+        <FaPenSquare />
+      </a>
+    ) : null}
+    {github ? (
+      <a href="#">
+        <FaGithubSquare />
+      </a>
+    ) : null}
+  </div>
+)
+
+export default function TitledSection({
+  title,
+  subtitle,
+  info,
+  children,
+  github,
+  blogs,
+}) {
   return (
     <div
       css={css`
@@ -15,9 +38,26 @@ export default function TitledSection({ subOne, subTwo, subThree, children }) {
             margin-top: 8px;
       `}
     >
-      {subOne ? <h3>{subOne}</h3> : null}
-      {subTwo ? <h4>{subTwo}</h4> : null}
-      {subThree ? <h6>{subThree}</h6> : null}
+      <div
+        css={css`
+          display: flex;
+          align-items: baseline;
+          justify-content: space-between;
+          a {
+            margin-left: 8px;
+            font-size: 1.5em;
+            color: var(--color);
+          }
+          a:hover {
+            color: var(--linkHover);
+          }
+        `}
+      >
+        {title ? <h3>{title}</h3> : null}
+        <Links {...{ github, blogs }} />
+      </div>
+      {subtitle ? <h4>{subtitle}</h4> : null}
+      {info ? <h6>{info}</h6> : null}
       <p>{children}</p>
     </div>
   )
