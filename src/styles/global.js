@@ -258,20 +258,20 @@ export default (theme) => css`
     line-height: 1.1;
   }
   h2 {
-    margin-left: 0;
-    margin-right: 0;
     margin-top: 2.75rem;
+    margin-bottom: 0;
     padding-bottom: 0;
     padding-left: 0;
     padding-right: 0;
     padding-top: 0;
-    margin-bottom: 1.45rem;
     color: inherit;
     font-weight: 400;
     text-rendering: optimizeLegibility;
     font-size: 1.62671rem;
     line-height: 1.1;
-    color: ${theme.highlightColor};
+    display: inline-block;
+    padding: 12px;
+    border: 2px dashed ${theme.highlightColor};
   }
   h3 {
     margin-left: 0;

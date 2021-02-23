@@ -81,8 +81,8 @@ export default function TypeHello({ className, children }) {
   }, [type])
 
   return (
-    <h2 className={className} css={state.style}>
+    <h3 className={className} css={state.style}>
       {state.text}
-    </h2>
+    </h3>
   )
 }

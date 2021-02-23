@@ -1,7 +1,6 @@
 import React from 'react'
 import Highlight, { defaultProps } from 'prism-react-renderer'
 import darkTheme from 'prism-react-renderer/themes/vsDark'
-import { InView } from 'react-intersection-observer'
 import lightTheme from 'prism-react-renderer/themes/github'
 import { css } from '@emotion/react'
 import { useTheme } from 'utils'
@@ -43,6 +42,7 @@ export default function Prism({ children: { props } }) {
   const { children } = props
 
   const { wrapText, showDiff } = usePrismOptions()
+
   const hasDiffLines = children.match(/^[+-]\s/gm)
 
   const textOverflow = css`
@@ -63,87 +63,73 @@ export default function Prism({ children: { props } }) {
   const { theme } = useTheme()
 
   return (
-    <InView>
-      {({ inView, ref }) => (
-        <div ref={ref}>
-          <Highlight
-            {...defaultProps}
-            theme={theme === 'light' ? lightTheme : darkTheme}
-            code={children}
-            language={lang ? lang : undefined}
+    <Highlight
+      {...defaultProps}
+      theme={theme === 'light' ? lightTheme : darkTheme}
+      code={children}
+      language={lang ? lang : undefined}
+    >
+      {({ className, style, tokens, getLineProps, getTokenProps }) => {
+        // This removes the empty line at the bottom
+        tokens = tokens.slice(0, tokens.length - 1)
+        return (
+          <pre
+            className={className}
+            css={css`
+              ${style}
+              border-radius: 10px;
+              padding: 12px 0 12px;
+              ${textOverflow}
+            `}
           >
-            {({ className, style, tokens, getLineProps, getTokenProps }) => {
-              // This removes the empty line at the bottom
-              tokens = tokens.slice(0, tokens.length - 1)
-              return (
-                <pre
-                  className={className}
-                  css={css`
-                    ${style}
-                    border-radius: 10px;
-                    padding: 12px 0 12px;
-                    ${textOverflow}
-                  `}
-                >
-                  <div
-                    css={css`
-                      display: flex;
-                      justify-content: flex-end;
-                      align-items: baseline;
-                      margin-bottom: 12px;
-                      padding: 0 4px;
-                      color: var(--color);
-                    `}
-                  >
-                    {hasDiffLines && (
-                      <OptionsToggle
-                        text="Show Diff"
-                        optionKey="showDiff"
-                        condition={hasDiffLines}
-                      />
-                    )}
-                    <OptionsToggle text="Wrap Text" optionKey="wrapText" />
-                  </div>
-                  {tokens.map((line, key) => {
-                    if (!inView)
-                      return (
-                        <div
-                          css={css`
-                            height: 28px;
-                          `}
-                        />
-                      )
-                    let lineNumber
-                    if (options && options.hasOwnProperty('numberLines')) {
-                      lineNumber =
-                        // eg. value is either 'true' or '4'
-                        // Number('4') == 4 || 4 == '4'
-                        // Number('true') === 'NaN' || 'NaN' != 'true'
+            <div
+              css={css`
+                display: flex;
+                justify-content: flex-end;
+                align-items: baseline;
+                margin-bottom: 12px;
+                padding: 0 4px;
+                color: var(--color);
+              `}
+            >
+              {hasDiffLines && (
+                <OptionsToggle
+                  text="Show Diff"
+                  optionKey="showDiff"
+                  condition={hasDiffLines}
+                />
+              )}
+              <OptionsToggle text="Wrap Text" optionKey="wrapText" />
+            </div>
+            {tokens.map((line, key) => {
+              let lineNumber
+              if (options && options.hasOwnProperty('numberLines')) {
+                lineNumber =
+                  // eg. value is either 'true' or '4'
+                  // Number('4') == 4 || 4 == '4'
+                  // Number('true') === 'NaN' || 'NaN' != 'true'
 
-                        // eslint-disable-next-line
-                        Number(options.numberLines) == options.numberLines
-                          ? key + Number(options.numberLines)
-                          : key + 1
-                    }
-                    return (
-                      <Line
-                        {...{
-                          ...getLineProps({ line, key }),
-                          lineNumber,
-                          showDiff,
-                          getTokenProps,
-                          line,
-                          options,
-                        }}
-                      />
-                    )
-                  })}
-                </pre>
+                  // eslint-disable-next-line
+                  Number(options.numberLines) == options.numberLines
+                    ? key + Number(options.numberLines)
+                    : key + 1
+              }
+              return (
+                <Line
+                  {...{
+                    ...getLineProps({ line, key }),
+                    lineNumber,
+                    showDiff,
+                    getTokenProps,
+                    line,
+                    options,
+                  }}
+                />
               )
-            }}
-          </Highlight>
-        </div>
-      )}
-    </InView>
+            })}
+          </pre>
+        )
+      }}
+    </Highlight>
   )
 }
