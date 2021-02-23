@@ -271,6 +271,7 @@ export default (theme) => css`
     text-rendering: optimizeLegibility;
     font-size: 1.62671rem;
     line-height: 1.1;
+    color: ${theme.highlightColor};
   }
   h3 {
     margin-left: 0;

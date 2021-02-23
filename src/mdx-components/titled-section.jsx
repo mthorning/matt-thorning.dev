@@ -2,6 +2,10 @@ import React from 'react'
 import { FaPenSquare, FaGithubSquare } from 'react-icons/fa'
 import { css } from '@emotion/react'
 
+function mdLinks(text) {
+  return text.replace(/\[(.*)\]\((https?:\/\/.*)\)/, '<a href="$2">$1</a>')
+}
+
 const Links = ({ github, blogs }) => (
   <div
     css={css`
@@ -48,8 +52,11 @@ export default function TitledSection({
         * {
           margin-bottom: 0;
         }
+          span {
+            border-bottom: 1px solid var(--color);
+            padding: 0 32px 16px 0;
+          }
         p {
-            border-top: 1px solid var(--color);
             padding-top: 8px;
             margin-top: 8px;
       `}
@@ -62,12 +69,14 @@ export default function TitledSection({
           justify-content: space-between;
         `}
       >
-        {title ? <h3>{title}</h3> : null}
+        <span>
+          {title ? <h3>{title}</h3> : null}
+          {subtitle ? <h4>{subtitle}</h4> : null}
+          {info ? <h6>{info}</h6> : null}
+        </span>
         <Links {...{ github, blogs }} />
       </div>
-      {subtitle ? <h4>{subtitle}</h4> : null}
-      {info ? <h6>{info}</h6> : null}
-      <p>{children}</p>
+      <p dangerouslySetInnerHTML={{ __html: mdLinks(children) }} />
     </div>
   )
 }
