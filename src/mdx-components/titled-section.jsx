@@ -2,15 +2,35 @@ import React from 'react'
 import { FaPenSquare, FaGithubSquare } from 'react-icons/fa'
 import { css } from '@emotion/react'
 
+function mdLinks(text) {
+  return text.replace(/\[(.*)\]\((https?:\/\/.*)\)/, '<a href="$2">$1</a>')
+}
+
 const Links = ({ github, blogs }) => (
-  <div>
+  <div
+    css={css`
+      display: flex;
+      align-items: center;
+      a {
+        margin-left: 8px;
+        color: var(--color);
+        display: inline-flex;
+        align-items: center;
+        font-size: 1.4em;
+      }
+
+      a:hover {
+        color: var(--linkHover);
+      }
+    `}
+  >
     {blogs ? (
-      <a href="#">
+      <a href={blogs}>
         <FaPenSquare />
       </a>
     ) : null}
     {github ? (
-      <a href="#">
+      <a href={github}>
         <FaGithubSquare />
       </a>
     ) : null}
@@ -32,8 +52,11 @@ export default function TitledSection({
         * {
           margin-bottom: 0;
         }
+          span {
+            border-bottom: 1px solid var(--color);
+            padding: 0 32px 16px 0;
+          }
         p {
-            border-top: 1px solid var(--color);
             padding-top: 8px;
             margin-top: 8px;
       `}
@@ -41,24 +64,19 @@ export default function TitledSection({
       <div
         css={css`
           display: flex;
-          align-items: baseline;
+          align-items: center;
+          flex-wrap: wrap;
           justify-content: space-between;
-          a {
-            margin-left: 8px;
-            font-size: 1.5em;
-            color: var(--color);
-          }
-          a:hover {
-            color: var(--linkHover);
-          }
         `}
       >
-        {title ? <h3>{title}</h3> : null}
+        <span>
+          {title ? <h3>{title}</h3> : null}
+          {subtitle ? <h4>{subtitle}</h4> : null}
+          {info ? <h6>{info}</h6> : null}
+        </span>
         <Links {...{ github, blogs }} />
       </div>
-      {subtitle ? <h4>{subtitle}</h4> : null}
-      {info ? <h6>{info}</h6> : null}
-      <p>{children}</p>
+      <p dangerouslySetInnerHTML={{ __html: mdLinks(children) }} />
     </div>
   )
 }
