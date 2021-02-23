@@ -11,7 +11,7 @@ export default (theme) => css`
       font-size: 22px;
     }
   }
-  body {
+  #___gatsby {
     --bg: #fff;
     --color: #3d3d3d;
     --primaryColor: ${theme.highlightColor};
@@ -26,6 +26,7 @@ export default (theme) => css`
     color: var(--color);
     background: var(--bg);
     font-family: Helvetica, Arial, sans-serif;
+    overflow-x: hidden;
   }
 
   body.dark {
@@ -102,6 +103,7 @@ export default (theme) => css`
   strong {
     font-weight: inherit;
     font-weight: bolder;
+    word-break: break-all;
   }
   dfn {
     font-style: italic;
