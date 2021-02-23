@@ -12,6 +12,9 @@ export default (theme) => css`
     }
   }
   #___gatsby {
+    overflow-x: hidden;
+  }
+  body {
     --bg: #fff;
     --color: #3d3d3d;
     --primaryColor: ${theme.highlightColor};
@@ -26,7 +29,6 @@ export default (theme) => css`
     color: var(--color);
     background: var(--bg);
     font-family: Helvetica, Arial, sans-serif;
-    overflow-x: hidden;
   }
 
   body.dark {
