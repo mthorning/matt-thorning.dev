@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import { css } from '@emotion/react'
 
 function LineNumber({ lineNumber }) {

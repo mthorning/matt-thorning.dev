@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { graphql } from 'gatsby'
 import Helmet from 'react-helmet'
 import Layout from 'layouts/main-layout'
@@ -26,7 +26,10 @@ const components = {
   pre: (props) => <Prism {...props} />,
 }
 
-export default function Template({ data, location, pageContext }) {
+export default function BlogPost({ data, location, pageContext }) {
+  const [containerHeight, setContainerHeight] = useState(0)
+  console.log(containerHeight)
+
   const post = data.mdx
   const { siteMetadata } = data.site
   const { previous, next } = pageContext
@@ -41,9 +44,16 @@ export default function Template({ data, location, pageContext }) {
           <meta name="author" content={siteMetadata.author} />
         </Helmet>
         <BlogFunctions post={post} />
-        <MDXProvider {...{ components }}>
-          <MDXRenderer>{post.body}</MDXRenderer>
-        </MDXProvider>
+        <div
+          ref={(el) => {
+            if (el) setContainerHeight(el.scrollHeight)
+          }}
+        >
+          <MDXProvider {...{ components }}>
+            <MDXRenderer>{post.body}</MDXRenderer>
+          </MDXProvider>
+        </div>
+
         <Clap slug={post.frontmatter.slug} />
         <ShareButtons shareUrl={location.href} title={post.frontmatter.title} />
         <PreviousNext
