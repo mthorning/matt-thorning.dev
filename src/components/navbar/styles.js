@@ -2,15 +2,16 @@ import { css } from '@emotion/react'
 
 export const nav = css`
   background: var(--bg);
+  min-width: 150px;
   box-shadow: 0 0 2px gray;
 `
 export const inner = css`
-  position: sticky;
+  position: fixed;
   top: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 100vh;
+  height: 100vh;
 `
 export const menu = css`
   margin: 0;
