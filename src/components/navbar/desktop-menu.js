@@ -1,14 +1,14 @@
-import React from 'react'
+import React, { useRef, useState, useLayoutEffect } from 'react'
 import { Link } from 'gatsby'
 import ThemeToggle from 'components/theme-toggle'
 import * as styles from './styles'
 
 const useWidth = () => {
-  const ref = React.useRef()
-  const [width, setWidth] = React.useState(0)
+  const ref = useRef()
+  const [width, setWidth] = useState(0)
   const clientWidth = ref?.current?.clientWidth
 
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     setWidth(clientWidth)
   }, [clientWidth])
 

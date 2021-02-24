@@ -26,7 +26,7 @@ const components = {
   pre: (props) => <Prism {...props} />,
 }
 
-export default function Template({ data, location, pageContext }) {
+export default function BlogPost({ data, location, pageContext }) {
   const post = data.mdx
   const { siteMetadata } = data.site
   const { previous, next } = pageContext
@@ -44,6 +44,7 @@ export default function Template({ data, location, pageContext }) {
         <MDXProvider {...{ components }}>
           <MDXRenderer>{post.body}</MDXRenderer>
         </MDXProvider>
+
         <Clap slug={post.frontmatter.slug} />
         <ShareButtons shareUrl={location.href} title={post.frontmatter.title} />
         <PreviousNext
