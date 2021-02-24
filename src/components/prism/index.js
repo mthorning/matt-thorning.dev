@@ -3,7 +3,7 @@ import Highlight, { defaultProps } from 'prism-react-renderer'
 import darkTheme from 'prism-react-renderer/themes/vsDark'
 import lightTheme from 'prism-react-renderer/themes/github'
 import { css } from '@emotion/react'
-import { useTheme } from 'utils'
+import { useTheme, useIsIntersecting } from 'utils'
 import { OptionsToggle, usePrismOptions } from './options'
 import Line from './Line'
 
@@ -39,6 +39,7 @@ function splitClass(classname, metastring) {
 }
 
 export default function Prism({ children: { props } }) {
+  const [ref, isIntersecting] = useIsIntersecting({ rootMargin: '50px' })
   const { children } = props
 
   const { wrapText, showDiff } = usePrismOptions()
@@ -74,6 +75,7 @@ export default function Prism({ children: { props } }) {
         tokens = tokens.slice(0, tokens.length - 1)
         return (
           <pre
+            ref={ref}
             className={className}
             css={css`
               ${style}
@@ -118,6 +120,7 @@ export default function Prism({ children: { props } }) {
                 <Line
                   {...{
                     ...getLineProps({ line, key }),
+                    isIntersecting,
                     lineNumber,
                     showDiff,
                     getTokenProps,

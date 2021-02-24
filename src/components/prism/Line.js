@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react'
+import React, { useMemo } from 'react'
 import { css } from '@emotion/react'
 
 function LineNumber({ lineNumber }) {
@@ -12,78 +12,99 @@ function LineNumber({ lineNumber }) {
 }
 
 export default function Line(props) {
-  const { line, options, lineNumber, getTokenProps, showDiff, ...rest } = props
+  const {
+    line,
+    options,
+    lineNumber,
+    getTokenProps,
+    showDiff,
+    isIntersecting,
+    ...rest
+  } = props
 
-  // lineContent is only used to work out if it is
-  // a diff line.
-  const lineContent = line
-    .map((l) => l.content)
-    .join('')
-    .trim()
+  const lineDiffType = useMemo(() => {
+    const lineContent = line
+      .map((l) => l.content)
+      .join('')
+      .trim()
 
-  const lineDiffType = lineContent.startsWith('-')
-    ? 'removed'
-    : lineContent.startsWith('+')
-    ? 'added'
-    : null
+    return lineContent.startsWith('-')
+      ? 'removed'
+      : lineContent.startsWith('+')
+      ? 'added'
+      : null
+  }, [line])
 
   // Add the bg color to the row if it is a diff
-  const style = css`
-    width: fit-content;
-    padding: 0 12px 0 12px;
-    ${lineDiffType === 'removed' &&
-    `
+  const style = useMemo(
+    () => css`
+      width: fit-content;
+      padding: 0 12px 0 12px;
+      ${lineDiffType === 'removed' &&
+      `
         background: #cc353561;
     `}
-    ${lineDiffType === 'added' &&
-    showDiff &&
-    `
+      ${lineDiffType === 'added' &&
+      showDiff &&
+      `
         background: #13bf1359;
     `}
-  `
-  // Only show removed lines in diffs
-  if (lineDiffType === 'removed' && !showDiff) return null
-
-  const idx = line.findIndex(
-    ({ content }) => content === '-' || content === '+'
+    `,
+    [lineDiffType, showDiff]
   )
 
+  if (lineDiffType === 'removed' && !showDiff) return null
+
   // Add 2 spaces to start of lines without symbols
-  const lineToRender =
-    showDiff && !lineDiffType
-      ? [
+  const lineToRender = ((showDiff, lineDiffType, line, isIntersecting) => {
+    if (!isIntersecting) return line
+    const idx = line.findIndex(
+      ({ content }) => content === '-' || content === '+'
+    )
+
+    switch (true) {
+      case showDiff && !lineDiffType:
+        return [
           {
             types: ['plain'],
             content: '  ',
           },
           ...line,
         ]
-      : showDiff && !!lineDiffType
-      ? [
+      case showDiff && !!lineDiffType:
+        return [
           ...line.slice(0, idx + 1),
           { types: ['plain'], content: ' ' },
           ...line.slice(idx + 1),
         ]
-      : !showDiff && !!lineDiffType
-      ? [...line.slice(2)]
-      : line
+      case !showDiff && !!lineDiffType:
+        return [...line.slice(2)]
+      default:
+        return line
+    }
+  })(showDiff, lineDiffType, line, isIntersecting)
 
   return (
     <div {...rest} css={style}>
       {options && options.numberLines && <LineNumber {...{ lineNumber }} />}
       {lineToRender.map((token, key) => {
         const lineProps = getTokenProps({ token, key })
-
-        // This makes the plus/minus symbol red/green
-        if (key < 2 && lineProps.children === '-' && lineDiffType === 'removed')
-          lineProps.style = { fontWeight: 'bold', color: 'red' }
-        if (
-          key < 2 &&
-          lineProps.children === '+' &&
-          lineDiffType === 'added' &&
-          showDiff
-        )
-          lineProps.style = { fontWeight: 'bold', color: 'green' }
+        if (isIntersecting) {
+          // This makes the plus/minus symbol red/green
+          if (
+            key < 2 &&
+            lineProps.children === '-' &&
+            lineDiffType === 'removed'
+          )
+            lineProps.style = { fontWeight: 'bold', color: 'red' }
+          if (
+            key < 2 &&
+            lineProps.children === '+' &&
+            lineDiffType === 'added' &&
+            showDiff
+          )
+            lineProps.style = { fontWeight: 'bold', color: 'green' }
+        }
 
         return <span {...lineProps} />
       })}
