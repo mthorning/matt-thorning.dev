@@ -9,6 +9,7 @@ import Clap from 'components/clap'
 import { MDXProvider } from '@mdx-js/react'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
 import Prism, { PrismOptionsProvider } from 'components/prism'
+import { ObserverProvider, useIsResizing } from 'utils'
 
 function BlogFunctions({ post }) {
   return (
@@ -41,9 +42,11 @@ export default function BlogPost({ data, location, pageContext }) {
           <meta name="author" content={siteMetadata.author} />
         </Helmet>
         <BlogFunctions post={post} />
-        <MDXProvider {...{ components }}>
-          <MDXRenderer>{post.body}</MDXRenderer>
-        </MDXProvider>
+        <ObserverProvider useObserver={useIsResizing}>
+          <MDXProvider {...{ components }}>
+            <MDXRenderer>{post.body}</MDXRenderer>
+          </MDXProvider>
+        </ObserverProvider>
 
         <Clap slug={post.frontmatter.slug} />
         <ShareButtons shareUrl={location.href} title={post.frontmatter.title} />
