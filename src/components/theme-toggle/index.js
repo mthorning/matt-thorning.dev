@@ -43,7 +43,7 @@ const useAstronomy = (state, initial) => {
 }
 
 export default function ThemeToggle() {
-  const initialTheme = typeof window !== 'undefined' ? window.__theme : 'light'
+  const initialTheme = typeof window !== 'undefined' ? window.__theme : 'dark'
   const { theme } = useTheme()
 
   const [state, send] = useMachine(machine, initialTheme)
