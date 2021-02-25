@@ -12,8 +12,11 @@ export const wrapper = (theme) => css`
   padding: 4px;
   position: relative;
   border: 2px solid var(--color);
-  cursor: pointer;
   ${sharedStyles}
+
+  svg {
+    cursor: pointer;
+  }
 
   div {
     ${sharedStyles}
@@ -29,10 +32,12 @@ export const wrapper = (theme) => css`
       list-style-type: none;
     }
     li {
-      margin: 1em 0;
-      padding: 0 4px;
+      margin: 0.4em 0;
     }
     li a {
+      display: block;
+      padding: 0.6em 0;
+      height: 100%;
       color: var(--color);
     }
     li a:hover {

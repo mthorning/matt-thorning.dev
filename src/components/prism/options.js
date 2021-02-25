@@ -40,20 +40,18 @@ export const usePrismOptions = () => useContext(PrismContext)
 export function OptionsToggle({ optionKey, text, condition }) {
   const { setOptions, ...options } = usePrismOptions()
   const checked = options[optionKey]
-  const [target, setTarget] = useState(null)
+  const target = React.useRef(null)
 
   const { observation } = useObserverContext()
-  React.useLayoutEffect(() => {
-    if (target) {
-      const yPos = target.getBoundingClientRect().top
-      target.scrollIntoView()
-      window.scrollTo(0, window.scrollY - yPos)
-      setTarget(null)
+  React.useEffect(() => {
+    if (target.current) {
+      target.current.scrollIntoView()
+      target.current = null
     }
-  }, [target, observation.height])
+  }, [observation.height])
 
   const clickHandler = (e) => {
-    setTarget(e.target)
+    target.current = e.target
     setOptions((options) => ({
       ...options,
       [optionKey]: condition && !options[optionKey],
