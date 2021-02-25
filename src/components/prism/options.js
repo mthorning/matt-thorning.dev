@@ -45,7 +45,7 @@ export function OptionsToggle({ optionKey, text, condition }) {
   const { observation } = useObserverContext()
   React.useEffect(() => {
     if (target.current) {
-      target.current.scrollIntoView()
+      target.current.scrollIntoView({ behavior: 'smooth' })
       target.current = null
     }
   }, [observation.height])
