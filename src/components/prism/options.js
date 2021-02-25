@@ -7,6 +7,7 @@ import React, {
 } from 'react'
 import { css } from '@emotion/react'
 import { ControlledToggle } from 'components/Toggle'
+import { useObserverContext } from 'utils'
 
 const STORAGE_KEY = 'prism-options'
 const PrismContext = createContext()
@@ -39,8 +40,20 @@ export const usePrismOptions = () => useContext(PrismContext)
 export function OptionsToggle({ optionKey, text, condition }) {
   const { setOptions, ...options } = usePrismOptions()
   const checked = options[optionKey]
+  const [target, setTarget] = useState(null)
 
-  const clickHandler = () => {
+  const { observation } = useObserverContext()
+  React.useLayoutEffect(() => {
+    if (target) {
+      const yPos = target.getBoundingClientRect().top
+      target.scrollIntoView()
+      window.scrollTo(0, window.scrollY - yPos)
+      setTarget(null)
+    }
+  }, [target, observation.height])
+
+  const clickHandler = (e) => {
+    setTarget(e.target)
     setOptions((options) => ({
       ...options,
       [optionKey]: condition && !options[optionKey],
