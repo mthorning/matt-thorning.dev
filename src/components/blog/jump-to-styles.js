@@ -3,7 +3,7 @@ import { css } from '@emotion/react'
 const sharedStyles = css`
   border: 1px solid var(--color);
   border-radius: 2px;
-  font-size: 15px;
+  font-size: 17px;
 `
 export const wrapper = (theme) => css`
   display: flex;
@@ -25,10 +25,11 @@ export const wrapper = (theme) => css`
 
     ul {
       margin: 0;
+      padding: 0.5em;
       list-style-type: none;
     }
     li {
-      margin: 4px 0;
+      margin: 1em 0;
       padding: 0 4px;
     }
     li a {

@@ -12,15 +12,7 @@ function LineNumber({ lineNumber }) {
 }
 
 export default function Line(props) {
-  const {
-    line,
-    options,
-    lineNumber,
-    getTokenProps,
-    showDiff,
-    isIntersecting,
-    ...rest
-  } = props
+  const { line, options, lineNumber, getTokenProps, showDiff, ...rest } = props
 
   const lineDiffType = useMemo(() => {
     const lineContent = line
@@ -40,71 +32,59 @@ export default function Line(props) {
     () => css`
       width: fit-content;
       padding: 0 12px 0 12px;
-      ${lineDiffType === 'removed' &&
-      `
-        background: #cc353561;
-    `}
+      ${lineDiffType === 'removed'
+        ? showDiff
+          ? 'background: #cc353561;'
+          : 'display: none;'
+        : ''}
       ${lineDiffType === 'added' &&
       showDiff &&
       `
         background: #13bf1359;
     `}
+      .hideIfNotDiff {
+        display: ${showDiff ? 'inline' : 'none'};
+      }
     `,
     [lineDiffType, showDiff]
   )
 
-  if (lineDiffType === 'removed' && !showDiff) return null
-
-  // Add 2 spaces to start of lines without symbols
-  const lineToRender = ((showDiff, lineDiffType, line, isIntersecting) => {
-    if (!isIntersecting) return line
+  const lineToRender = ((lineDiffType, line) => {
     const idx = line.findIndex(
-      ({ content }) => content === '-' || content === '+'
+      ({ content, types }) =>
+        content === '-' || (content === '+' && types.push('hideIfNotDiff'))
     )
 
     switch (true) {
-      case showDiff && !lineDiffType:
+      case !lineDiffType:
         return [
           {
-            types: ['plain'],
+            types: ['plain', 'hideIfNotDiff'],
             content: '  ',
           },
           ...line,
         ]
-      case showDiff && !!lineDiffType:
+      case !!lineDiffType:
         return [
           ...line.slice(0, idx + 1),
-          { types: ['plain'], content: ' ' },
+          { types: ['plain', 'hideIfNotDiff'], content: ' ' },
           ...line.slice(idx + 1),
         ]
-      case !showDiff && !!lineDiffType:
-        return [...line.slice(2)]
       default:
         return line
     }
-  })(showDiff, lineDiffType, line, isIntersecting)
+  })(lineDiffType, line)
 
   return (
     <div {...rest} css={style}>
       {options && options.numberLines && <LineNumber {...{ lineNumber }} />}
       {lineToRender.map((token, key) => {
         const lineProps = getTokenProps({ token, key })
-        if (isIntersecting) {
-          // This makes the plus/minus symbol red/green
-          if (
-            key < 2 &&
-            lineProps.children === '-' &&
-            lineDiffType === 'removed'
-          )
-            lineProps.style = { fontWeight: 'bold', color: 'red' }
-          if (
-            key < 2 &&
-            lineProps.children === '+' &&
-            lineDiffType === 'added' &&
-            showDiff
-          )
-            lineProps.style = { fontWeight: 'bold', color: 'green' }
-        }
+        // This makes the plus/minus symbol red/green
+        if (key < 2 && lineProps.children === '-' && lineDiffType === 'removed')
+          lineProps.style = { fontWeight: 'bold', color: 'red' }
+        if (key < 2 && lineProps.children === '+' && lineDiffType === 'added')
+          lineProps.style = { fontWeight: 'bold', color: 'green' }
 
         return <span {...lineProps} />
       })}
