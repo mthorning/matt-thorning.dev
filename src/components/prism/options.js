@@ -59,7 +59,8 @@ export function OptionsToggle({ optionKey, text, condition }) {
   }, [observation.height, restoreScroll])
 
   const clickHandler = (e) => {
-    setTargetTop(e.target.getBoundingClientRect())
+    const rect = e.target.getBoundingClientRect()
+    setTargetTop(rect?.top)
     setTarget(e.target)
     setOptions((options) => ({
       ...options,
