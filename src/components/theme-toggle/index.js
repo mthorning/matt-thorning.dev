@@ -43,7 +43,8 @@ const useAstronomy = (state, initial) => {
 }
 
 export default function ThemeToggle() {
-  const initialTheme = typeof window !== 'undefined' ? window.__theme : 'dark'
+  const initialTheme =
+    typeof window !== 'undefined' ? window.__theme || 'light' : 'light'
   const { theme } = useTheme()
 
   const [state, send] = useMachine(machine, initialTheme)
@@ -74,7 +75,7 @@ export default function ThemeToggle() {
         <Toggle
           transitionSpeed={SPEED}
           onToggle={onToggle}
-          initialChecked={theme === 'light'}
+          initialChecked={(theme || initialTheme) === 'light'}
         />
       </div>
       <FaSun css={light(sun, '#ffb500')} />
