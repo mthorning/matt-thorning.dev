@@ -2,7 +2,13 @@ import React, { useState, useLayoutEffect } from 'react'
 import PropTypes from 'prop-types'
 import { IoIosArrowDown } from 'react-icons/io'
 import { AnchorLink } from 'gatsby-plugin-anchor-links'
-import { wrapper, selectedStyle, overlay, bySide } from './jump-to-styles'
+import {
+  wrapper,
+  selectedStyle,
+  overlay,
+  dropdown,
+  bySide,
+} from './jump-to-styles'
 import { a11yButton } from 'utils'
 
 const propTypes = {
@@ -59,10 +65,12 @@ function JumpToHeading({ headings, slug }) {
       <div
         ref={getPosition}
         {...a11yButton(() => setShowDropdown(!showDropdown))}
-        css={(theme) => [wrapper(theme), showDropdown ? selectedStyle : '']}
+        css={[wrapper, showDropdown ? selectedStyle : '']}
       >
-        Jump to Section
-        <IoIosArrowDown />
+        <span>
+          Jump to Section
+          <IoIosArrowDown />
+        </span>
         {showDropdown && (
           <div css={bySide(dropdownSide)}>
             <ul>

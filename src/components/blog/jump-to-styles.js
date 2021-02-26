@@ -5,16 +5,17 @@ const sharedStyles = css`
   border-radius: 2px;
   font-size: 17px;
 `
-export const wrapper = (theme) => css`
-  display: flex;
-  align-items: center;
-  align-self: center;
+export const wrapper = css`
   padding: 4px;
+  display: flex;
+  align-self: center;
   position: relative;
   border: 2px solid var(--color);
   ${sharedStyles}
 
-  svg {
+  span {
+    display: inline-flex;
+    align-items: center;
     cursor: pointer;
   }
 
