@@ -2,13 +2,7 @@ import React, { useState, useLayoutEffect } from 'react'
 import PropTypes from 'prop-types'
 import { IoIosArrowDown } from 'react-icons/io'
 import { AnchorLink } from 'gatsby-plugin-anchor-links'
-import {
-  wrapper,
-  selectedStyle,
-  overlay,
-  dropdown,
-  bySide,
-} from './jump-to-styles'
+import { wrapper, selectedStyle, overlay, bySide } from './jump-to-styles'
 import { a11yButton } from 'utils'
 
 const propTypes = {

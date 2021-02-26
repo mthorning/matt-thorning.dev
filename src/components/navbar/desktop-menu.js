@@ -1,22 +1,12 @@
-import React, { useRef, useState, useLayoutEffect } from 'react'
+import React from 'react'
 import { Link } from 'gatsby'
 import ThemeToggle from 'components/theme-toggle'
+import { useIsResizing } from 'utils'
 import * as styles from './styles'
 
-const useWidth = () => {
-  const ref = useRef()
-  const [width, setWidth] = useState(0)
-  const clientWidth = ref?.current?.clientWidth
-
-  useLayoutEffect(() => {
-    setWidth(clientWidth)
-  }, [clientWidth])
-
-  return [ref, { minWidth: `${width}px` }]
-}
-
 export default function DesktopMenu({ menuItems, className, pathRegex }) {
-  const [ref, width] = useWidth()
+  const [ref, resizing] = useIsResizing()
+  const width = { minWidth: `${resizing.width}px` }
 
   return (
     <nav css={[styles.nav, width]} className={className}>

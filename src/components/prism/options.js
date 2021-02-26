@@ -1,4 +1,6 @@
 import React, {
+  useLayoutEffect,
+  useCallback,
   useMemo,
   useEffect,
   useState,
@@ -43,7 +45,7 @@ export function OptionsToggle({ optionKey, text, condition }) {
   const [targetTop, setTargetTop] = useState(0)
   const [target, setTarget] = useState(null)
 
-  const restoreScroll = React.useCallback(() => {
+  const restoreScroll = useCallback(() => {
     if (target) {
       target.scrollIntoView()
       window.scrollTo(0, window.scrollY - targetTop)
@@ -52,13 +54,12 @@ export function OptionsToggle({ optionKey, text, condition }) {
   }, [target, setTarget, targetTop])
 
   const { observation } = useObserverContext()
-  React.useLayoutEffect(() => {
+  useLayoutEffect(() => {
     restoreScroll()
-  }, [observation.height])
+  }, [observation.height, restoreScroll])
 
   const clickHandler = (e) => {
-    const gbcr = e.target.getBoundingClientRect()
-    setTargetTop(gbcr.top)
+    setTargetTop(e.target.getBoundingClientRect())
     setTarget(e.target)
     setOptions((options) => ({
       ...options,
