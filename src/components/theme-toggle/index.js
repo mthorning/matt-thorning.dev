@@ -74,7 +74,7 @@ export default function ThemeToggle() {
         <Toggle
           transitionSpeed={SPEED}
           onToggle={onToggle}
-          initialChecked={theme === 'dark'}
+          initialChecked={theme === 'light'}
         />
       </div>
       <FaSun css={light(sun, '#ffb500')} />
