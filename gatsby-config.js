@@ -3,7 +3,7 @@ module.exports = {
     title: `Matt Thorning`,
     description: `Software developer.`,
     author: `Matt Thorning`,
-    siteUrl: `https://blog.matt-thorning.dev`,
+    siteUrl: `https://matt-thorning.dev`,
     menuItems: [
       { title: 'home', slug: '/', order: 1 },
       { title: 'blog', slug: '/blog', order: 20 },
@@ -91,7 +91,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-react-helmet-canonical-urls`,
       options: {
-        siteUrl: `https://blog.matt-thorning.dev`,
+        siteUrl: `https://matt-thorning.dev`,
         stripQueryString: true,
       },
     },
