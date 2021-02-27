@@ -27,7 +27,8 @@ export default function TypeHello({ className, children }) {
     }
   }
 
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [state, bareDispatch] = useReducer(reducer, initialState)
+  const dispatch = (...args) => mounted.current && bareDispatch(...args)
 
   const tick = useCallback((cb) => {
     let rand = Math.random() * 100 + 20
@@ -42,8 +43,8 @@ export default function TypeHello({ className, children }) {
         let i = 0
         function cb() {
           const payload = stringToType[i]
-          mounted.current && dispatch({ type: 'add', payload })
-          if (mounted.current && i < stringToType.length) {
+          dispatch({ type: 'add', payload })
+          if (i < stringToType.length) {
             tick(cb)
             i++
           } else {

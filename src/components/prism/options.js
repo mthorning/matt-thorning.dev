@@ -9,12 +9,11 @@ import React, {
 } from 'react'
 import { css } from '@emotion/react'
 import { ControlledToggle } from 'components/Toggle'
-import { useObserverContext } from 'utils'
 
 const STORAGE_KEY = 'prism-options'
 const PrismContext = createContext()
 
-export function PrismOptionsProvider({ children }) {
+export function PrismOptionsProvider({ children, mutation }) {
   const storedOptions = useMemo(
     () =>
       typeof window !== 'undefined'
@@ -31,7 +30,7 @@ export function PrismOptionsProvider({ children }) {
   )
 
   return (
-    <PrismContext.Provider value={{ ...options, setOptions }}>
+    <PrismContext.Provider value={{ ...options, setOptions, mutation }}>
       {children}
     </PrismContext.Provider>
   )
@@ -40,7 +39,7 @@ export function PrismOptionsProvider({ children }) {
 export const usePrismOptions = () => useContext(PrismContext)
 
 export function OptionsToggle({ optionKey, text, condition }) {
-  const { setOptions, ...options } = usePrismOptions()
+  const { mutation, setOptions, ...options } = usePrismOptions()
   const checked = options[optionKey]
   const [targetTop, setTargetTop] = useState(0)
   const [target, setTarget] = useState(null)
@@ -53,10 +52,9 @@ export function OptionsToggle({ optionKey, text, condition }) {
     }
   }, [target, setTarget, targetTop])
 
-  const { observation } = useObserverContext()
   useLayoutEffect(() => {
     restoreScroll()
-  }, [observation.height, restoreScroll])
+  }, [mutation, restoreScroll])
 
   const clickHandler = (e) => {
     const rect = e.target.getBoundingClientRect()

@@ -1,59 +1,51 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useRef,
-  useEffect,
-} from 'react'
+import { useCallback, useState, useRef, useEffect } from 'react'
 
-export function useIsIntersecting(options) {
-  const [isIntersecting, setIsIntersecting] = useState(false)
+function useObserver(constructObserver, targetOptions) {
+  const [observation, setObservation] = useState({})
   const ref = useRef()
   useEffect(() => {
     let observer
     let el
     if (ref.current) {
       el = ref.current
-      observer = new IntersectionObserver(([entry]) => {
-        if (entry.ratio <= 0) return
-        setIsIntersecting(entry.isIntersecting)
-      }, options)
-      observer.observe(el)
+      observer = constructObserver(setObservation)
+      observer.observe(el, targetOptions)
     }
-    return () => observer && observer.unobserve(el)
-  }, [options])
+    return () => observer && observer?.unobserve?.(el)
+  }, [targetOptions, constructObserver])
 
-  return [ref, isIntersecting]
+  return [ref, observation]
 }
 
-export function useIsResizing() {
-  const [isResizing, setIsResizing] = useState({})
-  const ref = useRef()
-  useEffect(() => {
-    let observer
-    let el
-    if (ref.current) {
-      el = ref.current
-      observer = new ResizeObserver(([entry]) => {
-        setIsResizing(entry.contentRect)
-      })
-      observer.observe(el)
-    }
-    return () => observer && observer.unobserve(el)
-  }, [])
-
-  return [ref, isResizing]
-}
-
-const ObserverContext = createContext()
-
-export const useObserverContext = () => useContext(ObserverContext)
-
-export function ObserverProvider({ children, useObserver }) {
-  const [ref, observation] = useObserver()
-  return (
-    <ObserverContext.Provider value={{ observation }}>
-      <div ref={ref}>{children}</div>
-    </ObserverContext.Provider>
+export function useIntersectionObserver(options) {
+  const constructObserver = useCallback(
+    (setObservation) =>
+      new IntersectionObserver((entries) => {
+        if (entries[0].ratio > 0) setObservation(entries)
+      }, options),
+    [options]
   )
+  return useObserver(constructObserver)
+}
+
+export function useResizeObserver() {
+  const constructObserver = useCallback(
+    (setObservation) => new ResizeObserver(([entry]) => setObservation(entry)),
+    []
+  )
+  return useObserver(constructObserver)
+}
+
+export function useMutationObserver(options = {}) {
+  const constructObserver = useCallback(
+    (setObservation) =>
+      new MutationObserver((mutation) => setObservation(mutation)),
+    []
+  )
+  return useObserver(constructObserver, {
+    childList: true,
+    attributes: false,
+    subtree: false,
+    ...options,
+  })
 }

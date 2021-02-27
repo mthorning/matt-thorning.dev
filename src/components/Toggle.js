@@ -10,7 +10,6 @@ const toggle = (checked, transitionSpeed) => css`
   box-shadow: inset 1px 1px 4px #6e6e6e;
   background-color: #a5a3a3;
   border-radius: 20px;
-  // transition: all ${transitionSpeed}ms;
   cursor: pointer;
   &::after {
     content: '';

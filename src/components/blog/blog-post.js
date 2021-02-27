@@ -9,7 +9,7 @@ import Clap from 'components/clap'
 import { MDXProvider } from '@mdx-js/react'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
 import Prism, { PrismOptionsProvider } from 'components/prism'
-import { ObserverProvider, useIsResizing } from 'utils'
+import { useMutationObserver } from 'utils'
 
 function BlogFunctions({ post }) {
   return (
@@ -31,9 +31,10 @@ export default function BlogPost({ data, location, pageContext }) {
   const post = data.mdx
   const { siteMetadata } = data.site
   const { previous, next } = pageContext
+  const [ref, mutation] = useMutationObserver()
 
   return (
-    <PrismOptionsProvider>
+    <PrismOptionsProvider mutation={mutation}>
       <Layout>
         <Helmet>
           <title>{post.frontmatter.title}</title>
@@ -42,11 +43,11 @@ export default function BlogPost({ data, location, pageContext }) {
           <meta name="author" content={siteMetadata.author} />
         </Helmet>
         <BlogFunctions post={post} />
-        <ObserverProvider useObserver={useIsResizing}>
-          <MDXProvider {...{ components }}>
+        <MDXProvider {...{ components }}>
+          <div ref={ref}>
             <MDXRenderer>{post.body}</MDXRenderer>
-          </MDXProvider>
-        </ObserverProvider>
+          </div>
+        </MDXProvider>
 
         <Clap slug={post.frontmatter.slug} />
         <ShareButtons shareUrl={location.href} title={post.frontmatter.title} />
