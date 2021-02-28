@@ -5,6 +5,6 @@
   package = "netlify-plugin-gatsby-cache"
 
 [[redirects]]
-  from = "/api"
-  to = "http://mtd.thorning.ovh/"
+  from = "/api/*"
+  to = "http://mtd.thorning.ovh/:splat"
   status = 200
