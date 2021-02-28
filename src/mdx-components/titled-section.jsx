@@ -71,7 +71,7 @@ export default function TitledSection({
   return (
     <div
       css={css`
-            margin-bottom: 32px;
+            margin-top: 32px;
         * {
           margin-bottom: 0;
         }

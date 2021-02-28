@@ -3,7 +3,7 @@ type: 'page'
 slug: '/skills'
 title: 'skills'
 order: 60
-published: false
+published: true
 ---
 import TitledSection from 'mdx/titled-section'
 import { SiJavascript, SiRust, SiReason, SiTypescript, SiGo, SiReact, SiSvelte, SiGatsby, SiNodeDotJs } from 'react-icons/si'
@@ -15,36 +15,36 @@ I thought it would be a good idea to list some of the technologies I use here. A
 
 ## Languages
 
-Although the only language I use for work is Javascript, I have dabbled in other languages in my spare time. Unfortunately, as I haven't needed to use them daily I have probably forgotten 90% of what I knew. I like to think that I could get that knowledge back reasonably quickly should I need to though!
+Although the only language I use for work is Javascript, I have devloped with  other languages in my spare time. Unfortunately, as I haven't needed to use them daily I have probably forgotten a large proportion of what I once knew. I like to think that I could get that knowledge back reasonably quickly should I need to and I also find learning the concepts from other languages helps me write better JavaScript.
 
 <TitledSection collapsible Icon={SiJavascript} title="JavaScript" github="https://github.com/mthorning?tab=repositories&q=&type=&language=javascript" blogs="/blog?tag=javascript" >
-As stated above, this is the language I use daily for my job and therefore the one I know best. It's also the language which I have written the most blog posts about. The main problem with JavaScript is that it is ubiquitous which, when you know it well, makes choosing another language for projects difficult!
+As stated above, this is the language I use daily for my job and therefore the one I know best. It's also the language which I have written the most blog posts about. In addition to building frontend applications, I have also written web servers and executables with JavaScript.
 </TitledSection>
 
 <TitledSection collapsible Icon={SiRust} title="Rust" github="https://github.com/mthorning?tab=repositories&q=&type=&language=rust" blogs="/blog?tag=rust" >
-I really like Rust but it's quite a steep learning curve coming from JavaScript and I haven't written anything in it for a while so I expect I'm quite rusty (or not rusty depending on how you want to look at it!). I wrote a CLI tool for listing the currently installed packages in JavaScript repos which I use pretty much every day and I have every intention of getting back into it soon, when I can think of something I want to make.
+I enjoyed learning Rust which was quite a steep learning curve coming from JavaScript.Aside from working my way through the official book I wrote a CLI tool for listing the currently installed packages in JavaScript repos which I use pretty much every day and a couple of CRUD APIs.
 </TitledSection>
 
 <TitledSection collapsible Icon={SiReason} title="Reason" github="https://github.com/mthorning?tab=repositories&q=&type=&language=reason" blogs="/blog?tag=reason" >
-Reason is OCaml but with a syntax which is very similar to JavaScript. You can also use React with it which is really cool. Unfortunately unless I start working somewhere which uses it I can't see myself getting back into it as the projects which I could do in Reason would be easier and quicker for me to write in JavaScript using either Svelte or React. I do really like it though and keep checking in to see how it's developing.
+After learning Rust I found Reason which allowed me to write frontend applications in React with a language which is syntactically similar to JavaScript but with a solid type system. I enjoyed using it but the trade-off was that the additional complexity introduced through the need to bind to JavaScript modules did make development slower than writing in plain JavaScript. For this reason I can't see myself using it much in the future unlesss I end up using it in my day job.
 </TitledSection>
 
 <TitledSection collapsible Icon={SiTypescript} title="Typescript" github="https://github.com/mthorning?tab=repositories&q=&type=&language=typescript">
-Typescript sits somewhere between JavaScript and Reason for me. I haven't used it extensively but I do use it in my [photography website](https://github.com/mthorning/mattthorningphotography) which uses Svelte and I find being able to create interfaces to describe data structures for code completion really useful.
+Typescript sits somewhere between JavaScript and Reason for me. I haven't used it extensively but I do use it in my [photography website](https://github.com/mthorning/mattthorningphotography) (which uses Svelte) where I found that being able to create interfaces to describe data structures for code completion really useful in modules which passed a lot of data around.
 </TitledSection>
 
 <TitledSection collapsible Icon={SiGo} title="Go" github="https://github.com/mthorning?tab=repositories&q=&type=public&language=go">
-Another one which I haven't used very much of but I did enjoy while I did. I found it easier to get my head around than Rust and would love an opportunity to get to use more of at some point in the future.
+I haven't written much in Go at the moment but it's the language I am about to start focusing more on. I think it will be a useful addition to my skillset, it's easier to write than Rust and at times feels like a scripting language but gives the ability to create executables so I can easily create backend services and CLI tools. It also has a big community so finding solutions to problems is a lot easier.
 </TitledSection>
 
 ## Frameworks
-I'm going to use the term "frameworks" loosely here, basically I'm classing it as any tool I use which isn't a language!
+I'm going to use the term "frameworks" loosely here, basically I'm classing it as any tool I use with JavaScript to create applications.
 
 <TitledSection collapsible Icon={SiReact} title="React" blogs="/blog?tag=react">
-This is the main framework I use as our main apps at work are now all written in React. I do enjoy using it, more so since the release of hooks as they have allowed me to write much more functional code which I prefer to using classes.
+This is the main framework I use in my day job. I do enjoy using it, more so since the release of hooks as they have allowed me to write much more functional code which I prefer to using classes. I've written several blog posts on it but I don't have that many examples in Github; I prefer to try other tools in my spare time as I use React all day at work, the only exeption being this site.
 </TitledSection>
 <TitledSection collapsible Icon={SiSvelte} title="Svelte" github="https://github.com/mthorning?tab=repositories&q=&type=&language=svelte">
-Svelte is probably my favourite framework, I use it with Sapper which provides routing and server-side rendering. Github has classed it as a language too which is why I'm able to provide a link above. If I had to create a website quickly I would definitely use Svelte.
+Svelte is probably my favourite JavaScript framework, I use it with Sapper which provides routing and server-side rendering. Github has classed it as a language which is why I'm able to provide a link to some repositories above. If I had to create a website quickly I would definitely use Svelte, conversely I haven't written any blog posts about it, I think this is because it feels so easy to use and their documentation is so well written that I fel like there isn't anything I can add that people would find useful.
 </TitledSection>
 <TitledSection collapsible Icon={SiGatsby} title="Gatsby" github="https://github.com/mthorning/matt-thorning.dev">
 Gatsby is a framework built around React. It's main party trick is that it has a data layer which you can query at build time with GraphQL to create pages dynamically. This site runs on Gatsby so I've included a link to the code in Github above. 
@@ -56,7 +56,15 @@ I'm pretty sure most people who write JavaScript have used Node at some point, I
 No links for this one and Backbone isn't something I would like to go back to using when we now have the likes of React and Svelte but it was the main framework we used when I started my job so I do have experience with it and therefore it's going on the list!
 </TitledSection>
 
-* test frameworks
-* docker
-* linux
-* CI - jenkins/github/gitlab pipelines
+## Additional
+<TitledSection collapsible title ="Test Frameworks" github="https://github.com/mthorning/mattthorningphotography" blogs="/blog?tag=backend&tag=testing">
+I've used Mocha, Jest, Enzyme, React Testing Library and Cypress. My preference is to use Jest with React Testing Library for unit tests and Cypress for integration tests. I haven't written many tests for personal projects with the exception of my photography website which has Cypress tests (link above).
+</TitledSection>
+
+<TitledSection collapsible title="Production Environment" blogs="/blog?tag=linux&tag=tooling">
+I use CI/CD tools for releasing my code. At work this is with Jenkins and Gilab Workflows, my own projects use Netlify, Github Actions or (in their infancy) bash scripts. I usually use Docker and Docker Compose for serving applications or for running JavaScript scripts as executables and NGINX for proxying incoming requests to the correct ports for services.
+</TitledSection>
+
+<TitledSection collapsible title="Development Environment" blogs="/blog?tag=linux&tag=tooling">
+I've used OSX and several Linux distibutions for development in the past but I'm currently using Windows with WSL2 both at home and at work. I use Zsh, tmux and Neovim unless I'm trying out a new language and want easy access to extensions, then I use VsCode (with Vim key bindings).
+</TitledSection>
