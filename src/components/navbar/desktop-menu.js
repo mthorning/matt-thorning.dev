@@ -1,12 +1,15 @@
 import React from 'react'
 import { Link } from 'gatsby'
 import ThemeToggle from 'components/theme-toggle'
-import { useIsResizing } from 'utils'
+import { useResizeObserver } from 'utils'
 import * as styles from './styles'
 
 export default function DesktopMenu({ menuItems, className, pathRegex }) {
-  const [ref, resizing] = useIsResizing()
-  const width = { minWidth: `${resizing.width}px` }
+  const [ref, { contentRect }] = useResizeObserver({
+    subtree: true,
+    childList: true,
+  })
+  const width = { minWidth: `${contentRect?.width ?? 100}px` }
 
   return (
     <nav css={[styles.nav, width]} className={className}>
