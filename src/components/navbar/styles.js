@@ -2,7 +2,6 @@ import { css } from '@emotion/react'
 
 export const nav = css`
   background: var(--bg);
-  min-width: 150px;
   box-shadow: 0 0 2px gray;
 `
 export const inner = css`
