@@ -4,7 +4,7 @@ import { Link } from 'gatsby'
 import { icon, iconWrapper, title } from './style'
 import { css } from '@emotion/react'
 
-export default function ({ slug, previous, next }) {
+function PreviousNext({ slug, previous, next }) {
   return (
     <>
       <div css={iconWrapper}>
@@ -49,3 +49,4 @@ export default function ({ slug, previous, next }) {
     </>
   )
 }
+export default PreviousNext

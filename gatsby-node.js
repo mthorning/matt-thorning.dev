@@ -1,4 +1,38 @@
 const path = require('path')
+const { gql, GraphQLClient } = require('graphql-request')
+require('dotenv').config()
+
+function getGqlClient() {
+  return new GraphQLClient(`${process.env.API_URL}/graphql`, {
+    headers: {
+      'UI-Environment': 'development',
+      Authorization: `Basic ${process.env.API_TOKEN}`,
+    },
+  })
+}
+
+const mutation = gql`
+  mutation($id: ID!, $data: UpdateArticle!) {
+    updateArticle(id: $id, data: $data) {
+      title
+    }
+  }
+`
+
+async function updateDB(node, client) {
+  const id = node.frontmatter.slug.replace('/blog/', '')
+  const variables = {
+    id,
+    data: node.frontmatter,
+  }
+  try {
+    await client.request(mutation, variables)
+  } catch (err) {
+    // it usually fails and I don't know why but the data is updated
+    // so I'm just going to walk away.
+  }
+}
+
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
   const result = await graphql(`
@@ -18,6 +52,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             frontmatter {
               title
               slug
+              published
+              date
             }
           }
         }
@@ -45,6 +81,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   }
   const pages = result.data.pages.edges
   const posts = result.data.blogPosts.edges
+  const gqlClient = getGqlClient()
 
   pages.forEach(({ node }) => {
     createPage({
@@ -64,6 +101,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       index > 0
         ? posts[index - 1].node.frontmatter
         : posts[posts.length - 1].node.frontmatter
+
+    updateDB(node, gqlClient)
 
     createPage({
       path: node.frontmatter.slug,

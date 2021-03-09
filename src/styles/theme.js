@@ -3,7 +3,7 @@ const footerIconFontSize = '25px'
 const blogInfoIconFontSize = '13px'
 const maxWidth = '900px'
 
-export default {
+const theme = {
   highlightColor: '#218bf8',
   footerIconFontSize,
   blogInfoIconFontSize,
@@ -19,3 +19,4 @@ export default {
     }
   `,
 }
+export default theme

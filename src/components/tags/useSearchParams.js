@@ -5,7 +5,7 @@ function updateSearch(searchParams) {
   navigate(`?${searchParams.toString()}`, { replace: true })
 }
 
-export default function (search) {
+function useSearchParams(search) {
   const searchParams = useMemo(() => new URLSearchParams(search), [search])
   const selectedTags = searchParams.getAll('tag')
 
@@ -35,3 +35,4 @@ export default function (search) {
 
   return { selectedTags, addTag, removeTag, postHasSelectedTag }
 }
+export default useSearchParams

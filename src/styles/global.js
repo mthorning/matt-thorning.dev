@@ -2,7 +2,7 @@ import { css } from '@emotion/react'
 import table from './table.js'
 import scrollbars from './scrollbars.js'
 
-export default (theme) => css`
+const global = (theme) => css`
   html {
     font-size: 18px;
     -ms-text-size-adjust: 100%;
@@ -340,3 +340,4 @@ export default (theme) => css`
   ${scrollbars}
   ${table}
 `
+export default global

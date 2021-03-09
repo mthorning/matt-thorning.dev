@@ -4,7 +4,7 @@ import { a11yButton } from 'utils'
 import { css } from '@emotion/react'
 import useSearchParams from './useSearchParams'
 
-export default function ({ search, posts, children }) {
+function TagSelector({ search, posts, children }) {
   const {
     postHasSelectedTag,
     selectedTags,
@@ -78,3 +78,4 @@ export default function ({ search, posts, children }) {
     </>
   )
 }
+export default TagSelector
