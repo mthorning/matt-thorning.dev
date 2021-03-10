@@ -5,7 +5,7 @@ module.exports = {
     app.use(
       '/api',
       createProxyMiddleware({
-        target: 'http://localhost:8001',
+        target: process.env.API_URL,
         pathRewrite: {
           '^/api': '/',
         },

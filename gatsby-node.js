@@ -2,35 +2,34 @@ const path = require('path')
 const { gql, GraphQLClient } = require('graphql-request')
 require('dotenv').config()
 
-function getGqlClient() {
-  return new GraphQLClient(`${process.env.API_URL}/graphql`, {
-    headers: {
-      'UI-Environment': 'development',
-      Authorization: `Basic ${process.env.API_TOKEN}`,
-    },
-  })
-}
+const gqlClient = new GraphQLClient(`${process.env.API_URL}/graphql`, {
+  headers: {
+    'UI-Environment': process.env.NODE_ENV,
+    Authorization: `Basic ${process.env.API_TOKEN}`,
+  },
+})
 
 const mutation = gql`
-  mutation($id: ID!, $data: UpdateArticle!) {
-    updateArticle(id: $id, data: $data) {
-      title
-    }
+  mutation($data: [UpdateArticle]!) {
+    updateArticles(data: $data)
   }
 `
 
-async function updateDB(node, client) {
-  const id = node.frontmatter.slug.replace('/blog/', '')
+function updateDB(posts) {
   const variables = {
-    id,
-    data: node.frontmatter,
+    data: posts.map(({ node: { frontmatter } }) => ({
+      id: frontmatter.slug.replace('/blog/', ''),
+      ...frontmatter,
+    })),
   }
-  try {
-    await client.request(mutation, variables)
-  } catch (err) {
-    // it usually fails and I don't know why but the data is updated
-    // so I'm just going to walk away.
-  }
+
+  gqlClient
+    .request(mutation, variables)
+    .then(() => console.log(`DB updated with ${posts.length} records`))
+    .catch((err) => {
+      console.error(`Error updating DB: ${err}`)
+      process.exit(1)
+    })
 }
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
@@ -81,7 +80,11 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   }
   const pages = result.data.pages.edges
   const posts = result.data.blogPosts.edges
-  const gqlClient = getGqlClient()
+
+  const { NODE_ENV, UPDATE_DB } = process.env
+  if (NODE_ENV === 'production' || UPDATE_DB) {
+    updateDB(posts)
+  }
 
   pages.forEach(({ node }) => {
     createPage({
@@ -90,6 +93,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       context: { id: node.id },
     })
   })
+
   posts.forEach(({ node }, index) => {
     //sorted by desc so these need to be reversed
     const previous =
@@ -101,8 +105,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       index > 0
         ? posts[index - 1].node.frontmatter
         : posts[posts.length - 1].node.frontmatter
-
-    updateDB(node, gqlClient)
 
     createPage({
       path: node.frontmatter.slug,
