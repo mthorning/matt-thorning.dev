@@ -3,14 +3,13 @@ import { FiCalendar, FiClock } from 'react-icons/fi'
 import { TagDisplay } from 'components/tags'
 import ClapIcon from 'components/clap/ClapIcon'
 import { infoWrapper, infoItemStyle, infoWrapperTopRow } from './styles'
-import { useClaps } from 'utils'
 
 export default function BlogInfo({ post, children }) {
-  const [claps] = useClaps(post.frontmatter.slug)
+  const claps = 0
   const CalendarDate = () => (
     <div css={infoItemStyle}>
       <FiCalendar />
-      <span>{post.frontmatter.date}</span>
+      <span>{post.date}</span>
     </div>
   )
 
@@ -35,7 +34,7 @@ export default function BlogInfo({ post, children }) {
         <TimeToRead />
         <Claps />
       </div>
-      <TagDisplay tags={post.frontmatter.tags} />
+      <TagDisplay tags={post.tags} />
     </div>
   )
 }

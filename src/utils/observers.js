@@ -20,9 +20,7 @@ function useObserver(constructObserver, targetOptions) {
 export function useIntersectionObserver(options) {
   const constructObserver = useCallback(
     (setObservation) =>
-      new IntersectionObserver((entries) => {
-        if (entries[0].ratio > 0) setObservation(entries)
-      }, options),
+      new IntersectionObserver((entries) => setObservation(entries), options),
     [options]
   )
   return useObserver(constructObserver)

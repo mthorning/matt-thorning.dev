@@ -11,8 +11,8 @@ function BlogPostPreview({ post }) {
   return (
     <div css={{ marginTop: '40px' }}>
       <h1 css={{ margin: 0 }}>
-        <Link css={(theme) => theme.orangeLink} to={post.frontmatter.slug}>
-          {post.frontmatter.title}
+        <Link css={(theme) => theme.orangeLink} to={post.slug}>
+          {post.title}
         </Link>
       </h1>
       <BlogInfo post={post} />

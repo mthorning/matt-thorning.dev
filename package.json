@@ -27,7 +27,6 @@
     "@loadable/component": "^5.14.1",
     "@mdx-js/mdx": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
-    "firebase": "^8.2.10",
     "gatsby": "^3.0.3",
     "gatsby-image": "^2.11.0",
     "gatsby-plugin-alias-imports": "^1.0.5",
@@ -61,6 +60,7 @@
     "react-icons": "^4.2.0",
     "react-robot": "^0.2.2",
     "react-share": "^4.4.0",
+    "react-spinners": "^0.10.6",
     "react-transition-group": "^4.4.1",
     "robot3": "^0.2.19"
   },

@@ -1,7 +1,6 @@
 import React, { useRef, useReducer, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { withTheme, css } from '@emotion/react'
-import { useClaps } from 'utils'
 import loadable from '@loadable/component'
 
 const ClapButton = loadable(() => import('./clap-button'))
@@ -37,7 +36,8 @@ function Clap({ slug, theme }) {
   const [state, dispatch] = useReducer(reducer, initialState)
   const { clapQueue, totalClaps } = state
   const debounce = useRef(null)
-  const [claps, setClaps] = useClaps(slug)
+  const claps = 0
+  const setClaps = React.useCallback(() => {}, [])
 
   useEffect(() => {
     if (claps) {

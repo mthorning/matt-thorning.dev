@@ -2,7 +2,7 @@ const path = require('path')
 const { gql, GraphQLClient } = require('graphql-request')
 require('dotenv').config()
 
-const gqlClient = new GraphQLClient(`${process.env.API_URL}/graphql`, {
+const gqlClient = new GraphQLClient(`${process.env.GATSBY_API_URL}/graphql`, {
   headers: {
     'UI-Environment': process.env.NODE_ENV,
     Authorization: `Basic ${process.env.API_TOKEN}`,
@@ -17,9 +17,10 @@ const mutation = gql`
 
 function updateDB(posts) {
   const variables = {
-    data: posts.map(({ node: { frontmatter } }) => ({
+    data: posts.map(({ node: { frontmatter, id: _, ...rest } }) => ({
       id: frontmatter.slug.replace('/blog/', ''),
       ...frontmatter,
+      ...rest,
     })),
   }
 
@@ -48,11 +49,14 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         edges {
           node {
             id
+          timeToRead
+          excerpt(pruneLength: 250)
             frontmatter {
               title
               slug
               published
               date
+              tags
             }
           }
         }

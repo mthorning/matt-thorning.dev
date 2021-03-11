@@ -7,7 +7,7 @@ function TagDisplay({ tags }) {
   return (
     <div css={tagDisplay}>
       <FiTag />
-      <span>{tags.join(', ')}</span>
+      <span>{tags?.join(', ')}</span>
     </div>
   )
 }

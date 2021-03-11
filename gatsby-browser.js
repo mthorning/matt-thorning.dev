@@ -3,6 +3,7 @@ import { ThemeProvider as EmotionThemeProvider, Global } from '@emotion/react'
 import Helmet from 'react-helmet'
 import { ThemeProvider } from 'utils'
 import { theme, global } from './src/styles'
+import { ApolloProvider } from 'utils'
 
 export const wrapRootElement = ({ element }) => {
   return (
@@ -15,10 +16,12 @@ export const wrapRootElement = ({ element }) => {
         ></script>
       </Helmet>
       <EmotionThemeProvider theme={theme}>
-        <ThemeProvider>
-          <Global styles={global} />
-          {element}
-        </ThemeProvider>
+        <ApolloProvider>
+          <ThemeProvider>
+            <Global styles={global} />
+            {element}
+          </ThemeProvider>
+        </ApolloProvider>
       </EmotionThemeProvider>
     </>
   )
