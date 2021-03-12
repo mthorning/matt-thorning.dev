@@ -5,7 +5,7 @@ import ClapIcon from 'components/clap/ClapIcon'
 import { infoWrapper, infoItemStyle, infoWrapperTopRow } from './styles'
 
 export default function BlogInfo({ post, children }) {
-  const claps = 0
+  const { claps } = post
   const CalendarDate = () => (
     <div css={infoItemStyle}>
       <FiCalendar />

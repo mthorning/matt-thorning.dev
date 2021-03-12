@@ -4,22 +4,34 @@ import { css } from '@emotion/react'
 import Layout from 'layouts/main-layout'
 import { BlogPostPreview } from 'components/blog'
 import { SEO } from 'components'
-import { TagSelector } from 'components/tags'
 import { useQuery, gql } from '@apollo/client'
 import PulseLoader from 'react-spinners/PulseLoader'
 import { useIntersectionObserver } from 'utils'
+import { HiOutlineSortAscending, HiOutlineSortDescending } from 'react-icons/hi'
+import { FiCalendar } from 'react-icons/fi'
+import ClapIcon from 'components/clap/ClapIcon'
+
+const date = new Intl.DateTimeFormat('en-GB', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+})
 
 // FIXME
 // need to get only published
 const GET_ARTICLES = gql`
-  query($first: Int!, $after: ID, $orderBy: String) {
-    articles(first: $first, after: $after, orderBy: $orderBy) {
+  query($first: Int!, $after: ID, $orderBy: String, $unpublished: Boolean) {
+    articles(
+      first: $first
+      after: $after
+      orderBy: $orderBy
+      unpublished: $unpublished
+    ) {
       edges {
         cursor
         node {
           claps
           date
-          published
           slug
           title
           excerpt
@@ -34,6 +46,32 @@ const GET_ARTICLES = gql`
   }
 `
 
+function Sort() {
+  const [desc, setDesc] = React.useState(false)
+  const [claps, setClaps] = React.useState(false)
+  const onClick = (handler) => () => handler((current) => !current)
+  return (
+    <div
+      css={css`
+        & > * {
+          cursor: pointer;
+        }
+      `}
+    >
+      {desc ? (
+        <HiOutlineSortAscending onClick={onClick(setDesc)} />
+      ) : (
+        <HiOutlineSortDescending onClick={onClick(setDesc)} />
+      )}
+      {claps ? (
+        <FiCalendar onClick={onClick(setClaps)} />
+      ) : (
+        <ClapIcon onClick={onClick(setClaps)} />
+      )}
+    </div>
+  )
+}
+
 export default function BlogPage(props) {
   const {
     location: { search },
@@ -43,21 +81,28 @@ export default function BlogPage(props) {
   const { edges: posts } = staticData.allMdx
   const { siteMetadata } = staticData.site
 
+  const variables = {
+    first: 4,
+    orderBy: 'date:desc',
+    unpublished: process.env.NODE_ENV === 'development',
+  }
+
   const { loading, error, fetchMore, data } = useQuery(GET_ARTICLES, {
-    variables: { first: 4, orderBy: 'date:desc' },
+    variables,
     notifyOnNetworkStatusChange: true,
   })
 
   const articles = data?.articles?.edges ?? []
+  const hasNextPage = data?.articles?.pageInfo?.hasNextPage
 
   const [ref, [entry]] = useIntersectionObserver()
   useEffect(() => {
-    if (entry?.isIntersecting && articles.length)
+    if (entry?.isIntersecting && articles.length && hasNextPage)
       fetchMore({
         variables: {
+          ...variables,
           first: 3,
           after: articles[articles.length - 1].cursor,
-          orderBy: 'date:desc',
         },
       })
   }, [entry, articles])
@@ -81,19 +126,15 @@ export default function BlogPage(props) {
           )
         )}
       />
-      {/*
-      <TagSelector {...{ posts, search }}>
-        {(posts) =>
-      */}
       <div css={{ minHeight: '50vh' }}>
+        <Sort />
         {articles.map(({ cursor, node }) => (
-          <BlogPostPreview key={cursor} post={node} />
+          <BlogPostPreview
+            key={cursor}
+            post={{ ...node, date: date.format(new Date(node.date)) }}
+          />
         ))}
       </div>
-      {/*
-        }
-      </TagSelector>
-      */}
       <div
         ref={ref}
         css={css`
