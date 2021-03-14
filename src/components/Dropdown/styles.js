@@ -9,6 +9,7 @@ export const wrapper = css`
   padding: 4px;
   display: flex;
   align-self: center;
+  justify-content: space-between;
   position: relative;
   border: 2px solid var(--color);
   ${sharedStyles}
@@ -46,10 +47,12 @@ export const wrapper = css`
     }
   }
 `
+
 export const selectedStyle = css`
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 `
+
 export const overlay = css`
   position: fixed;
   top: 0;

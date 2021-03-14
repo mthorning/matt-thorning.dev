@@ -7,12 +7,12 @@ export const tagDisplay = (theme) => css`
     margin-left: 5px;
   }
 `
-export const baseStyle = (theme) => css`
+export const tagStyle = (theme) => css`
   border-radius: 4px;
   background: var(--tagBg);
   color: ${theme.textColor};
   padding: 4px;
-  margin: 5px 5px 0 0;
+  margin-bottom: 4px;
   cursor: pointer;
   display: flex;
   align-items: end;

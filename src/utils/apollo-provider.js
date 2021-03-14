@@ -14,7 +14,7 @@ if (typeof window !== 'undefined') {
         Query: {
           fields: {
             articles: {
-              keyArgs: ['orderBy', 'unpublished'],
+              keyArgs: ['orderBy', 'unpublished', 'ids'],
               merge(existing = {}, incoming) {
                 return {
                   ...existing,

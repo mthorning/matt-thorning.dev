@@ -15,7 +15,7 @@ const mutation = gql`
   }
 `
 
-function updateDB(posts) {
+async function updateDB(posts) {
   const variables = {
     data: posts.map(({ node: { frontmatter, id: _, ...rest } }) => ({
       id: frontmatter.slug.replace('/blog/', ''),
@@ -24,13 +24,10 @@ function updateDB(posts) {
     })),
   }
 
-  gqlClient
-    .request(mutation, variables)
-    .then(() => console.log(`DB updated with ${posts.length} records`))
-    .catch((err) => {
-      console.error(`Error updating DB: ${err}`)
-      process.exit(1)
-    })
+  return gqlClient.request(mutation, variables).catch((err) => {
+    console.error(`Error updating DB: ${err}`)
+    process.exit(1)
+  })
 }
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
@@ -87,7 +84,10 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   const { NODE_ENV, UPDATE_DB } = process.env
   if (NODE_ENV === 'production' || UPDATE_DB) {
-    updateDB(posts)
+    const activity = reporter.activityTimer('Updated Database')
+    activity.start()
+    await updateDB(posts)
+    activity.end()
   }
 
   pages.forEach(({ node }) => {

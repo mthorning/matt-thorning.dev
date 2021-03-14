@@ -1,15 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import { graphql, navigate } from 'gatsby'
 import { css } from '@emotion/react'
 import Layout from 'layouts/main-layout'
-import { BlogPostPreview } from 'components/blog'
+import { BlogPostPreview, Sort } from 'components/blog'
+import { Tag } from 'components/tags'
 import { SEO } from 'components'
 import { useQuery, gql } from '@apollo/client'
 import PulseLoader from 'react-spinners/PulseLoader'
 import { useIntersectionObserver } from 'utils'
-import { HiOutlineSortAscending, HiOutlineSortDescending } from 'react-icons/hi'
-import { FiCalendar } from 'react-icons/fi'
-import ClapIcon from 'components/clap/ClapIcon'
+import { useSearchParams } from 'components/tags'
 
 const date = new Intl.DateTimeFormat('en-GB', {
   year: 'numeric',
@@ -17,15 +16,20 @@ const date = new Intl.DateTimeFormat('en-GB', {
   day: 'numeric',
 })
 
-// FIXME
-// need to get only published
 const GET_ARTICLES = gql`
-  query($first: Int!, $after: ID, $orderBy: String, $unpublished: Boolean) {
+  query(
+    $first: Int!
+    $after: ID
+    $orderBy: String
+    $unpublished: Boolean
+    $ids: [ID]
+  ) {
     articles(
       first: $first
       after: $after
       orderBy: $orderBy
       unpublished: $unpublished
+      ids: $ids
     ) {
       edges {
         cursor
@@ -45,29 +49,85 @@ const GET_ARTICLES = gql`
     }
   }
 `
+const GET_TAGS = gql`
+  query {
+    tags {
+      name
+      articles
+    }
+  }
+`
 
-function Sort() {
-  const [desc, setDesc] = React.useState(false)
-  const [claps, setClaps] = React.useState(false)
-  const onClick = (handler) => () => handler((current) => !current)
+function getTotals(tags) {
+  const totals = {}
+  tags.forEach((tag) => {
+    tag.articles.forEach((article) => {
+      if (Object.prototype.hasOwnProperty.call(totals, article)) {
+        totals[article]++
+      } else {
+        totals[article] = 1
+      }
+    })
+  })
+  return totals
+}
+
+function Tags({ search }) {
+  const { selectedTags, addTag, removeTag } = useSearchParams(search)
+  const { error, data } = useQuery(GET_TAGS)
+  const tags = data?.tags ?? []
+  if (error) return null
+
+  function onTagClick(tag) {
+    if (!selectedTags.includes(tag)) {
+      addTag(tag)
+    } else if (selectedTags.length && selectedTags.includes(tag)) {
+      removeTag(tag)
+    }
+  }
+  const selected = tags.filter(({ name }) => selectedTags.includes(name))
+  const selectedTotals = getTotals(selected)
+
+  const selectedArticles = Object.entries(selectedTotals).reduce(
+    (articles, [article, total]) =>
+      total === selectedTags.length ? [...articles, article] : articles,
+    []
+  )
+
+  const unselected = tags
+    .filter(
+      ({ name, articles }) =>
+        !selectedTags.includes(name) &&
+        (!selectedArticles.length ||
+          articles.some((article) => selectedArticles.includes(article)))
+    )
+    .map((tag) => {
+      const count = tag.articles.filter(
+        (article) =>
+          !selectedArticles.length || selectedArticles.includes(article)
+      ).length
+
+      return { ...tag, count }
+    })
+
   return (
     <div
       css={css`
-        & > * {
-          cursor: pointer;
-        }
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-bottom: 12px;
       `}
     >
-      {desc ? (
-        <HiOutlineSortAscending onClick={onClick(setDesc)} />
-      ) : (
-        <HiOutlineSortDescending onClick={onClick(setDesc)} />
-      )}
-      {claps ? (
-        <FiCalendar onClick={onClick(setClaps)} />
-      ) : (
-        <ClapIcon onClick={onClick(setClaps)} />
-      )}
+      {[...selected, ...unselected].map(({ name, count }) => (
+        <Tag
+          key={name}
+          tag={name}
+          count={count}
+          selectedTags={selectedTags}
+          onTagClick={() => onTagClick(name)}
+        />
+      ))}
     </div>
   )
 }
@@ -81,12 +141,13 @@ export default function BlogPage(props) {
   const { edges: posts } = staticData.allMdx
   const { siteMetadata } = staticData.site
 
+  const [orderBy, setOrderBy] = useState('date:desc')
+
   const variables = {
+    orderBy,
     first: 4,
-    orderBy: 'date:desc',
     unpublished: process.env.NODE_ENV === 'development',
   }
-
   const { loading, error, fetchMore, data } = useQuery(GET_ARTICLES, {
     variables,
     notifyOnNetworkStatusChange: true,
@@ -108,7 +169,8 @@ export default function BlogPage(props) {
   }, [entry, articles])
 
   if (error) {
-    navigate('/blogs', { replace: true })
+    // navigate('/blog/fb', { replace: true })
+    console.error(error)
   }
 
   return (
@@ -126,8 +188,9 @@ export default function BlogPage(props) {
           )
         )}
       />
-      <div css={{ minHeight: '50vh' }}>
-        <Sort />
+      <div>
+        <Tags {...{ search }} />
+        <Sort {...{ orderBy, setOrderBy }} />
         {articles.map(({ cursor, node }) => (
           <BlogPostPreview
             key={cursor}

@@ -1,0 +1,63 @@
+import React, { useState, useEffect } from 'react'
+import { css } from '@emotion/react'
+import { HiOutlineSortAscending, HiOutlineSortDescending } from 'react-icons/hi'
+import { Dropdown } from 'components'
+
+export function Sort({ orderBy, setOrderBy }) {
+  const [desc, setDesc] = useState(orderBy.includes(':desc'))
+  const sortBys = ['date', 'claps']
+  const [sortBy, setSortBy] = useState(
+    sortBys.find((s) => s === orderBy.split(':')[0])
+  )
+
+  useEffect(() => {
+    setOrderBy(`${sortBy}${desc ? ':desc' : ''}`)
+  }, [desc, sortBy])
+  return (
+    <div
+      css={css`
+        display: flex;
+        justify-content: flex-end;
+      `}
+    >
+      <Dropdown
+        value={sortBy}
+        css={css`
+          width: 60px;
+          user-select: none;
+          div {
+            width: 80px;
+          }
+          li {
+            user-select: none;
+            cursor: pointer;
+          }
+        `}
+      >
+        {sortBys
+          .filter((sort) => sort != sortBy)
+          .map((s) => (
+            <li key={s} onClick={() => setSortBy(s)}>
+              {s}
+            </li>
+          ))}
+      </Dropdown>
+      <div
+        css={css`
+          cursor: pointer;
+          color: var(--color);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid var(--color);
+          border-radius: 2px;
+          width: 30px;
+          margin-left: 4px;
+        `}
+        onClick={() => setDesc((current) => !current)}
+      >
+        {desc ? <HiOutlineSortDescending /> : <HiOutlineSortAscending />}
+      </div>
+    </div>
+  )
+}

@@ -1,10 +1,30 @@
 import React from 'react'
-import { clearButton, baseStyle, wrapper, tagNumber } from './style'
+import { clearButton, tagStyle, wrapper, tagNumber } from './style'
 import { a11yButton } from 'utils'
 import { css } from '@emotion/react'
 import useSearchParams from './useSearchParams'
 
-function TagSelector({ search, posts, children }) {
+export function Tag({ tag, selectedTags, onTagClick, count }) {
+  const tagCol = () =>
+    isSelected &&
+    css`
+      color: var(--tagColor);
+    `
+  const isSelected = selectedTags.includes(tag)
+
+  return (
+    <span
+      key={tag}
+      {...a11yButton(() => onTagClick(tag))}
+      css={(theme) => [tagStyle, tagCol].map((a) => a(theme))}
+    >
+      {tag}
+      {!isSelected && <span css={tagNumber}>{count}</span>}
+    </span>
+  )
+}
+
+export function TagSelector({ search, posts, children }) {
   const {
     postHasSelectedTag,
     selectedTags,
@@ -42,23 +62,9 @@ function TagSelector({ search, posts, children }) {
   }
 
   function TagBlock(tag) {
-    const isSelected = selectedTags.includes(tag)
-    const tagCol = (theme) =>
-      isSelected &&
-      css`
-        color: var(--tagColor);
-      `
-    return (
-      <span
-        key={tag}
-        {...a11yButton(() => onTagClick(tag))}
-        css={(theme) => [baseStyle, tagCol].map((a) => a(theme))}
-      >
-        {tag}
-        {!isSelected && <span css={tagNumber}>{tagCount[tag]}</span>}
-      </span>
-    )
+    return <Tag {...{ tag, selectedTags, onTagClick }} count={tagCount[tag]} />
   }
+
   return (
     <>
       <div css={wrapper}>
@@ -78,4 +84,3 @@ function TagSelector({ search, posts, children }) {
     </>
   )
 }
-export default TagSelector
