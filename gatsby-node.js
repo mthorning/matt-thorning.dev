@@ -18,7 +18,7 @@ const mutation = gql`
 async function updateDB(posts) {
   const variables = {
     data: posts.map(({ node: { frontmatter, id: _, ...rest } }) => ({
-      id: frontmatter.slug.replace('/blog/', ''),
+      articleId: frontmatter.slug.replace('/blog/', ''),
       ...frontmatter,
       ...rest,
     })),

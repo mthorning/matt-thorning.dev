@@ -18,18 +18,18 @@ const date = new Intl.DateTimeFormat('en-GB', {
 
 const GET_ARTICLES = gql`
   query(
-    $first: Int!
-    $after: ID
-    $orderBy: String
+    $orderBy: String!
+    $first: Int
+    $after: String
     $unpublished: Boolean
-    $ids: [ID]
+    $tags: [String]
   ) {
     articles(
+      orderBy: $orderBy
       first: $first
       after: $after
-      orderBy: $orderBy
       unpublished: $unpublished
-      ids: $ids
+      tags: $tags
     ) {
       edges {
         cursor
@@ -72,65 +72,75 @@ function getTotals(tags) {
   return totals
 }
 
-function Tags({ search }) {
-  const { selectedTags, addTag, removeTag } = useSearchParams(search)
-  const { error, data } = useQuery(GET_TAGS)
-  const tags = data?.tags ?? []
-  if (error) return null
+// function Tags({ search, setSelectedArticles }) {
+//   const { selectedTags, addTag, removeTag } = useSearchParams(search)
+//   const { error, data } = useQuery(GET_TAGS)
+//   const tags = data?.tags ?? []
 
-  function onTagClick(tag) {
-    if (!selectedTags.includes(tag)) {
-      addTag(tag)
-    } else if (selectedTags.length && selectedTags.includes(tag)) {
-      removeTag(tag)
-    }
-  }
-  const selected = tags.filter(({ name }) => selectedTags.includes(name))
-  const selectedTotals = getTotals(selected)
+//   function onTagClick(tag) {
+//     if (!selectedTags.includes(tag)) {
+//       addTag(tag)
+//     } else if (selectedTags.length && selectedTags.includes(tag)) {
+//       removeTag(tag)
+//     }
+//   }
+//   const selected = useMemo(
+//     () => tags.filter(({ name }) => selectedTags.includes(name)),
+//     [selectedTags]
+//   )
 
-  const selectedArticles = Object.entries(selectedTotals).reduce(
-    (articles, [article, total]) =>
-      total === selectedTags.length ? [...articles, article] : articles,
-    []
-  )
+//   const selectedArticles = useMemo(() => {
+//     const selectedTotals = getTotals(selected)
+//     return Object.entries(selectedTotals).reduce(
+//       (articles, [article, total]) =>
+//         total === selectedTags.length ? [...articles, article] : articles,
+//       []
+//     )
+//   }, [selected, selectedTags])
 
-  const unselected = tags
-    .filter(
-      ({ name, articles }) =>
-        !selectedTags.includes(name) &&
-        (!selectedArticles.length ||
-          articles.some((article) => selectedArticles.includes(article)))
-    )
-    .map((tag) => {
-      const count = tag.articles.filter(
-        (article) =>
-          !selectedArticles.length || selectedArticles.includes(article)
-      ).length
+//   useEffect(() => {
+//     setSelectedArticles(selectedArticles)
+//   }, [selectedArticles])
 
-      return { ...tag, count }
-    })
+//   const unselected = tags
+//     .filter(
+//       ({ name, articles }) =>
+//         !selectedTags.includes(name) &&
+//         (!selectedArticles.length ||
+//           articles.some((article) => selectedArticles.includes(article)))
+//     )
+//     .map((tag) => {
+//       const count = tag.articles.filter(
+//         (article) =>
+//           !selectedArticles.length || selectedArticles.includes(article)
+//       ).length
 
-  return (
-    <div
-      css={css`
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        margin-bottom: 12px;
-      `}
-    >
-      {[...selected, ...unselected].map(({ name, count }) => (
-        <Tag
-          key={name}
-          tag={name}
-          count={count}
-          selectedTags={selectedTags}
-          onTagClick={() => onTagClick(name)}
-        />
-      ))}
-    </div>
-  )
-}
+//       return { ...tag, count }
+//     })
+
+//   if (error) return null
+
+//   return (
+//     <div
+//       css={css`
+//         display: flex;
+//         flex-wrap: wrap;
+//         justify-content: flex-start;
+//         margin-bottom: 12px;
+//       `}
+//     >
+//       {[...selected, ...unselected].map(({ name, count }) => (
+//         <Tag
+//           key={name}
+//           tag={name}
+//           count={count}
+//           selectedTags={selectedTags}
+//           onTagClick={() => onTagClick(name)}
+//         />
+//       ))}
+//     </div>
+//   )
+// }
 
 export default function BlogPage(props) {
   const {
@@ -154,7 +164,7 @@ export default function BlogPage(props) {
   })
 
   const articles = data?.articles?.edges ?? []
-  const hasNextPage = data?.articles?.pageInfo?.hasNextPage
+  const { hasNextPage } = data?.articles?.pageInfo ?? {}
 
   const [ref, [entry]] = useIntersectionObserver()
   useEffect(() => {
@@ -162,7 +172,6 @@ export default function BlogPage(props) {
       fetchMore({
         variables: {
           ...variables,
-          first: 3,
           after: articles[articles.length - 1].cursor,
         },
       })
@@ -173,6 +182,10 @@ export default function BlogPage(props) {
     console.error(error)
   }
 
+  // const tags = useMemo(() => <Tags {...{ search, setSelectedArticles }} />, [
+  //   search,
+  //   setSelectedArticles,
+  // ])
   return (
     <Layout>
       <SEO
@@ -189,7 +202,6 @@ export default function BlogPage(props) {
         )}
       />
       <div>
-        <Tags {...{ search }} />
         <Sort {...{ orderBy, setOrderBy }} />
         {articles.map(({ cursor, node }) => (
           <BlogPostPreview
