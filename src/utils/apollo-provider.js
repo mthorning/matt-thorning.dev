@@ -14,10 +14,9 @@ if (typeof window !== 'undefined') {
         Query: {
           fields: {
             articles: {
-              keyArgs: ['orderBy', 'unpublished', 'ids'],
+              keyArgs: ['orderBy', 'unpublished', 'selectedTags'],
               merge(existing = {}, incoming) {
                 return {
-                  ...existing,
                   ...incoming,
                   edges: [...(existing?.edges ?? []), ...incoming.edges],
                 }

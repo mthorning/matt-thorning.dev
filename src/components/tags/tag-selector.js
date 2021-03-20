@@ -4,7 +4,7 @@ import { a11yButton } from 'utils'
 import { css } from '@emotion/react'
 import useSearchParams from './useSearchParams'
 
-export function Tag({ tag, selectedTags, onTagClick, count }) {
+export function Tag({ tag, selectedTags, onTagClick, count, className }) {
   const tagCol = () =>
     isSelected &&
     css`
@@ -13,14 +13,15 @@ export function Tag({ tag, selectedTags, onTagClick, count }) {
   const isSelected = selectedTags.includes(tag)
 
   return (
-    <span
+    <div
+      className={className}
       key={tag}
       {...a11yButton(() => onTagClick(tag))}
       css={(theme) => [tagStyle, tagCol].map((a) => a(theme))}
     >
       {tag}
       {!isSelected && <span css={tagNumber}>{count}</span>}
-    </span>
+    </div>
   )
 }
 
