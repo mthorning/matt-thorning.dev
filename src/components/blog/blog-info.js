@@ -23,7 +23,7 @@ export default function BlogInfo({ post, children }) {
   const Claps = () => (
     <div css={infoItemStyle}>
       <ClapIcon fill="var(--color)" styles={{ marginLeft: '-5px' }} />
-      <span>{`${claps} clap${claps !== 1 ? 's' : ''}`}</span>
+      <span>{`${claps ?? 0} clap${claps !== 1 ? 's' : ''}`}</span>
     </div>
   )
 

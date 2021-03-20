@@ -80,6 +80,7 @@ function Clap({ slug, theme }) {
       <p
         css={css`
           margin: 0 10px;
+          line-height: 1.1em;
         `}
       >
         If you've found this helpful then let me know with a clap or two!

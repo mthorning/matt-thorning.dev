@@ -1,6 +1,7 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 import Helmet from 'react-helmet'
+import { useQuery, gql } from '@apollo/client'
 import Layout from 'layouts/main-layout'
 import { ShareButtons, PreviousNext } from 'components'
 import { BlogInfo, JumpToSection } from 'components/blog'
@@ -11,12 +12,24 @@ import { MDXRenderer } from 'gatsby-plugin-mdx'
 import Prism, { PrismOptionsProvider } from 'components/prism'
 import { useMutationObserver } from 'utils'
 
+const GET_CLAPS = gql`
+  query($articleId: ID!) {
+    claps(articleId: $articleId)
+  }
+`
+
 function BlogFunctions({ post }) {
+  const { data } = useQuery(GET_CLAPS, {
+    variables: {
+      articleId: post.frontmatter.slug.replace('/blog/', ''),
+    },
+  })
+  const claps = data?.claps
   return (
     <div css={blogFunctionsWrapper}>
       <h1>{post.frontmatter.title}</h1>
       <div css={blogFunctions}>
-        <BlogInfo post={post} />
+        <BlogInfo post={{ ...post, ...post.frontmatter, claps }} />
         <JumpToSection headings={post.headings} slug={post.frontmatter.slug} />
       </div>
     </div>

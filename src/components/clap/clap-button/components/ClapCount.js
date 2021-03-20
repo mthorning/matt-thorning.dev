@@ -1,6 +1,6 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import { textStyles } from '../utils'
+import { textStyles } from '../styles'
 
 const ClapCount = styled.span`
   top: -${({ size }) => size / 1.6}px;
