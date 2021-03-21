@@ -69,8 +69,7 @@
     "develop": "gatsby develop",
     "start": "npm run develop",
     "format": "prettier --write \"src/**/*.js\"",
-    "preversion": "[[ $(git rev-parse --abbrev-ref HEAD) == \"develop\" ]] && git checkout master && git merge develop",
-    "postversion": "git push && git push --tags && git checkout develop && git merge master && git push",
+    "postversion": "git push && git push --tags",
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
   },
   "husky": {
