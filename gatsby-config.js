@@ -6,8 +6,9 @@ module.exports = {
       '/api',
       createProxyMiddleware({
         target: process.env.GATSBY_API_URL,
+        changeOrigin: true,
         pathRewrite: {
-          '^/api': '/',
+          '^/api': '',
         },
       })
     )

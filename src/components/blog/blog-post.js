@@ -1,7 +1,6 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 import Helmet from 'react-helmet'
-import { useQuery, gql } from '@apollo/client'
 import Layout from 'layouts/main-layout'
 import { ShareButtons, PreviousNext } from 'components'
 import { BlogInfo, JumpToSection } from 'components/blog'
@@ -11,20 +10,9 @@ import { MDXProvider } from '@mdx-js/react'
 import { MDXRenderer } from 'gatsby-plugin-mdx'
 import Prism, { PrismOptionsProvider } from 'components/prism'
 import { useMutationObserver } from 'utils'
+import { useClaps } from 'utils'
 
-const GET_CLAPS = gql`
-  query($articleId: ID!) {
-    claps(articleId: $articleId)
-  }
-`
-
-function BlogFunctions({ post }) {
-  const { data } = useQuery(GET_CLAPS, {
-    variables: {
-      articleId: post.frontmatter.slug.replace('/blog/', ''),
-    },
-  })
-  const claps = data?.claps
+function BlogFunctions({ post, claps }) {
   return (
     <div css={blogFunctionsWrapper}>
       <h1>{post.frontmatter.title}</h1>
@@ -46,6 +34,10 @@ export default function BlogPost({ data, location, pageContext }) {
   const { previous, next } = pageContext
   const [ref, mutation] = useMutationObserver()
 
+  const [claps, addClaps] = useClaps(
+    post.frontmatter.slug.replace('/blog/', '')
+  )
+
   return (
     <PrismOptionsProvider mutation={mutation}>
       <Layout>
@@ -55,14 +47,14 @@ export default function BlogPost({ data, location, pageContext }) {
           <meta name="keywords" content={post.frontmatter.tags.join(',')} />
           <meta name="author" content={siteMetadata.author} />
         </Helmet>
-        <BlogFunctions post={post} />
+        <BlogFunctions {...{ post, claps }} />
         <MDXProvider {...{ components }}>
           <div ref={ref}>
             <MDXRenderer>{post.body}</MDXRenderer>
           </div>
         </MDXProvider>
 
-        <Clap slug={post.frontmatter.slug} />
+        <Clap {...{ claps, addClaps }} slug={post.frontmatter.slug} />
         <ShareButtons shareUrl={location.href} title={post.frontmatter.title} />
         <PreviousNext
           slug={post.frontmatter.slug}

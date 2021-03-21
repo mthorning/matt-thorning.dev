@@ -28,7 +28,7 @@ const reducer = (state, [type, payload]) => {
   }
 }
 
-function Clap({ slug, theme }) {
+function Clap({ claps, addClaps, theme }) {
   const initialState = {
     clapQueue: 0,
     totalClaps: 0,
@@ -36,8 +36,6 @@ function Clap({ slug, theme }) {
   const [state, dispatch] = useReducer(reducer, initialState)
   const { clapQueue, totalClaps } = state
   const debounce = useRef(null)
-  const claps = 0
-  const setClaps = React.useCallback(() => {}, [])
 
   useEffect(() => {
     if (claps) {
@@ -49,11 +47,11 @@ function Clap({ slug, theme }) {
     if (clapQueue > 0) {
       debounce.current && clearTimeout(debounce.current)
       debounce.current = setTimeout(() => {
+        addClaps(clapQueue)
         dispatch(['RESET_QUEUE'])
-        setClaps(totalClaps)
       }, 700)
     }
-  }, [clapQueue, setClaps, totalClaps])
+  }, [clapQueue])
 
   return (
     <div
@@ -80,7 +78,7 @@ function Clap({ slug, theme }) {
       <p
         css={css`
           margin: 0 10px;
-          line-height: 1.1em;
+          line-height: 1.5em;
         `}
       >
         If you've found this helpful then let me know with a clap or two!

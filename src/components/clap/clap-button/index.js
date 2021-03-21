@@ -42,7 +42,7 @@ const Clap = class extends React.Component {
         shape: 'polygon',
         radius: { 6: 0 },
         scale: 1,
-        stroke: 'rgba(211,84,0 ,0.5)',
+        stroke: '#218bf8',
         strokeWidth: 2,
         angle: 210,
         delay: 30,
@@ -71,7 +71,7 @@ const Clap = class extends React.Component {
       el: '#clap--count',
       isShowStart: false,
       isShowEnd: true,
-      y: { 0: -30 },
+      y: { 0: -15 },
       opacity: { 0: 1 },
       duration: tlDuration,
     }).then({

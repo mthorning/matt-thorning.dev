@@ -71,8 +71,7 @@ function Tags({ data, search, children, loading }) {
       <div
         css={css`
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-          grid-column-gap: 1fr;
+          grid-template-columns: repeat(auto-fill, minmax(6.5em, 1fr));
           grid-row-gap: 4px;
         `}
       >
@@ -157,9 +156,14 @@ export default function BlogPage(props) {
   const page = data?.articles?.page
   const hasNextPage = data?.articles?.hasNextPage
 
-  const [ref, [entry]] = useIntersectionObserver()
+  const [ref, entries] = useIntersectionObserver()
   useEffect(() => {
-    if (entry?.isIntersecting && articles.length && hasNextPage && !loading) {
+    if (
+      entries?.[0]?.isIntersecting &&
+      articles.length &&
+      hasNextPage &&
+      !loading
+    ) {
       fetchMore({
         variables: {
           ...variables,
@@ -167,11 +171,11 @@ export default function BlogPage(props) {
         },
       })
     }
-  }, [entry, articles.length])
+  }, [entries, articles.length])
 
   if (error) {
-    // navigate('/blog/fb', { replace: true })
     console.error(error)
+    navigate('/blog/fb', { replace: true })
   }
 
   return (
@@ -189,26 +193,35 @@ export default function BlogPage(props) {
           )
         )}
       />
-      <div>
-        <Tags {...{ loading, search, data }}>
-          <Sort {...{ orderBy, setOrderBy }} />
-        </Tags>
-        {articles.map((article) => (
-          <BlogPostPreview
-            key={article.slug}
-            post={{ ...article, date: date.format(new Date(article.date)) }}
-          />
-        ))}
-      </div>
       <div
-        ref={ref}
         css={css`
-          display: flex;
-          justify-content: center;
-          width: 100%;
+          min-height: 40vh;
+          position: relative;
         `}
       >
-        <PulseLoader loading={loading} color="gray" />
+        <div>
+          <Tags {...{ loading, search, data }}>
+            <Sort {...{ orderBy, setOrderBy }} />
+          </Tags>
+          {articles.map((article) => (
+            <BlogPostPreview
+              key={article.slug}
+              post={{ ...article, date: date.format(new Date(article.date)) }}
+            />
+          ))}
+        </div>
+        <div
+          ref={ref}
+          css={css`
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            position: absolute;
+            bottom: -40px;
+          `}
+        >
+          <PulseLoader loading={loading} color="gray" />
+        </div>
       </div>
     </Layout>
   )
