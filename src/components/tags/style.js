@@ -3,6 +3,8 @@ import { css } from '@emotion/react'
 export const tagDisplay = (theme) => css`
   color: ${theme.textColor};
   font-size: ${theme.blogInfoIconFontSize};
+  display: flex;
+  align-items: center;
   span {
     margin-left: 5px;
   }
