@@ -32,6 +32,7 @@ const GET_ARTICLES = gql`
       selectedTags: $selectedTags
     ) {
       edges {
+        articleId
         claps
         date
         slug
@@ -144,7 +145,7 @@ export default function BlogPage(props) {
       limit: 4,
       unpublished: process.env.NODE_ENV === 'development',
     }),
-    [orderBy, selectedTags.length]
+    [orderBy, selectedTags]
   )
 
   const { loading, error, fetchMore, data } = useQuery(GET_ARTICLES, {
@@ -171,7 +172,15 @@ export default function BlogPage(props) {
         },
       })
     }
-  }, [entries, articles.length])
+  }, [
+    entries,
+    articles.length,
+    fetchMore,
+    hasNextPage,
+    loading,
+    page,
+    variables,
+  ])
 
   if (error) {
     console.error(error)

@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { useQuery, useMutation, gql } from '@apollo/client'
 
 const GET_CLAPS = gql`
@@ -12,27 +13,37 @@ const ADD_CLAPS = gql`
 `
 
 export function useClaps(articleId) {
-  const variables = { articleId }
-  const { data } = useQuery(GET_CLAPS, { variables })
+  const { data } = useQuery(GET_CLAPS, { variables: { articleId } })
   const claps = data?.claps
   const [mutator] = useMutation(ADD_CLAPS)
 
-  const addClaps = (claps) => {
-    mutator({
-      variables: {
-        ...variables,
-        claps,
-      },
-      update(cache, { data: { claps } }) {
-        cache.modify({
-          fields: {
-            claps() {
-              return claps
+  const addClaps = useCallback(
+    (claps) => {
+      mutator({
+        variables: {
+          articleId,
+          claps,
+        },
+        update(cache, { data: { claps } }) {
+          cache.modify({
+            fields: {
+              claps() {
+                return claps
+              },
+              articles(existingArticles = []) {
+                const updatedArticles = existingArticles.edges.map((article) =>
+                  article.articleId === articleId
+                    ? { ...article, claps }
+                    : article
+                )
+                return [updatedArticles]
+              },
             },
-          },
-        })
-      },
-    })
-  }
+          })
+        },
+      })
+    },
+    [mutator, articleId]
+  )
   return [claps, addClaps]
 }

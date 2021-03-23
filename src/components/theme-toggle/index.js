@@ -31,8 +31,14 @@ const useAstronomy = (state, initial) => {
   const [astronomy, setAstronomy] = useState(
     initial === 'light' ? 'sun' : 'moon'
   )
+
+  const mounted = React.useRef()
+  useEffect(() => {
+    mounted.current = true
+    return () => (mounted.current = false)
+  }, [])
   const flick = (astro) => {
-    setTimeout(() => setAstronomy(astro), SPEED / 2)
+    setTimeout(() => mounted.current && setAstronomy(astro), SPEED / 2)
   }
   useEffect(() => {
     if (state === 'toLight') flick('sun')

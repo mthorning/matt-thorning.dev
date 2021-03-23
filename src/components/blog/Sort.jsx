@@ -12,7 +12,7 @@ export function Sort({ orderBy, setOrderBy }) {
 
   useEffect(() => {
     setOrderBy(`${sortBy}${desc ? ':desc' : ''}`)
-  }, [desc, sortBy])
+  }, [desc, sortBy, setOrderBy])
   return (
     <div
       css={css`
@@ -35,9 +35,9 @@ export function Sort({ orderBy, setOrderBy }) {
         `}
       >
         {sortBys
-          .filter((sort) => sort != sortBy)
+          .filter((sort) => sort !== sortBy)
           .map((s) => (
-            <li key={s} onClick={() => setSortBy(s)}>
+            <li key={s} role="presentation" onClick={() => setSortBy(s)}>
               {s}
             </li>
           ))}
@@ -54,6 +54,7 @@ export function Sort({ orderBy, setOrderBy }) {
           width: 30px;
           margin-left: 4px;
         `}
+        role="presentation"
         onClick={() => setDesc((current) => !current)}
       >
         {desc ? <HiOutlineSortDescending /> : <HiOutlineSortAscending />}

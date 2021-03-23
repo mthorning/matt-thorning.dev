@@ -51,7 +51,7 @@ function Clap({ claps, addClaps, theme }) {
         dispatch(['RESET_QUEUE'])
       }, 700)
     }
-  }, [clapQueue])
+  }, [clapQueue, addClaps])
 
   return (
     <div
