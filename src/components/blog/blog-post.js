@@ -56,11 +56,13 @@ export default function BlogPost({ data, location, pageContext }) {
 
         <Clap {...{ claps, addClaps }} slug={post.frontmatter.slug} />
         <ShareButtons shareUrl={location.href} title={post.frontmatter.title} />
+        {/*
         <PreviousNext
           slug={post.frontmatter.slug}
           previous={previous}
           next={next}
         />
+        */}
       </Layout>
     </PrismOptionsProvider>
   )

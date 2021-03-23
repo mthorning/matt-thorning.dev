@@ -14,7 +14,7 @@ const machine = createMachine(({ state, transition, invoke, delay }) => ({
 
 export const hamburger = (fade) => css`
   position: fixed;
-  bottom: 8vh;
+  bottom: 12vh;
   right: 8vw;
   z-index: 1000;
   display: flex;

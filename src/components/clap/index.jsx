@@ -59,7 +59,7 @@ function Clap({ claps, addClaps, theme }) {
         padding: 8px;
         display: flex;
         align-items: center;
-        max-width: 50%;
+        max-width: 320px;
         margin-top: 70px;
         font-size: 16px;
         ${theme.smallScreen} {
