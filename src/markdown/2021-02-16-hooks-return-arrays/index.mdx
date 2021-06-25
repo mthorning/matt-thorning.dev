@@ -116,23 +116,6 @@ With this in mind we can implement the solution to our problem. We just need to 
 + return returnValues
 ```
 
-And if you're thinking "that's a bit verbose and I can't be bothered to type all that out" then you're absolutely right and should create a loop instead:
-
-```js
-returnValues.forEach((value, i) => {
-    returnValues[value] = returnValues[i]
-})
-```
-
-I've used `forEach` here instead of `map` or `reduce` because we're not actually mutating the array itself, merely adding additional properties to it.
-
-Now we are able to destructure the values from our hook in whichever way best suits the situation:
-
-```js
-const { status, updateState } = useFetchedData(url)
-const [usersStatus, usersPaylod ] = useFetchedData(url)
-```
-
 ---
 
 I hope this post has been helpful, see you next time. 
