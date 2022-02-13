@@ -4,11 +4,11 @@ import scrollbars from './scrollbars.js'
 
 const global = (theme) => css`
   html {
-    font-size: 18px;
+    font-size: 14px;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
     @media (min-width: 425px) {
-      font-size: 22px;
+      font-size: 18px;
     }
   }
   #___gatsby {
