@@ -3,6 +3,10 @@ require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 
+if (!process.env.GATSBY_API_URL) {
+  throw new Error('You need to add the .env.(development|production) file!!')
+}
+
 module.exports = {
   developMiddleware: (app) => {
     app.use(
