@@ -4,12 +4,9 @@ import scrollbars from './scrollbars.js'
 
 const global = (theme) => css`
   html {
-    font-size: 14px;
+    font-size: 18px;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
-    @media (min-width: 425px) {
-      font-size: 18px;
-    }
   }
   #___gatsby {
     overflow-x: hidden;
