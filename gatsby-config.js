@@ -37,6 +37,7 @@ module.exports = {
     `gatsby-plugin-sharp`,
     `gatsby-plugin-sitemap`,
     `gatsby-plugin-emotion`,
+    `gatsby-plugin-netlify`,
     {
       resolve: `gatsby-plugin-alias-imports`,
       options: {
