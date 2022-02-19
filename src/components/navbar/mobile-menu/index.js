@@ -34,7 +34,6 @@ const machine = createMachine(
         'closing',
         reduce((ctx, { slug }) => ({ ...ctx, slug })),
         action((ctx) => {
-          window.history.pushState({ id: 'menu' }, 'menu')
           restoreAppScroll(ctx.currentScroll)
         })
       )
@@ -45,7 +44,6 @@ const machine = createMachine(
         'done',
         'closed',
         action((ctx) => {
-          window.dispatchEvent(new Event('popstate'))
           if (ctx.slug) navigate(ctx.slug)
         })
       )
