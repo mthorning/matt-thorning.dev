@@ -12,7 +12,6 @@ export const wrapper = css`
   justify-content: space-between;
   position: relative;
   border: 2px solid var(--color);
-  cursor: pointer;
   ${sharedStyles}
 
   span {

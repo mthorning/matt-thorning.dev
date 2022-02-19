@@ -20,7 +20,6 @@ export const iconWrapper = (theme, color) => css`
   margin-top: 40px;
 
   div {
-    cursor: pointer;
     transition: 0.3s ease;
   }
   &:hover {

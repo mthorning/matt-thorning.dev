@@ -28,10 +28,6 @@ const ClapButton = styled.button`
     border-radius: 50%;
   }
 
-  &:hover {
-    cursor: pointer;
-  }
-
   ${(props) =>
     props.isHover &&
     css`

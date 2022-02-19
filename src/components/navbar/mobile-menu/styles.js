@@ -18,7 +18,6 @@ export const menu = css`
   position: relative;
 `
 export const close = css`
-  cursor: pointer;
   svg {
     font-size: 40px;
     fill: gray;

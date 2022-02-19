@@ -74,7 +74,16 @@ const Menu = ({ menuItems, state, send, pathRegex }) => {
         <ThemeToggle />
         {state === 'opened' ? (
           <div css={styles.close}>
-            <IoMdClose onClick={() => send({ type: 'close' })} />
+            <button
+              ariaLabel="close menu"
+              css={css`
+                background: transparent;
+                border: none !important;
+              `}
+              onClick={() => send('close')}
+            >
+              <IoMdClose />
+            </button>
           </div>
         ) : null}
       </div>

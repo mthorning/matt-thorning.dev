@@ -16,7 +16,6 @@ export const tagStyle = (theme) => css`
   padding: 4px;
   margin-bottom: 4px;
   margin-right: 4px;
-  cursor: pointer;
   display: flex;
   align-items: end;
   user-select: none;
@@ -33,7 +32,6 @@ export const tagNumber = css`
   color: var(--tagColor);
 `
 export const clearButton = (hide) => css`
-  cursor: pointer;
   font-style: italic;
 
   ${hide && 'display: none;'}

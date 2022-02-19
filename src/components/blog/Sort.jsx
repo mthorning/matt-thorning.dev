@@ -30,7 +30,6 @@ export function Sort({ orderBy, setOrderBy }) {
           }
           li {
             user-select: none;
-            cursor: pointer;
           }
         `}
       >
@@ -44,7 +43,6 @@ export function Sort({ orderBy, setOrderBy }) {
       </Dropdown>
       <div
         css={css`
-          cursor: pointer;
           color: var(--color);
           display: flex;
           align-items: center;

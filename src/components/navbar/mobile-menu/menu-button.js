@@ -23,7 +23,6 @@ export const hamburger = (fade) => css`
   border-radius: 10px;
   padding: 12px;
   border: 1px solid gray;
-  cursor: pointer;
   opacity: ${fade ? '0' : '0.8'};
   svg {
     fill: var(--color);
@@ -62,6 +61,7 @@ export default function MenuButton({ onMenuClick }) {
     <>
       {state !== 'invisible' ? (
         <button
+          arialLabel="open menu"
           onClick={() => onMenuClick()}
           onMouseEnter={() => send('show')}
           css={[

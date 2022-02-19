@@ -13,7 +13,6 @@ const Arrow = ({ collapsible, collapsed, setCollapsed }) => {
       css={css`
         margin-left: 16px;
         align-self: flex-end;
-        cursor: pointer;
       `}
     >
       {React.createElement(collapsed ? IoIosArrowDown : IoIosArrowUp, {

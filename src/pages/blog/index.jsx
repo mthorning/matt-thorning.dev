@@ -81,7 +81,6 @@ function Tags({ data, search, children, loading }) {
             css={css`
               position: relative;
               padding: 4px 8px;
-              cursor: pointer;
               ${articleCount === 0
                 ? `
                       color: #8080804d; 
@@ -113,7 +112,6 @@ function Tags({ data, search, children, loading }) {
         <span
           {...a11yButton(() => removeTag())}
           css={css`
-            cursor: pointer;
             font-style: italic;
             visibility: ${selectedTags.length ? 'visible' : 'hidden'};
           `}

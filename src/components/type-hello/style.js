@@ -4,6 +4,7 @@ export const title = css`
   margin: 0;
   display: inline-block;
   color: var(--linkHover);
+  border: none;
 `
 export const whiteBorder = css`
   border-right: 3px solid var(--linkHover);

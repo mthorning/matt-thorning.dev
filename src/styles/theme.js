@@ -12,7 +12,6 @@ const theme = {
   orangeLink: css`
     color: var(--color);
     text-decoration: none;
-    cursor: pointer;
     &:hover {
       color: var(--linkHover);
       text-decoration: none;
