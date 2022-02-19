@@ -58,20 +58,17 @@ export default function MenuButton({ onMenuClick }) {
   }, [state, send])
 
   return (
-    <>
-      {state !== 'invisible' ? (
-        <button
-          arialLabel="open menu"
-          onClick={() => onMenuClick()}
-          onMouseEnter={() => send('show')}
-          css={[
-            hamburger(state === 'fading'),
-            state === 'fading' ? fadeStyle : '',
-          ]}
-        >
-          <FaBars />
-        </button>
-      ) : null}
-    </>
+    <button
+      aria-label="open menu"
+      onClick={() => onMenuClick()}
+      onMouseEnter={() => send('show')}
+      css={[
+        hamburger(state === 'fading'),
+        state === 'fading' ? fadeStyle : '',
+        { visibility: state === 'invisible' ? 'hidden' : 'visible' },
+      ]}
+    >
+      <FaBars />
+    </button>
   )
 }

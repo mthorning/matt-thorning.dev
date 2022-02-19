@@ -17,7 +17,8 @@ export const menu = css`
   ${allMenu}
   position: relative;
 `
-export const close = css`
+export const close = open => css`
+  visibility: ${open ? 'visible' : 'hidden'};
   svg {
     font-size: 40px;
     fill: gray;

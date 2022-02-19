@@ -71,7 +71,7 @@ On _line 16_ we create a new Koa app and tell it to listen on port 9000, followe
 
 Finally on _line 23_ we add the middleware. We use `koa-mount` to create the route `/graphql`; any requests to this URL are passed to the koa-graphql middleware. The GraphQL middleware takes a schema and a rootValue, which we will write later, and we're also telling it to use `graphiql` (pronounced 'graphical'). 
 
-[Graphiql](https://github.com/graphql/graphiql) is a great tool which lets you run queries against your server whilst you are developing it and also when you are developing the frontend which uses it. Graphiql also creates documentation for you automatically, showing anyone who is using your API which types and fields are available and what each one is capable of.
+[Graphiql](https://github.com/graphql/graphiql) is a great tool which lets you run queries against your server whilst you are developing it and also when you are developing the front-end which uses it. Graphiql also creates documentation for you automatically, showing anyone who is using your API which types and fields are available and what each one is capable of.
 
 ## The Mongoose model
 

@@ -72,10 +72,9 @@ const Menu = ({ menuItems, state, send, pathRegex }) => {
       </ul>
       <div css={styles.bottomRow}>
         <ThemeToggle />
-        {state === 'opened' ? (
-          <div css={styles.close}>
+          <div css={styles.close(state === 'opened')}>
             <button
-              ariaLabel="close menu"
+              aria-label="close menu"
               css={css`
                 background: transparent;
                 border: none !important;
@@ -85,7 +84,6 @@ const Menu = ({ menuItems, state, send, pathRegex }) => {
               <IoMdClose />
             </button>
           </div>
-        ) : null}
       </div>
     </>
   )
