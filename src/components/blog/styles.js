@@ -1,6 +1,7 @@
 import { css } from '@emotion/react'
 
 export const infoWrapper = css`
+  user-select: none;
   margin: 0.5rem 0 0.5rem;
   display: inline-block;
 `

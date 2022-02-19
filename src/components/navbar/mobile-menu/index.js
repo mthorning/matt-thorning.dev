@@ -33,7 +33,10 @@ const machine = createMachine(
         'close',
         'closing',
         reduce((ctx, { slug }) => ({ ...ctx, slug })),
-        action((ctx) => restoreAppScroll(ctx.currentScroll))
+        action((ctx) => {
+          window.history.pushState({ id: 'menu' }, 'menu')
+          restoreAppScroll(ctx.currentScroll)
+        })
       )
     ),
     closing: invoke(
@@ -42,6 +45,7 @@ const machine = createMachine(
         'done',
         'closed',
         action((ctx) => {
+          window.dispatchEvent(new Event('popstate'))
           if (ctx.slug) navigate(ctx.slug)
         })
       )
@@ -72,7 +76,7 @@ const Menu = ({ menuItems, state, send, pathRegex }) => {
         <ThemeToggle />
         {state === 'opened' ? (
           <div css={styles.close}>
-            <IoMdClose onClick={() => send('close')} />
+            <IoMdClose onClick={() => send({ type: 'close' })} />
           </div>
         ) : null}
       </div>

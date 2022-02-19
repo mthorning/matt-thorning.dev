@@ -11,13 +11,13 @@ const propTypes = {
 function BlogPostPreview({ post }) {
   return (
     <div css={{ marginTop: '40px' }}>
-      <h1 css={{ margin: 0 }}>
+      <h1 css={{ userSelect: 'none', margin: 0 }}>
         <Link css={(theme) => theme.orangeLink} to={post.slug}>
           {post.title}
         </Link>
       </h1>
       <BlogInfo post={post} />
-      <p>{post.excerpt}</p>
+      <p css={{ userSelect: 'none' }}>{post.excerpt}</p>
     </div>
   )
 }
