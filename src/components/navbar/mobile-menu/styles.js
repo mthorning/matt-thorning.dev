@@ -25,7 +25,7 @@ export const close = open => css`
   }
 `
 export const bottomRow = css`
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   padding: 32px;
