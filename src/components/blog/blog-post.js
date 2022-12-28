@@ -54,7 +54,7 @@ export default function BlogPost({ data, location, pageContext }) {
           </div>
         </MDXProvider>
 
-        <Clap {...{ claps, addClaps }} slug={post.frontmatter.slug} />
+        {/*<Clap {...{ claps, addClaps }} slug={post.frontmatter.slug} />*/}
         <ShareButtons shareUrl={location.href} title={post.frontmatter.title} />
         {/*
         <PreviousNext

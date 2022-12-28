@@ -15,11 +15,11 @@ I thought it would be a good idea to list some of the technologies I use here. A
 
 ## Languages
 
-Although the only language I use for work is JavaScript, I have developed with  other languages in my spare time because I find that learning the concepts from other languages helps me write better JavaScript, plus it's fun!
-
 <TitledSection collapsible Icon={SiJavascript} title="JavaScript" github="https://github.com/mthorning?tab=repositories&q=&type=&language=javascript" blogs="/blog?tag=javascript" >
-As stated above, this is the language I use daily for my job and therefore the one I know best. It's also the language which I have written the most blog posts about. In addition to building front-end applications, I have also written web servers and CLI tools with JavaScript.
+This is the language I have been using for the longest amount of time and therefore the one I know best. It's also the language which I have written the most blog posts about. In addition to building front-end applications, I have also written web servers and CLI tools with JavaScript.
 </TitledSection>
+
+<TitledSection collapsible Icon={SiTypescript} title="Typescript" github="https://github.com/mthorning?tab=repositories&q=&type=&language=typescript">After spending a decent amount of time writing TypeScript since working at Ometria, I now prefer it to JavaScript due to the improved developer experience and additional confidence it can provide when refactoring. I invested a fair amount of time in reading books and completing courses so that I now have a good grasp of how to make TypeScript's structural type system work well for me whilst coding.</TitledSection>
 
 <TitledSection collapsible Icon={SiRust} title="Rust" github="https://github.com/mthorning?tab=repositories&q=&type=&language=rust" blogs="/blog?tag=rust" >
 I enjoyed learning Rust which was quite a steep learning curve coming from JavaScript. Aside from working my way through the official book I wrote a couple of CRUD APIs and a CLI tool for listing the currently installed packages in JavaScript repositories which I use pretty much every day.
@@ -27,10 +27,6 @@ I enjoyed learning Rust which was quite a steep learning curve coming from JavaS
 
 <TitledSection collapsible Icon={SiReason} title="Reason" github="https://github.com/mthorning?tab=repositories&q=&type=&language=reason" blogs="/blog?tag=reason" >
 After learning Rust I found Reason which allowed me to write front-end applications in React with a language which is syntactically similar to JavaScript but with a solid type system. I enjoyed using it but the trade-off was that the additional complexity introduced through the need to bind to JavaScript modules did make development slower than writing in plain JavaScript. For this reason I can't see myself using it much in the future unless I end up using it in my day job.
-</TitledSection>
-
-<TitledSection collapsible Icon={SiTypescript} title="Typescript" github="https://github.com/mthorning?tab=repositories&q=&type=&language=typescript">
-I'm finding that as time goes on I'm writing more TypeScript than JavaScript, especially now that we use it at work. I first experimented with it on my [photography website](https://github.com/mthorning/mattthorningphotography) (which uses Svelte) where I found that being able to create interfaces to describe data structures for code completion was really useful in modules which passed a lot of data around.
 </TitledSection>
 
 <TitledSection collapsible Icon={SiGo} title="Go" github="https://github.com/mthorning?tab=repositories&q=&type=public&language=go">
@@ -53,7 +49,7 @@ Gatsby is a framework built around React. It's main party trick is that it has a
 I've used Node for writing web servers and also for creating scripts which perform tasks such as cloning multiple repositories or scraping data from websites. I've included a link above to a project which sends me a weather report each night as an example.
 </TitledSection>
 <TitledSection collapsible Icon={DiBackbone} title="Backbone">
-No links for this one and Backbone isn't something I would like to go back to using when we now have the likes of React and Svelte but it was the main framework we used when I started my job so I do have experience with it and therefore it's going on the list!
+No links for this one and Backbone isn't something I would like to go back to using when we now have the likes of React and Svelte but it was the main framework we used when I started my first developer job so I do have experience with it and therefore it's going on the list! I have also worked with Ampersand which is a framework that was built on top of Backbone. Again, not something I wish to return to but the experience is there.
 </TitledSection>
 
 ## Additional
@@ -62,9 +58,9 @@ I've used Mocha, Jest, Enzyme, React Testing Library and Cypress. My preference 
 </TitledSection>
 
 <TitledSection collapsible title="Production Environment" blogs="/blog?tag=linux&tag=tooling">
-I use CI/CD tools for releasing my code. At work this is with Jenkins and Gitlab Workflows, my own projects use Netlify, Github Actions or (in their infancy) bash scripts. I usually use Docker and Docker Compose for serving applications or for running JavaScript scripts as executables and NGINX for proxying incoming requests to the correct ports for services.
+Professionally I have experience with Kubernetes, a number of AWS services, Concourse, Jenkins, and Gitlab Workflows. My own projects use Netlify, Vercel, Github Actions or (in their infancy) bash scripts. I usually use Docker with Docker Compose for serving applications and NGINX for proxying incoming requests to the correct ports for services. I also have some experience with Postgres, MongoDB and monitoring services like Grafana/Loki, Scalyr and Honeycomb.
 </TitledSection>
 
 <TitledSection collapsible title="Development Environment" blogs="/blog?tag=linux&tag=tooling">
-I've used macOS and Windows (with WSL2) in the past but I'm currently using Ubunutu for development, both at home and at work, although I have had to keep an installation of Windows purely for Photoshop. I use i3 window manager with Zsh, Tmux and Neovim which allows me complete control of the configuration of my environment.
+I've used Linux and Windows (with WSL2) for development in the past but I'm currently using a Macbook Pro for development, both at home and at work. I use Kitty, Zsh, Tmux, and Neovim which allows me complete control of the configuration of my environment and I enjoy writing extra tools to help improve my productivity wherever I can.
 </TitledSection>

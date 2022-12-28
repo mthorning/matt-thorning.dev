@@ -19,6 +19,7 @@ export const tagStyle = (theme) => css`
   display: flex;
   align-items: end;
   user-select: none;
+  cursor: pointer;
 `
 export const wrapper = css`
   display: flex;
@@ -33,6 +34,7 @@ export const tagNumber = css`
 `
 export const clearButton = (hide) => css`
   font-style: italic;
+  cursor: pointer;
 
   ${hide && 'display: none;'}
 `

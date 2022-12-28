@@ -17,7 +17,7 @@ const date = new Intl.DateTimeFormat('en-GB', {
 })
 
 const GET_ARTICLES = gql`
-  query(
+  query (
     $orderBy: String!
     $limit: Int
     $page: Int
@@ -113,10 +113,11 @@ function Tags({ data, search, children, loading }) {
           {...a11yButton(() => removeTag())}
           css={css`
             font-style: italic;
+            cursor: pointer;
             visibility: ${selectedTags.length ? 'visible' : 'hidden'};
           `}
         >
-          clear
+          clearXXSX
         </span>
         {children}
       </div>

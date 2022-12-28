@@ -26,12 +26,8 @@ export function Tag({ tag, selectedTags, onTagClick, count, className }) {
 }
 
 export function TagSelector({ search, posts, children }) {
-  const {
-    postHasSelectedTag,
-    selectedTags,
-    addTag,
-    removeTag,
-  } = useSearchParams(search)
+  const { postHasSelectedTag, selectedTags, addTag, removeTag } =
+    useSearchParams(search)
 
   const tags = posts.reduce((tags, post) => {
     if (postHasSelectedTag(post)) {
@@ -47,10 +43,10 @@ export function TagSelector({ search, posts, children }) {
   const tagList = Array.from(new Set(tags))
   const tagCount = tagList.reduce(
     (acc, currentTag) =>
-      (acc = {
-        ...acc,
-        [currentTag]: tags.filter((tag) => tag === currentTag).length,
-      }),
+    (acc = {
+      ...acc,
+      [currentTag]: tags.filter((tag) => tag === currentTag).length,
+    }),
     {}
   )
 
@@ -63,7 +59,7 @@ export function TagSelector({ search, posts, children }) {
   }
 
   function TagBlock(tag) {
-    return <Tag {...{ tag, selectedTags, onTagClick }} count={tagCount[tag]} />
+    return <Tag key={tag} {...{ tag, selectedTags, onTagClick }} count={tagCount[tag]} />
   }
 
   return (

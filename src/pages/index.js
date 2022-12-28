@@ -31,11 +31,11 @@ export default function Page({ data }) {
         <h1
           css={css`
             ${respFont({
-              minFont: 30,
-              maxFont: 75,
-              minScreen: 300,
-              maxScreen: 1500,
-            })}
+            minFont: 30,
+            maxFont: 75,
+            minScreen: 300,
+            maxScreen: 1500,
+          })}
             color: var(--color);
             margin-top: 10vh;
             margin-bottom: 0;
@@ -46,14 +46,14 @@ export default function Page({ data }) {
         <TypeHello
           css={css`
             ${respFont({
-              minFont: 25,
-              maxFont: 50,
-              minScreen: 300,
-              maxScreen: 1500,
-            })}
+            minFont: 25,
+            maxFont: 50,
+            minScreen: 300,
+            maxScreen: 1500,
+          })}
           `}
         >
-          Software Developer
+          Software Engineer
         </TypeHello>
       </div>
     </Layout>
