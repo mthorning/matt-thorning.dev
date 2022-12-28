@@ -10,7 +10,7 @@ const gqlClient = new GraphQLClient(`${process.env.GATSBY_API_URL}/graphql`, {
 })
 
 const mutation = gql`
-  mutation($data: [UpdateArticle]!) {
+  mutation ($data: [UpdateArticle]!) {
     updateArticles(data: $data)
   }
 `
@@ -35,11 +35,10 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const result = await graphql(`
     query {
       blogPosts: allMdx(
-        filter: { frontmatter: { type: { eq: "blog" }${
-          process.env.NODE_ENV !== 'development'
-            ? ', published: { eq: true }'
-            : ''
-        } } }
+        filter: { frontmatter: { type: { eq: "blog" }${process.env.NODE_ENV !== 'development'
+      ? ', published: { eq: true }'
+      : ''
+    } } }
         sort: { order: DESC, fields: [frontmatter___date] }
         limit: 1000
       ) {
@@ -59,11 +58,10 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         }
       }
       pages: allMdx(
-      filter: { frontmatter: { type: { eq: "page" }${
-        process.env.NODE_ENV !== 'development'
-          ? ', published: { eq: true }'
-          : ''
-      } }}) {
+      filter: { frontmatter: { type: { eq: "page" }${process.env.NODE_ENV !== 'development'
+      ? ', published: { eq: true }'
+      : ''
+    } }}) {
         edges {
           node {
             id
@@ -86,7 +84,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   if (NODE_ENV === 'production' || UPDATE_DB) {
     const activity = reporter.activityTimer('Updated Database')
     activity.start()
-    await updateDB(posts)
+    //await updateDB(posts)
     activity.end()
   }
 
